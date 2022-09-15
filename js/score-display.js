@@ -12,6 +12,7 @@ WL.registerComponent('score-display', {
         this.text = this.object.getComponent('text');
 
         updateScore = function(text) {
+            console.log("score-display >> updateScore >> "+text);
             this.text.text = text;
         }.bind(this);
 

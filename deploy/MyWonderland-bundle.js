@@ -38,6 +38,7 @@ WL.registerComponent('ball-physics', {
     weight: {type: WL.Type.Float, default: 1.0}
 }, {
     init: function() {
+        console.log("ball-physics >> init");
         this.pos = new Float32Array(3);
         this.velocity = new Float32Array(3);
 
@@ -48,6 +49,7 @@ WL.registerComponent('ball-physics', {
     },
 
     update: function(dt) {
+        console.log("ball-physics >> update");
         /* Remember the last position */
         this.object.getTranslationWorld(this.pos);
 
@@ -359,6 +361,7 @@ WL.registerComponent('paperball-spawner', {
          * when the session started */
         WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
         this.start = new Float32Array(2);
+        console.log("paperball-spawner >> this.start >> "+this.start);
 
         this.paperBalls = [];
         this.nextIndex = 0;
@@ -372,10 +375,13 @@ WL.registerComponent('paperball-spawner', {
         paperBallSpawner = this.object;
     },
     onTouchDown: function(e) {
+        console.log("paperball-spawner >> onTouchDown >> "+e);
         /* We cannot use .axes directly, as the list is being reused
          * in the selectend event and would therefore change the value
          * of this.start */
-        this.start.set(e.inputSource.gamepad.axes);
+        console.log("paperball-spawner >> onTouchDown >> e.inputSource.gamepad.axes >> "+e.inputSource.gamepad.axes);
+        // this.start.set(e.inputSource.gamepad.axes);
+        this.start.set([0,1]);
         this.startTime = e.timeStamp;
     },
 
@@ -391,6 +397,7 @@ WL.registerComponent('paperball-spawner', {
         }
     },
     onTouchUp: function(e) {
+        console.log("paperball-spawner >> onTouchUp >> "+e);
         const end = e.inputSource.gamepad.axes;
         const duration = 0.001*(e.timeStamp - this.startTime);
 
@@ -404,10 +411,10 @@ WL.registerComponent('paperball-spawner', {
 
         const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
         /* Avoid tapping spawning a ball */
-        if(swipeLength < 0.1) return;
+        // if(swipeLength < 0.1) return;
 
         /* Rotate direction about rotation of the view object */
-        glMatrix.vec3.transformQuat(dir, dir, this.object.parent.transformWorld);
+        glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);
         glMatrix.vec3.normalize(dir, dir);
 
         /* Assuming swipe length of 0.5, duration of 200ms, then the right term
@@ -418,6 +425,7 @@ WL.registerComponent('paperball-spawner', {
         this.throw(dir);
     },
     throw: function(dir) {
+        console.log("paperball-spawner >> throw");
         let paper =
             this.paperBalls.length == this.maxPapers ?
             this.paperBalls[this.nextIndex] : this.spawnPaper();
@@ -431,6 +439,7 @@ WL.registerComponent('paperball-spawner', {
         /* Reset scored value which is set in 'score-trigger' component */
         paper.physics.scored = false;
         paper.physics.active = true;
+
 
         /* New orientation for the next paper */
         this.object.rotateAxisAngleDegObject([1, 0, 0], Math.random()*180.0);
@@ -453,6 +462,7 @@ WL.registerComponent('paperball-spawner', {
         }
     },
     spawnPaper: function() {
+        console.log("paperball-spawner >> spawnPaper");
         const obj = WL.scene.addObject();
 
         const mesh = obj.addComponent('mesh');
@@ -632,6 +642,7 @@ WL.registerComponent('score-display', {
         this.text = this.object.getComponent('text');
 
         updateScore = function(text) {
+            console.log("score-display >> updateScore >> "+text);
             this.text.text = text;
         }.bind(this);
 

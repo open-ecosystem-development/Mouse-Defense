@@ -15,6 +15,7 @@ WL.registerComponent('ball-physics', {
     weight: {type: WL.Type.Float, default: 1.0}
 }, {
     init: function() {
+        console.log("ball-physics >> init");
         this.pos = new Float32Array(3);
         this.velocity = new Float32Array(3);
 
@@ -25,6 +26,7 @@ WL.registerComponent('ball-physics', {
     },
 
     update: function(dt) {
+        console.log("ball-physics >> update");
         /* Remember the last position */
         this.object.getTranslationWorld(this.pos);
 

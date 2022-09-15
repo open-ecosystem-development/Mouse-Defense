@@ -67,13 +67,20 @@
             ]
         },
         "16": {
-            "name": "Cube",
+            "name": "Wastebin",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "8",
                         "material": "22"
+                    }
+                },
+                {
+                    "type": "wastebin-spawner",
+                    "wastebin-spawner": {
+                        "binMesh": "8",
+                        "binMaterial": "22"
                     }
                 }
             ],
@@ -1746,7 +1753,7 @@
             ]
         },
         "200": {
-            "name": "Title",
+            "name": "Score Title",
             "parent": "194",
             "components": [
                 {
@@ -1755,6 +1762,9 @@
                         "text": "Play again?",
                         "material": "201"
                     }
+                },
+                {
+                    "type": "score-display"
                 }
             ],
             "transformation": [
@@ -2747,6 +2757,43 @@
             },
             "parent": "295",
             "skin": "294"
+        },
+        "420": {
+            "name": "Paperball",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "9",
+                        "material": "20"
+                    }
+                },
+                {
+                    "type": "paperball-spawner",
+                    "paperball-spawner": {
+                        "paperballMesh": "9",
+                        "paperballMaterial": "20"
+                    }
+                }
+            ],
+            "transformation": [
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                0.0,
+                0.0118364,
+                0.6217702,
+                1.4911164,
+                1.0
+            ]
         }
     },
     "meshes": {
