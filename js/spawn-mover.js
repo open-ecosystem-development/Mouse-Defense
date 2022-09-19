@@ -3,7 +3,7 @@
 
 Feel free to extend the game with a PR!
 */
-WL.registerComponent('roomba', {
+WL.registerComponent('spawn-mover', {
     speed: {type: WL.Type.Float, default: 1.0},
     roombaObject: {type: WL.Type.Object},
 }, {
@@ -35,26 +35,22 @@ WL.registerComponent('roomba', {
             this.state = (this.state + 1) % 4;
         }
 
-        // console.log("roomba >> "+this.state);
-
+        this.object.resetTransform();
         switch(this.state) {
             case 0:
-                this.object.resetTranslation();
+                Math.floor(Math.random() * 3);
                 glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time);
                 this.object.translate(this.position);
                 break;
             case 1:
-                this.object.resetTransform();
                 this.object.rotateAxisAngleDeg([0, 1, 0], this.time*180);
                 this.object.translate(this.position);
                 break;
             case 2:
-                this.object.resetTranslation();
                 glMatrix.vec3.lerp(this.position, this.pointB, this.pointA, this.time);
                 this.object.translate(this.position);
                 break;
             case 3:
-                this.object.resetTransform();
                 this.object.rotateAxisAngleDeg([0, 1, 0], (1-this.time)*180);
                 this.object.translate(this.position);
                 break;

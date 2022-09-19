@@ -19,7 +19,7 @@ WL.registerComponent('score-display', {
         updateScore("");
         /* Initial text to set after session started */
         WL.onXRSessionStart.push(function() {
-            updateScore("Slowly scan\narea");
+            // updateScore("Slowly scan\narea");
         });
     },
 });

@@ -20,14 +20,13 @@ WL.registerComponent('score-trigger', {
         for(let i = 0; i < overlaps.length; ++i) {
             let p = overlaps[i].object.getComponent('ball-physics');
 
-            console.log("score-trigger >> conditions >> "+p+", "+p.velocity[1]+", "+!p.scored);
+            // console.log("score-trigger >> conditions >> "+p+", "+p.velocity[1]+", "+!p.scored);
             if(p && p.velocity[1] < 0.0 && !p.scored) {
                 p.scored = true;
                 this.particles.transformWorld.set(this.object.transformWorld);
                 this.particles.getComponent('confetti-particles').burst();
-                // p.ballBurst();
                 ++score;
-                console.log("score-trigger >> scored");
+                // console.log("score-trigger >> scored");
                 updateScore(score.toString());
 
                 /* We don't have collisions with the wastebin, simply

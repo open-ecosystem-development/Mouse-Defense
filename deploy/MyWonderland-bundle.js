@@ -559,8 +559,8 @@ WL.registerComponent('play-again-button', {
         /* Show cursor */
         wastebinSpawner.object.getComponent('mesh').active = true;
         /* Hide pall spawner */
-        paperBallSpawner.getComponent('mesh').active = false;
-        paperBallSpawner.getComponent('paperball-spawner').active = false;
+        // paperBallSpawner.getComponent('mesh').active = false;
+        // paperBallSpawner.getComponent('paperball-spawner').active = false;
 
         this.hide();
     },
@@ -633,21 +633,26 @@ WL.registerComponent('roomba', {
             this.state = (this.state + 1) % 4;
         }
 
-        this.object.resetTransform();
+        // console.log("roomba >> "+this.state);
+
         switch(this.state) {
             case 0:
+                this.object.resetTranslation();
                 glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time);
                 this.object.translate(this.position);
                 break;
             case 1:
+                this.object.resetTransform();
                 this.object.rotateAxisAngleDeg([0, 1, 0], this.time*180);
                 this.object.translate(this.position);
                 break;
             case 2:
+                this.object.resetTranslation();
                 glMatrix.vec3.lerp(this.position, this.pointB, this.pointA, this.time);
                 this.object.translate(this.position);
                 break;
             case 3:
+                this.object.resetTransform();
                 this.object.rotateAxisAngleDeg([0, 1, 0], (1-this.time)*180);
                 this.object.translate(this.position);
                 break;
@@ -676,7 +681,7 @@ WL.registerComponent('score-display', {
         updateScore("");
         /* Initial text to set after session started */
         WL.onXRSessionStart.push(function() {
-            updateScore("Slowly scan\narea");
+            // updateScore("Slowly scan\narea");
         });
     },
 });
@@ -703,20 +708,79 @@ WL.registerComponent('score-trigger', {
         for(let i = 0; i < overlaps.length; ++i) {
             let p = overlaps[i].object.getComponent('ball-physics');
 
-            console.log("score-trigger >> conditions >> "+p+", "+p.velocity[1]+", "+!p.scored);
+            // console.log("score-trigger >> conditions >> "+p+", "+p.velocity[1]+", "+!p.scored);
             if(p && p.velocity[1] < 0.0 && !p.scored) {
                 p.scored = true;
                 this.particles.transformWorld.set(this.object.transformWorld);
                 this.particles.getComponent('confetti-particles').burst();
-                // p.ballBurst();
                 ++score;
-                console.log("score-trigger >> scored");
+                // console.log("score-trigger >> scored");
                 updateScore(score.toString());
 
                 /* We don't have collisions with the wastebin, simply
                  * drop it straight down to avoid it flying through */
                 p.velocity.set([0, -1, 0]);
             }
+        }
+    },
+});
+
+/**
+@brief (Unused) Moves a mesh back and forth
+
+Feel free to extend the game with a PR!
+*/
+WL.registerComponent('spawn-mover', {
+    speed: {type: WL.Type.Float, default: 1.0},
+    roombaObject: {type: WL.Type.Object},
+}, {
+    init: function() {
+        this.time = 0;
+        this.state = 0;
+        this.position = [0, 0, 0];
+        this.pointA = [0, 0, 0];
+        this.pointB = [0, 0, 0];
+
+        this.position = [0, 0, 0];
+        glMatrix.quat2.getTranslation(this.position, this.object.transformLocal);
+
+        glMatrix.vec3.add(this.pointA, this.pointA, this.position);
+        glMatrix.vec3.add(this.pointB, this.position, [0, 0, 1.5]);
+    },
+
+    start: function() {
+        // this.roombaObject.scale([0.2, 0.2, 0.2]);
+        this.object.scale([0.2, 0.2, 0.2]);
+    },
+
+    update: function(dt) {
+        if(isNaN(dt)) return;
+
+        this.time += dt;
+        if(this.time >= 1.0) {
+            this.time -= 1.0;
+            this.state = (this.state + 1) % 4;
+        }
+
+        this.object.resetTransform();
+        switch(this.state) {
+            case 0:
+                Math.floor(Math.random() * 3);
+                glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time);
+                this.object.translate(this.position);
+                break;
+            case 1:
+                this.object.rotateAxisAngleDeg([0, 1, 0], this.time*180);
+                this.object.translate(this.position);
+                break;
+            case 2:
+                glMatrix.vec3.lerp(this.position, this.pointB, this.pointA, this.time);
+                this.object.translate(this.position);
+                break;
+            case 3:
+                this.object.rotateAxisAngleDeg([0, 1, 0], (1-this.time)*180);
+                this.object.translate(this.position);
+                break;
         }
     },
 });

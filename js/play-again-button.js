@@ -24,8 +24,8 @@ WL.registerComponent('play-again-button', {
         /* Show cursor */
         wastebinSpawner.object.getComponent('mesh').active = true;
         /* Hide pall spawner */
-        paperBallSpawner.getComponent('mesh').active = false;
-        paperBallSpawner.getComponent('paperball-spawner').active = false;
+        // paperBallSpawner.getComponent('mesh').active = false;
+        // paperBallSpawner.getComponent('paperball-spawner').active = false;
 
         this.hide();
     },
