@@ -76,13 +76,6 @@
                         "mesh": "8",
                         "material": "22"
                     }
-                },
-                {
-                    "type": "wastebin-spawner",
-                    "wastebin-spawner": {
-                        "binMesh": "8",
-                        "binMaterial": "22"
-                    }
                 }
             ],
             "transformation": [
@@ -2032,7 +2025,7 @@
                 "file": "assets\\batCat_Creature.gltf"
             },
             "transformation": [
-                -0.0396321,
+                -0.0396322,
                 0.0,
                 -0.9992153,
                 0.0,
@@ -2042,17 +2035,25 @@
                 0.0,
                 0.9992153,
                 0.0,
-                -0.0396321,
+                -0.0396322,
                 0.0,
-                -2.3124861,
-                0.0589715,
-                0.0739048,
+                -3.3347153,
+                0.0589714,
+                -1.3825013,
                 1.0
             ],
             "name": "roomba",
             "components": [
                 {
                     "type": "roomba"
+                },
+                {
+                    "type": "wastebin-spawner",
+                    "wastebin-spawner": {
+                        "binMesh": "291",
+                        "binMaterial": "288",
+                        "particles": "482"
+                    }
                 }
             ]
         },
@@ -2066,7 +2067,8 @@
                 {
                     "mesh": {
                         "skin": "294"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -2080,7 +2082,8 @@
                 {
                     "mesh": {
                         "skin": "294"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -2094,7 +2097,8 @@
                 {
                     "mesh": {
                         "skin": "294"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -2108,7 +2112,8 @@
                 {
                     "mesh": {
                         "skin": "294"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -2807,21 +2812,21 @@
                 }
             ],
             "transformation": [
-                0.2,
                 0.0,
                 0.0,
+                0.1999999,
+                0.0,
+                0.1940597,
+                0.0483843,
                 0.0,
                 0.0,
-                0.0483845,
-                -0.1940597,
-                0.0,
-                0.0,
+                -0.0483849,
                 0.1940618,
-                0.048385,
                 0.0,
-                -0.9594134,
-                -2.384185791015625e-7,
-                -1.4821773,
+                0.0,
+                -0.9594135,
+                -4.76837158203125e-7,
+                -4.354412,
                 1.0
             ],
             "name": "duck"
@@ -3027,20 +3032,20 @@
                 }
             ],
             "transformation": [
-                1.0,
+                1.0000001,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.9999994,
+                0.9999999,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                1.000001,
+                1.0000009,
                 0.0,
                 -0.0002059,
-                -0.0000686,
+                -0.0000724,
                 -0.0002288,
                 1.0
             ]
@@ -3205,6 +3210,96 @@
                         "material2": "25"
                     }
                 }
+            ]
+        },
+        "482": {
+            "name": "confetti",
+            "components": [
+                {
+                    "type": "confetti-particles",
+                    "confetti-particles": {
+                        "mesh": "8",
+                        "material0": "22",
+                        "material1": "25",
+                        "material2": "26"
+                    }
+                }
+            ],
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                -1.6871175,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "487": {
+            "link": {
+                "name": "Sketchfab_model",
+                "file": "assets\\anime_starry_night\\scene.gltf"
+            }
+        },
+        "488": {
+            "link": {
+                "name": "d38186a23aa74e9db13b64855444b1bb.fbx<Sketchfab_model",
+                "file": "assets\\anime_starry_night\\scene.gltf"
+            },
+            "parent": "487"
+        },
+        "489": {
+            "link": {
+                "name": "RootNode<d38186a23aa74e9db13b64855444b1bb.fbx<Sketchfab_model",
+                "file": "assets\\anime_starry_night\\scene.gltf"
+            },
+            "parent": "488"
+        },
+        "490": {
+            "link": {
+                "name": "Sphere<RootNode<d38186a23aa74e9db13b64855444b1bb.fbx<Sketchfab_model",
+                "file": "assets\\anime_starry_night\\scene.gltf"
+            },
+            "parent": "489"
+        },
+        "491": {
+            "link": {
+                "name": "Sphere_Material.001_0<Sphere<RootNode<d38186a23aa74e9db13b64855444b1bb.fbx<Sketchfab_model",
+                "file": "assets\\anime_starry_night\\scene.gltf"
+            },
+            "parent": "490"
+        },
+        "494": {
+            "link": {
+                "name": "Sphere",
+                "file": "assets\\BillBoardX.fbx"
+            },
+            "transformation": [
+                500.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                500.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                500.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
             ]
         }
     },
@@ -3589,6 +3684,18 @@
                 "name": "Duck_Material #88_0",
                 "file": "assets\\duck\\scene.gltf"
             }
+        },
+        "486": {
+            "link": {
+                "name": "Sphere_Material.001_0",
+                "file": "assets\\anime_starry_night\\scene.gltf"
+            }
+        },
+        "493": {
+            "link": {
+                "name": "Sphere",
+                "file": "assets\\BillBoardX.fbx"
+            }
         }
     },
     "textures": {
@@ -3638,6 +3745,12 @@
             "link": {
                 "name": "texture_2",
                 "file": "assets\\batCat_Creature.gltf"
+            }
+        },
+        "484": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\anime_starry_night\\scene.gltf"
             }
         }
     },
@@ -3704,6 +3817,12 @@
             "link": {
                 "name": "batCat_Normal2048",
                 "file": "assets\\batCat_Creature.gltf"
+            }
+        },
+        "483": {
+            "link": {
+                "name": "image_0",
+                "file": "assets\\anime_starry_night\\scene.gltf"
             }
         }
     },
@@ -4040,6 +4159,21 @@
                 "name": "Material_88",
                 "file": "assets\\duck\\scene.gltf"
             }
+        },
+        "485": {
+            "link": {
+                "name": "Material.001",
+                "file": "assets\\anime_starry_night\\scene.gltf"
+            },
+            "Flat": {
+                "flatTexture": "484"
+            }
+        },
+        "492": {
+            "link": {
+                "name": "Material.001",
+                "file": "assets\\BillBoardX.fbx"
+            }
         }
     },
     "shaders": {
@@ -4189,6 +4323,12 @@
                 "optionalFeatures": {
                     "local-floor": true
                 }
+            }
+        },
+        "rendering": {
+            "sky": {
+                "enabled": true,
+                "material": "485"
             }
         }
     },
@@ -4520,6 +4660,8 @@
         "assets/scene.gltf",
         "assets/batCat_Creature.gltf",
         "assets/oculus_quest_and_rift_s_left_controller.glb",
-        "assets/duck/scene.gltf"
+        "assets/duck/scene.gltf",
+        "assets/anime_starry_night/scene.gltf",
+        "assets/BillBoardX.fbx"
     ]
 }

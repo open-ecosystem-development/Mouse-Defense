@@ -140,10 +140,10 @@ WL.registerComponent('paperball-spawner', {
          * instead of the tutorial after first throw */
         updateScore(score.toString());
 
-        this.throwCount++;
-        if(this.throwCount == 3) {
-            resetButton.unhide();
-        }
+        // this.throwCount++;
+        // if(this.throwCount == 3) {
+        //     resetButton.unhide();
+        // }
     },
     spawnPaper: function() {
         console.log("paperball-spawner >> spawnPaper");

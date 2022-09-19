@@ -89,6 +89,9 @@ WL.registerComponent('ball-physics', {
         /* Apply gravity to velocity */
         this.velocity[1] -= this.weight*9.81*dt;
     },
+    // ballBurst: function(){
+
+    // }
 });
 
 WL.registerComponent('button', {
@@ -471,10 +474,10 @@ WL.registerComponent('paperball-spawner', {
          * instead of the tutorial after first throw */
         updateScore(score.toString());
 
-        this.throwCount++;
-        if(this.throwCount == 3) {
-            resetButton.unhide();
-        }
+        // this.throwCount++;
+        // if(this.throwCount == 3) {
+        //     resetButton.unhide();
+        // }
     },
     spawnPaper: function() {
         console.log("paperball-spawner >> spawnPaper");
@@ -700,11 +703,14 @@ WL.registerComponent('score-trigger', {
         for(let i = 0; i < overlaps.length; ++i) {
             let p = overlaps[i].object.getComponent('ball-physics');
 
+            console.log("score-trigger >> conditions >> "+p+", "+p.velocity[1]+", "+!p.scored);
             if(p && p.velocity[1] < 0.0 && !p.scored) {
                 p.scored = true;
                 this.particles.transformWorld.set(this.object.transformWorld);
                 this.particles.getComponent('confetti-particles').burst();
+                // p.ballBurst();
                 ++score;
+                console.log("score-trigger >> scored");
                 updateScore(score.toString());
 
                 /* We don't have collisions with the wastebin, simply
@@ -737,18 +743,20 @@ WL.registerComponent('wastebin-spawner', {
     particles: {type: WL.Type.Object},
 }, {
     start: function() {
-        WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
-        this.wastebins = [];
+        // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
+        // this.wastebins = [];
 
-        wastebinSpawner = this;
+        // wastebinSpawner = this;
+        this.spawnTarget();
     },
-    update: function(dt) {
-        if(this.wastebins.length >= this.maxWastebins) return;
+    // update: function(dt) {
+    //     if(this.wastebins.length >= this.maxWastebins) return;
 
-        updateScore("Place a\nWastebin");
-    },
-    onClick: function(e) {
-        if(this.wastebins.length >= this.maxWastebins) return;
+    //     updateScore("Place a\nWastebin");
+    // },
+    spawnTarget: function() {
+        console.log("wastebin-spawner >> spawnTarget");
+        // if(this.wastebins.length >= this.maxWastebins) return;
         /* Only spawn object if cursor is visible */
 
         const obj = WL.scene.addObject();
@@ -764,6 +772,8 @@ WL.registerComponent('wastebin-spawner', {
         mesh.material = this.binMaterial;
         mesh.active = true;
 
+        obj.addComponent("roomba");
+
         if(this.spawnAnimation) {
             const anim = obj.addComponent('animation');
             anim.playCount = 1;
@@ -776,7 +786,7 @@ WL.registerComponent('wastebin-spawner', {
         const trigger = WL.scene.addObject(obj);
         const col = trigger.addComponent('collision');
         col.collider = WL.Collider.Sphere;
-        col.extents[0] = 0.1;
+        col.extents[0] = 0.8;
         col.group = (1 << 0);
         col.active = true;
         trigger.translate([0, 0.4, 0]);
@@ -786,26 +796,26 @@ WL.registerComponent('wastebin-spawner', {
 
         obj.setDirty();
 
-        this.wastebins.push(obj);
+        // this.wastebins.push(obj);
 
-        if(this.wastebins.length == this.maxWastebins) {
-            updateScore("Swipe to\nthrow");
-            // paperBallSpawner.getComponent('mesh').active = true;
-            paperBallSpawner.getComponent('paperball-spawner').active = true;
-            /* Hide cursor */
-            this.object.getComponent('mesh').active = false;
-        }
+        // if(this.wastebins.length == this.maxWastebins) {
+        //     updateScore("Swipe to\nthrow");
+        //     // paperBallSpawner.getComponent('mesh').active = true;
+        //     paperBallSpawner.getComponent('paperball-spawner').active = true;
+        //     /* Hide cursor */
+        //     this.object.getComponent('mesh').active = false;
+        // }
     },
-    onActivate: function() {
-        if(WL.xrSession) {
-            WL.xrSession.addEventListener('select', this.onClick.bind(this));
-        }
-    },
-    xrSessionStart: function(session) {
-        if(this.active) {
-            session.addEventListener('select', this.onClick.bind(this));
-        }
-    },
+    // onActivate: function() {
+    //     if(WL.xrSession) {
+    //         WL.xrSession.addEventListener('select', this.onClick.bind(this));
+    //     }
+    // },
+    // xrSessionStart: function(session) {
+    //     if(this.active) {
+    //         session.addEventListener('select', this.onClick.bind(this));
+    //     }
+    // },
 });
 
 //# sourceMappingURL=MyWonderland-bundle.js.map
