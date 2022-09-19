@@ -21,13 +21,11 @@ WL.registerComponent('wastebin-spawner', {
 }, {
     start: function() {
         WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
-        this.hitTest = this.object.getComponent('hit-test-location');
         this.wastebins = [];
 
         wastebinSpawner = this;
     },
     update: function(dt) {
-        if(!this.hitTest || !this.hitTest.visible) return;
         if(this.wastebins.length >= this.maxWastebins) return;
 
         updateScore("Place a\nWastebin");
@@ -35,7 +33,6 @@ WL.registerComponent('wastebin-spawner', {
     onClick: function(e) {
         if(this.wastebins.length >= this.maxWastebins) return;
         /* Only spawn object if cursor is visible */
-        if(this.hitTest && !this.hitTest.visible) return;
 
         const obj = WL.scene.addObject();
         obj.transformLocal.set(this.object.transformWorld);
@@ -76,7 +73,7 @@ WL.registerComponent('wastebin-spawner', {
 
         if(this.wastebins.length == this.maxWastebins) {
             updateScore("Swipe to\nthrow");
-            paperBallSpawner.getComponent('mesh').active = true;
+            // paperBallSpawner.getComponent('mesh').active = true;
             paperBallSpawner.getComponent('paperball-spawner').active = true;
             /* Hide cursor */
             this.object.getComponent('mesh').active = false;

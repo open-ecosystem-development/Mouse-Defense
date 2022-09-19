@@ -366,6 +366,7 @@ WL.registerComponent('paperball-spawner', {
         this.paperBalls = [];
         this.nextIndex = 0;
         this.throwCount = 0;
+        this.lastTime = 0;
 
         if(this.debug) {
             this.active = true;
@@ -375,7 +376,7 @@ WL.registerComponent('paperball-spawner', {
         paperBallSpawner = this.object;
     },
     onTouchDown: function(e) {
-        console.log("paperball-spawner >> onTouchDown >> "+e);
+        // console.log("paperball-spawner >> onTouchDown >> "+e);
         /* We cannot use .axes directly, as the list is being reused
          * in the selectend event and would therefore change the value
          * of this.start */
@@ -386,6 +387,7 @@ WL.registerComponent('paperball-spawner', {
     },
 
     update: function(dt) {
+        // console.log("paperball-spawner >> update >> "+dt);
         this.time = (this.time || 0) + dt;
 
         if(this.debug && this.time > 0.5) {
@@ -397,32 +399,42 @@ WL.registerComponent('paperball-spawner', {
         }
     },
     onTouchUp: function(e) {
-        console.log("paperball-spawner >> onTouchUp >> "+e);
-        const end = e.inputSource.gamepad.axes;
-        const duration = 0.001*(e.timeStamp - this.startTime);
+        // console.log("paperball-spawner >> onTouchUp >> "+e);
+        let curTime = Date.now();
+        ballTime = Math.abs(curTime-this.lastTime);
+        console.log("ballTime >> "+ ballTime);
+        if(ballTime>50){
+            console.log("paperball-spawner >> onTouchUp GO");
+            const end = e.inputSource.gamepad.axes;
+            const duration = 0.001*(e.timeStamp - this.startTime);
 
-        const dir = [0, 0, -1];
+            const dir = [0, 0, -1];
 
-        glMatrix.vec2.sub(dir, end, this.start);
-        /* Screenspace Y is inverted */
-        dir[1] = -dir[1];
-        /* In portrait mode, left-right is shorter */
-        dir[0] *= 0.5;
+            glMatrix.vec2.sub(dir, end, this.start);
+            /* Screenspace Y is inverted */
+            dir[1] = -dir[1];
+            /* In portrait mode, left-right is shorter */
+            dir[0] *= 0.5;
 
-        const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
-        /* Avoid tapping spawning a ball */
-        // if(swipeLength < 0.1) return;
+            const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
+            /* Avoid tapping spawning a ball */
+            // if(swipeLength < 0.1) return;
 
-        /* Rotate direction about rotation of the view object */
-        glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);
-        glMatrix.vec3.normalize(dir, dir);
+            /* Rotate direction about rotation of the view object */
+            glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);
+            glMatrix.vec3.normalize(dir, dir);
 
-        /* Assuming swipe length of 0.5, duration of 200ms, then the right term
-         * evaluates to 0.5/0.2 = 2.5. Times the swipeSensitivity is the
-         * meter per second initial speed of the ball */
-        glMatrix.vec3.scale(dir, dir, this.swipeSensitivity*swipeLength/duration);
+            /* Assuming swipe length of 0.5, duration of 200ms, then the right term
+            * evaluates to 0.5/0.2 = 2.5. Times the swipeSensitivity is the
+            * meter per second initial speed of the ball */
+            glMatrix.vec3.scale(dir, dir, this.swipeSensitivity*swipeLength/duration);
 
-        this.throw(dir);
+            // this.spawnPaper();
+            this.throw(dir);
+        }else{
+            console.log("paperball-spawner >> onTouchUp SKIP");
+        }
+        this.lastTime=curTime;
     },
     throw: function(dir) {
         console.log("paperball-spawner >> throw");
@@ -430,20 +442,23 @@ WL.registerComponent('paperball-spawner', {
             this.paperBalls.length == this.maxPapers ?
             this.paperBalls[this.nextIndex] : this.spawnPaper();
         this.paperBalls[this.nextIndex] = paper;
+        // this.spawnPaper();
 
         this.nextIndex = (this.nextIndex + 1) % this.maxPapers;
 
         paper.object.transformLocal.set(this.object.transformWorld);
         paper.object.setDirty();
         paper.physics.velocity.set(dir);
+        paper.physics.velocity[0] *= 2;
         /* Reset scored value which is set in 'score-trigger' component */
         paper.physics.scored = false;
         paper.physics.active = true;
 
 
         /* New orientation for the next paper */
-        this.object.rotateAxisAngleDegObject([1, 0, 0], Math.random()*180.0);
-        this.object.rotateAxisAngleDegObject([0, 1, 0], Math.random()*180.0);
+        this.object.resetRotation();
+        this.object.rotateAxisAngleDegObject([1, 0, 0], -90);
+        // this.object.rotateAxisAngleDegObject([0, 1, 0], Math.random()*180.0);
         this.object.scale([0, 0, 0]);
 
         this.canThrow = false;
@@ -468,14 +483,20 @@ WL.registerComponent('paperball-spawner', {
         const mesh = obj.addComponent('mesh');
         mesh.mesh = this.paperballMesh;
         mesh.material = this.paperballMaterial;
+        //scaling
+        // obj.resetScaling();
+        obj.scale([0.05,0.05,0.05]);
+
         mesh.active = true;
 
-        if(this.spawnAnimation) {
-            const anim = obj.addComponent('animation');
-            anim.animation = this.spawnAnimation;
-            anim.active = true;
-            anim.play();
-        }
+        
+        //doesn't do anything
+        // if(this.spawnAnimation) {
+        //     const anim = obj.addComponent('animation');
+        //     anim.animation = this.spawnAnimation;
+        //     anim.active = true;
+        //     anim.play();
+        // }
 
         const col = obj.addComponent('collision');
         col.shape = WL.Collider.Sphere;
@@ -579,6 +600,7 @@ Feel free to extend the game with a PR!
 */
 WL.registerComponent('roomba', {
     speed: {type: WL.Type.Float, default: 1.0},
+    roombaObject: {type: WL.Type.Object},
 }, {
     init: function() {
         this.time = 0;
@@ -595,6 +617,8 @@ WL.registerComponent('roomba', {
     },
 
     start: function() {
+        // this.roombaObject.scale([0.2, 0.2, 0.2]);
+        this.object.scale([0.2, 0.2, 0.2]);
     },
 
     update: function(dt) {
@@ -714,13 +738,11 @@ WL.registerComponent('wastebin-spawner', {
 }, {
     start: function() {
         WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
-        this.hitTest = this.object.getComponent('hit-test-location');
         this.wastebins = [];
 
         wastebinSpawner = this;
     },
     update: function(dt) {
-        if(!this.hitTest || !this.hitTest.visible) return;
         if(this.wastebins.length >= this.maxWastebins) return;
 
         updateScore("Place a\nWastebin");
@@ -728,7 +750,6 @@ WL.registerComponent('wastebin-spawner', {
     onClick: function(e) {
         if(this.wastebins.length >= this.maxWastebins) return;
         /* Only spawn object if cursor is visible */
-        if(this.hitTest && !this.hitTest.visible) return;
 
         const obj = WL.scene.addObject();
         obj.transformLocal.set(this.object.transformWorld);
@@ -769,7 +790,7 @@ WL.registerComponent('wastebin-spawner', {
 
         if(this.wastebins.length == this.maxWastebins) {
             updateScore("Swipe to\nthrow");
-            paperBallSpawner.getComponent('mesh').active = true;
+            // paperBallSpawner.getComponent('mesh').active = true;
             paperBallSpawner.getComponent('paperball-spawner').active = true;
             /* Hide cursor */
             this.object.getComponent('mesh').active = false;

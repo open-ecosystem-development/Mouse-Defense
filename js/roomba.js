@@ -5,6 +5,7 @@ Feel free to extend the game with a PR!
 */
 WL.registerComponent('roomba', {
     speed: {type: WL.Type.Float, default: 1.0},
+    roombaObject: {type: WL.Type.Object},
 }, {
     init: function() {
         this.time = 0;
@@ -21,6 +22,8 @@ WL.registerComponent('roomba', {
     },
 
     start: function() {
+        // this.roombaObject.scale([0.2, 0.2, 0.2]);
+        this.object.scale([0.2, 0.2, 0.2]);
     },
 
     update: function(dt) {

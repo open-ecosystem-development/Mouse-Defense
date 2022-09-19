@@ -38,13 +38,14 @@
                         "collider": "aabb",
                         "aabb": {
                             "extents": [
-                                4.0,
-                                0.05,
-                                4.0
+                                20.0,
+                                -0.1,
+                                20.0
                             ]
                         },
                         "groups": 4
-                    }
+                    },
+                    "active": true
                 }
             ],
             "transformation": [
@@ -2762,13 +2763,6 @@
             "name": "Paperball",
             "components": [
                 {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "9",
-                        "material": "20"
-                    }
-                },
-                {
                     "type": "paperball-spawner",
                     "paperball-spawner": {
                         "paperballMesh": "9",
@@ -2777,22 +2771,440 @@
                 }
             ],
             "transformation": [
-                0.1,
+                0.05,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.1,
+                0.05,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.1,
+                0.05,
                 0.0,
-                0.0118364,
-                0.6217702,
-                1.4911164,
+                0.0,
+                0.0,
+                0.0,
                 1.0
+            ],
+            "parent": "129"
+        },
+        "441": {
+            "link": {
+                "name": "Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "components": [
+                {
+                    "type": "roomba"
+                },
+                {
+                    "type": "collision",
+                    "collision": {
+                        "groups": 8
+                    }
+                }
+            ],
+            "transformation": [
+                0.2,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0483845,
+                -0.1940597,
+                0.0,
+                0.0,
+                0.1940618,
+                0.048385,
+                0.0,
+                -0.9594134,
+                -2.384185791015625e-7,
+                -1.4821773,
+                1.0
+            ],
+            "name": "duck"
+        },
+        "442": {
+            "link": {
+                "name": "c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "441"
+        },
+        "443": {
+            "link": {
+                "name": "Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "442"
+        },
+        "444": {
+            "link": {
+                "name": "RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "443"
+        },
+        "445": {
+            "link": {
+                "name": "Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "444"
+        },
+        "446": {
+            "link": {
+                "name": "Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "445"
+        },
+        "447": {
+            "link": {
+                "name": "_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "skin": "437"
+        },
+        "448": {
+            "link": {
+                "name": "MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "447",
+            "skin": "437"
+        },
+        "449": {
+            "link": {
+                "name": "MarineLLeg1_01<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "448",
+            "skin": "437"
+        },
+        "450": {
+            "link": {
+                "name": "MarineLLeg2_02<MarineLLeg1_01<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "449",
+            "skin": "437"
+        },
+        "451": {
+            "link": {
+                "name": "MarineLLegAnkle_03<MarineLLeg2_02<MarineLLeg1_01<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "450",
+            "skin": "437"
+        },
+        "452": {
+            "link": {
+                "name": "MarineLLegAnkle_end_016<MarineLLegAnkle_03<MarineLLeg2_02<MarineLLeg1_01<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "451",
+            "skin": "437"
+        },
+        "453": {
+            "link": {
+                "name": "MarineSpine1_04<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "448",
+            "skin": "437"
+        },
+        "454": {
+            "link": {
+                "name": "MarineSpine2_05<MarineSpine1_04<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "453",
+            "skin": "437"
+        },
+        "455": {
+            "link": {
+                "name": "MarineSpine3_06<MarineSpine2_05<MarineSpine1_04<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "454",
+            "skin": "437"
+        },
+        "456": {
+            "link": {
+                "name": "MarineHub003_07<MarineSpine3_06<MarineSpine2_05<MarineSpine1_04<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "455",
+            "skin": "437"
+        },
+        "457": {
+            "link": {
+                "name": "MarineHub003_end_017<MarineHub003_07<MarineSpine3_06<MarineSpine2_05<MarineSpine1_04<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "456",
+            "skin": "437"
+        },
+        "458": {
+            "link": {
+                "name": "MarineRLeg1_08<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "448",
+            "skin": "437"
+        },
+        "459": {
+            "link": {
+                "name": "MarineRLeg2_09<MarineRLeg1_08<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "458",
+            "skin": "437"
+        },
+        "460": {
+            "link": {
+                "name": "MarineRLegAnkle_010<MarineRLeg2_09<MarineRLeg1_08<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "459",
+            "skin": "437"
+        },
+        "461": {
+            "link": {
+                "name": "MarineRLegAnkle_end_013<MarineRLegAnkle_010<MarineRLeg2_09<MarineRLeg1_08<MarineHub002_00<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "460",
+            "skin": "437"
+        },
+        "462": {
+            "link": {
+                "name": "MarineLLegPlatform_011<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "447",
+            "skin": "437"
+        },
+        "463": {
+            "link": {
+                "name": "MarineLLegPlatform_end_015<MarineLLegPlatform_011<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "462",
+            "skin": "437"
+        },
+        "464": {
+            "link": {
+                "name": "MarineRLegPlatform_012<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "447",
+            "skin": "437"
+        },
+        "465": {
+            "link": {
+                "name": "MarineRLegPlatform_end_014<MarineRLegPlatform_012<_rootJoint<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "464",
+            "skin": "437"
+        },
+        "466": {
+            "link": {
+                "name": "Object_26<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "components": [
+                {
+                    "mesh": {
+                        "skin": "440"
+                    }
+                }
+            ],
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.9999994,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.000001,
+                0.0,
+                -0.0002059,
+                -0.0000686,
+                -0.0002288,
+                1.0
+            ]
+        },
+        "467": {
+            "link": {
+                "name": "Object_27<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "components": [
+                {
+                    "mesh": {
+                        "skin": "440"
+                    }
+                }
+            ]
+        },
+        "468": {
+            "link": {
+                "name": "Object_28<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "components": [
+                {
+                    "mesh": {
+                        "skin": "440"
+                    }
+                }
+            ]
+        },
+        "469": {
+            "link": {
+                "name": "Object_29<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "components": [
+                {
+                    "mesh": {
+                        "skin": "440"
+                    }
+                }
+            ]
+        },
+        "470": {
+            "link": {
+                "name": "Object_30<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "components": [
+                {
+                    "mesh": {
+                        "skin": "440"
+                    }
+                }
+            ]
+        },
+        "471": {
+            "link": {
+                "name": "Object_31<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "components": [
+                {
+                    "mesh": {
+                        "skin": "440"
+                    }
+                }
+            ]
+        },
+        "472": {
+            "link": {
+                "name": "Object_32<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "components": [
+                {
+                    "mesh": {
+                        "skin": "440"
+                    }
+                }
+            ]
+        },
+        "473": {
+            "link": {
+                "name": "Object_33<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446",
+            "components": [
+                {
+                    "mesh": {
+                        "skin": "440"
+                    }
+                }
+            ]
+        },
+        "474": {
+            "link": {
+                "name": "Object_25<Object_5<Armature<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "446"
+        },
+        "475": {
+            "link": {
+                "name": "Duck<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "444"
+        },
+        "476": {
+            "link": {
+                "name": "Lamp<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "444"
+        },
+        "477": {
+            "link": {
+                "name": "Object_36<Lamp<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "476"
+        },
+        "478": {
+            "link": {
+                "name": "Object_37<Object_36<Lamp<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "477"
+        },
+        "479": {
+            "link": {
+                "name": "Camera<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "444"
+        },
+        "480": {
+            "link": {
+                "name": "Object_39<Camera<RootNode<Object_2<c03cce1450874a9b8d3100814bff55e2.fbx<Sketchfab_model",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "parent": "479"
+        },
+        "481": {
+            "name": "Mesh",
+            "parent": "420",
+            "components": [
+                {
+                    "type": "confetti-particles",
+                    "confetti-particles": {
+                        "mesh": "8",
+                        "material0": "22",
+                        "material1": "26",
+                        "material2": "25"
+                    }
+                }
             ]
         }
     },
@@ -3128,6 +3540,54 @@
             "link": {
                 "name": "GripTrigger_lambert2_0",
                 "file": "assets\\scene.gltf"
+            }
+        },
+        "429": {
+            "link": {
+                "name": "Duck_Material #101_0",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "430": {
+            "link": {
+                "name": "Duck_Material #75_0",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "431": {
+            "link": {
+                "name": "Duck_Material #50_0",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "432": {
+            "link": {
+                "name": "Duck_Material #25_0",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "433": {
+            "link": {
+                "name": "Duck_Material #37_0",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "434": {
+            "link": {
+                "name": "Duck_Standardmaterial_0",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "435": {
+            "link": {
+                "name": "Duck_Material #115_0",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "436": {
+            "link": {
+                "name": "Duck_Material #88_0",
+                "file": "assets\\duck\\scene.gltf"
             }
         }
     },
@@ -3532,6 +3992,54 @@
                 "name": "lambert2",
                 "file": "assets\\scene.gltf"
             }
+        },
+        "421": {
+            "link": {
+                "name": "Material_101",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "422": {
+            "link": {
+                "name": "Material_75",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "423": {
+            "link": {
+                "name": "Material_50",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "424": {
+            "link": {
+                "name": "Material_25",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "425": {
+            "link": {
+                "name": "Material_37",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "426": {
+            "link": {
+                "name": "Standardmaterial",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "427": {
+            "link": {
+                "name": "Material_115",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "428": {
+            "link": {
+                "name": "Material_88",
+                "file": "assets\\duck\\scene.gltf"
+            }
         }
     },
     "shaders": {
@@ -3696,6 +4204,18 @@
                 "name": "pose1",
                 "file": "assets\\batCat_Creature.gltf"
             }
+        },
+        "438": {
+            "link": {
+                "name": "idle",
+                "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "439": {
+            "link": {
+                "name": "walk",
+                "file": "assets\\duck\\scene.gltf"
+            }
         }
     },
     "skins": {
@@ -3854,6 +4374,60 @@
                 "378",
                 "379"
             ]
+        },
+        "437": {
+            "link": {
+                "name": "skin_0",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "joints": [
+                "447",
+                "448",
+                "449",
+                "450",
+                "451",
+                "452",
+                "453",
+                "454",
+                "455",
+                "456",
+                "457",
+                "458",
+                "459",
+                "460",
+                "461",
+                "462",
+                "463",
+                "464",
+                "465"
+            ]
+        },
+        "440": {
+            "link": {
+                "name": "skin_0",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "joints": [
+                "447",
+                "448",
+                "449",
+                "450",
+                "451",
+                "452",
+                "453",
+                "454",
+                "455",
+                "456",
+                "457",
+                "458",
+                "459",
+                "460",
+                "461",
+                "462",
+                "463",
+                "464",
+                "465"
+            ]
         }
     },
     "pipelines": {
@@ -3945,6 +4519,7 @@
         "models/teleport-indicator.glb",
         "assets/scene.gltf",
         "assets/batCat_Creature.gltf",
-        "assets/oculus_quest_and_rift_s_left_controller.glb"
+        "assets/oculus_quest_and_rift_s_left_controller.glb",
+        "assets/duck/scene.gltf"
     ]
 }
