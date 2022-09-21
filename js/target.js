@@ -3,9 +3,9 @@
 
 Feel free to extend the game with a PR!
 */
-WL.registerComponent('roomba', {
+WL.registerComponent('target', {
     speed: {type: WL.Type.Float, default: 1.0},
-    // roombaObject: {type: WL.Type.Object},
+    // targetObject: {type: WL.Type.Object},
 }, {
     init: function() {
         this.time = 0;
@@ -23,7 +23,7 @@ WL.registerComponent('roomba', {
     },
 
     start: function() {
-        // this.roombaObject.scale([0.2, 0.2, 0.2]);
+        // this.targetObject.scale([0.2, 0.2, 0.2]);
         // this.object.scale([0.2, 0.2, 0.2]);
     },
 
@@ -58,18 +58,18 @@ WL.registerComponent('roomba', {
             //find angle between point A and B
             let radAngle = glMatrix.vec3.angle(this.pointA, this.pointB);
             this.angle = radAngle*(180/Math.PI);
-            // console.log("roomba >> point A, B >> " + this.pointA+", "+ this.pointB);
-            // console.log("roomba >> angle >> " + radAngle+", "+ this.angle);
+            // console.log("target >> point A, B >> " + this.pointA+", "+ this.pointB);
+            // console.log("target >> angle >> " + radAngle+", "+ this.angle);
 
         }
 
         this.object.resetTranslation();
         if(this.time <= moveDuration/2) {
-            // console.log("roomba >> rotating");
+            // console.log("target >> rotating");
             this.object.resetRotation();
             this.object.rotateAxisAngleDeg([0, 1, 0], this.time*this.angle);
         }else{
-            // console.log("roomba >> moving");
+            // console.log("target >> moving");
             // this.object.resetTranslation();
             glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time-moveDuration/2);
         }

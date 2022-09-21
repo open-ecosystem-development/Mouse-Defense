@@ -5,7 +5,7 @@ Feel free to extend the game with a PR!
 */
 WL.registerComponent('spawn-mover', {
     speed: {type: WL.Type.Float, default: 1.0},
-    roombaObject: {type: WL.Type.Object},
+    // spawnObject: {type: WL.Type.Object},
 }, {
     init: function() {
         this.time = 0;
@@ -22,7 +22,7 @@ WL.registerComponent('spawn-mover', {
     },
 
     start: function() {
-        // this.roombaObject.scale([0.2, 0.2, 0.2]);
+        // this.spawnObject.scale([0.2, 0.2, 0.2]);
         // this.object.scale([0.2, 0.2, 0.2]);
     },
 

@@ -1,22 +1,14 @@
-var wastebinSpawner = null;
-var floorHeight = 0;
+// var wastebinSpawner = null;
+// var floorHeight = 0;
 
 /**
-@brief Spawns wastebins at the same location as this mesh on click
-
-Clicks are detected via `select` events, as in immersive AR sessions,
-we don't have touch events.
-
-To spawn the wastebin at the location of the AR hit-test, this component
-is attached to the same object as the `hit-test-location` object.
-That results in `this.object` having the same location as the hit-test
-result.
+@brief
 */
-WL.registerComponent('wastebin-spawner', {
-    binMesh: {type: WL.Type.Mesh},
-    binMaterial: {type: WL.Type.Material},
+WL.registerComponent('target-spawner', {
+    targetMesh: {type: WL.Type.Mesh},
+    targetMaterial: {type: WL.Type.Material},
     spawnAnimation: {type: WL.Type.Animation},
-    maxWastebins: {type: WL.Type.Int, default: 20},
+    maxTargets: {type: WL.Type.Int, default: 20},
     particles: {type: WL.Type.Object},
 }, {
     init: function() {
@@ -25,41 +17,41 @@ WL.registerComponent('wastebin-spawner', {
     },
     start: function() {
         // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
-        this.wastebins = [];
+        this.targets = [];
 
-        // wastebinSpawner = this;
+        // targetSpawner = this;
         this.spawnTarget();
     },
     update: function(dt) {
         this.time += dt;
-        if(this.wastebins.length >= this.maxWastebins) return;
+        if(this.targets.length >= this.maxTargets) return;
 
         if(this.time >= this.spawnInterval){
             this.time = 0;
             this.spawnTarget();
         }
 
-        // updateScore("Place a\nWastebin");
+        // updateScore("Place a target");
     },
     spawnTarget: function() {
-        console.log("wastebin-spawner >> spawnTarget");
-        // if(this.wastebins.length >= this.maxWastebins) return;
+        // console.log("target-spawner >> spawnTarget");
+        // if(this.targets.length >= this.maxTargets) return;
         /* Only spawn object if cursor is visible */
 
         const obj = WL.scene.addObject();
         obj.transformLocal.set(this.object.transformWorld);
 
-        const pos = [0, 0, 0];
-        this.object.getTranslationWorld(pos);
-        /* Make sure balls and confetti land on the floor */
-        floorHeight = pos[1];
+        // const pos = [0, 0, 0];
+        // this.object.getTranslationWorld(pos);
+        // /* Make sure balls and confetti land on the floor */
+        // floorHeight = pos[1];
 
         const mesh = obj.addComponent('mesh');
-        mesh.mesh = this.binMesh;
-        mesh.material = this.binMaterial;
+        mesh.mesh = this.targetMesh;
+        mesh.material = this.targetMaterial;
         mesh.active = true;
 
-        obj.addComponent("roomba");
+        obj.addComponent("target");
 
         if(this.spawnAnimation) {
             const anim = obj.addComponent('animation');
@@ -83,9 +75,9 @@ WL.registerComponent('wastebin-spawner', {
 
         obj.setDirty();
 
-        this.wastebins.push(obj);
+        this.targets.push(obj);
 
-        // if(this.wastebins.length == this.maxWastebins) {
+        // if(this.targets.length == this.maxTargets) {
         //     updateScore("Swipe to\nthrow");
         //     // paperBallSpawner.getComponent('mesh').active = true;
         //     paperBallSpawner.getComponent('paperball-spawner').active = true;
@@ -95,7 +87,7 @@ WL.registerComponent('wastebin-spawner', {
     },
     // destroyTarget: function(){
     //     console.log("destroyTarget");
-    //     // this.wastebins.pop();
+    //     // this.targets.pop();
     // }
     // onActivate: function() {
     //     if(WL.xrSession) {

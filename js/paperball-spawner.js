@@ -30,7 +30,7 @@ WL.registerComponent('paperball-spawner', {
          * when the session started */
         WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
         this.start = new Float32Array(2);
-        console.log("paperball-spawner >> this.start >> "+this.start);
+        // console.log("paperball-spawner >> this.start >> "+this.start);
 
         this.paperBalls = [];
         this.nextIndex = 0;
@@ -49,7 +49,7 @@ WL.registerComponent('paperball-spawner', {
         /* We cannot use .axes directly, as the list is being reused
          * in the selectend event and would therefore change the value
          * of this.start */
-        console.log("paperball-spawner >> onTouchDown >> e.inputSource.gamepad.axes >> "+e.inputSource.gamepad.axes);
+        // console.log("paperball-spawner >> onTouchDown >> e.inputSource.gamepad.axes >> "+e.inputSource.gamepad.axes);
         // this.start.set(e.inputSource.gamepad.axes);
         this.start.set([0,1]);
         this.startTime = e.timeStamp;
@@ -71,9 +71,9 @@ WL.registerComponent('paperball-spawner', {
         // console.log("paperball-spawner >> onTouchUp >> "+e);
         let curTime = Date.now();
         ballTime = Math.abs(curTime-this.lastTime);
-        console.log("ballTime >> "+ ballTime);
+        // console.log("ballTime >> "+ ballTime);
         if(ballTime>50){
-            console.log("paperball-spawner >> onTouchUp GO");
+            // console.log("paperball-spawner >> onTouchUp GO");
             const end = e.inputSource.gamepad.axes;
             const duration = 0.001*(e.timeStamp - this.startTime);
 
@@ -101,12 +101,12 @@ WL.registerComponent('paperball-spawner', {
             // this.spawnPaper();
             this.throw(dir);
         }else{
-            console.log("paperball-spawner >> onTouchUp SKIP");
+            // console.log("paperball-spawner >> onTouchUp SKIP");
         }
         this.lastTime=curTime;
     },
     throw: function(dir) {
-        console.log("paperball-spawner >> throw");
+        // console.log("paperball-spawner >> throw");
         let paper =
             this.paperBalls.length == this.maxPapers ?
             this.paperBalls[this.nextIndex] : this.spawnPaper();
@@ -146,7 +146,7 @@ WL.registerComponent('paperball-spawner', {
         // }
     },
     spawnPaper: function() {
-        console.log("paperball-spawner >> spawnPaper");
+        // console.log("paperball-spawner >> spawnPaper");
         const obj = WL.scene.addObject();
 
         const mesh = obj.addComponent('mesh');

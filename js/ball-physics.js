@@ -15,7 +15,7 @@ WL.registerComponent('ball-physics', {
     weight: {type: WL.Type.Float, default: 1.0}
 }, {
     init: function() {
-        console.log("ball-physics >> init");
+        // console.log("ball-physics >> init");
         this.pos = new Float32Array(3);
         this.velocity = new Float32Array(3);
 
