@@ -43,6 +43,8 @@ WL.registerComponent('paperball-spawner', {
         }
 
         paperBallSpawner = this.object;
+
+        this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
     },
     onTouchDown: function(e) {
         // console.log("paperball-spawner >> onTouchDown >> "+e);
@@ -53,6 +55,7 @@ WL.registerComponent('paperball-spawner', {
         // this.start.set(e.inputSource.gamepad.axes);
         this.start.set([0,1]);
         this.startTime = e.timeStamp;
+
     },
 
     update: function(dt) {
@@ -106,6 +109,7 @@ WL.registerComponent('paperball-spawner', {
             // console.log("paperball-spawner >> onTouchUp SKIP");
         }
         this.lastTime=curTime;
+        this.soundClick.play();
     },
     throw: function(dir) {
         // console.log("paperball-spawner >> throw");
