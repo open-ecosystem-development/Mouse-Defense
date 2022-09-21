@@ -19,6 +19,11 @@
                 0.0,
                 3.477014,
                 1.0
+            ],
+            "components": [
+                {
+                    "type": "bg-music"
+                }
             ]
         },
         "15": {
@@ -198,7 +203,7 @@
                 0.0,
                 0.0,
                 3.0,
-                5.2142944,
+                8.8421192,
                 1.0
             ],
             "parent": "501"
@@ -228,7 +233,7 @@
                 0.0,
                 -1.0,
                 3.0,
-                -6.9186134,
+                -3.8117322,
                 1.0
             ],
             "parent": "501"
@@ -1988,9 +1993,9 @@
                 0.0,
                 1.0,
                 0.0,
-                6.2319579,
+                7.5200338,
                 3.0,
-                0.0,
+                2.5838074,
                 1.0
             ]
         },
@@ -2018,7 +2023,7 @@
                 0.0,
                 -6.6474924,
                 3.0,
-                0.0,
+                4.7757062,
                 1.0
             ]
         },
@@ -3489,7 +3494,7 @@
             "parent": "780"
         },
         "769": {
-            "name": "Light",
+            "name": "Sunlight",
             "components": [
                 {
                     "type": "light",
@@ -3520,7 +3525,30 @@
             "parent": "501"
         },
         "772": {
-            "name": "Farm"
+            "name": "Farm",
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                -0.3,
+                0.0,
+                1.0
+            ],
+            "components": [
+                {
+                    "type": "collision"
+                }
+            ]
         },
         "773": {
             "name": "PumpkinPatch",
@@ -3652,8 +3680,7 @@
                         "targetMesh": "904",
                         "targetMaterial": "901",
                         "spawnAnimation": "439",
-                        "particles": "482",
-                        "maxTargets": 33
+                        "particles": "482"
                     }
                 },
                 {
@@ -5027,6 +5054,12 @@
                 "name": "Mesh.1",
                 "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
             }
+        },
+        "913": {
+            "link": {
+                "name": "duck.1_Material_0_0",
+                "file": "assets\\duck_walk_free.glb"
+            }
         }
     },
     "textures": {
@@ -5143,6 +5176,12 @@
                 "name": "texture_2",
                 "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
             }
+        },
+        "911": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\duck_walk_free.glb"
+            }
         }
     },
     "images": {
@@ -5238,6 +5277,12 @@
             "link": {
                 "name": "congau",
                 "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "910": {
+            "link": {
+                "name": "image_0",
+                "file": "assets\\duck_walk_free.glb"
             }
         }
     },
@@ -5899,6 +5944,12 @@
                 "name": "Eye_tx",
                 "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
             }
+        },
+        "912": {
+            "link": {
+                "name": "Material_0",
+                "file": "assets\\duck_walk_free.glb"
+            }
         }
     },
     "shaders": {
@@ -6080,6 +6131,12 @@
             "link": {
                 "name": "walk",
                 "file": "assets\\duck\\scene.gltf"
+            }
+        },
+        "969": {
+            "link": {
+                "name": "walk",
+                "file": "assets\\duck_walk_free.glb"
             }
         }
     },
@@ -6525,6 +6582,59 @@
                 "892",
                 "893"
             ]
+        },
+        "914": {
+            "link": {
+                "name": "skin_0",
+                "file": "assets\\duck_walk_free.glb"
+            },
+            "joints": [
+                "921",
+                "922",
+                "923",
+                "924",
+                "925",
+                "926",
+                "927",
+                "928",
+                "929",
+                "930",
+                "931",
+                "932",
+                "933",
+                "934",
+                "935",
+                "936",
+                "937",
+                "938",
+                "939",
+                "940",
+                "941",
+                "942",
+                "943",
+                "944",
+                "945",
+                "946",
+                "947",
+                "948",
+                "949",
+                "950",
+                "951",
+                "952",
+                "953",
+                "954",
+                "955",
+                "956",
+                "957",
+                "958",
+                "959",
+                "960",
+                "961",
+                "962",
+                "963",
+                "964",
+                "965"
+            ]
         }
     },
     "pipelines": {
@@ -6625,6 +6735,7 @@
         "assets/sDNMMyv.png",
         "assets/uploads_files_3300527_subaru.stl",
         "assets/uploads_files_2109779_Duck.fbx",
-        "assets/uploads_files_3861195_Mouse_GLB.glb"
+        "assets/uploads_files_3861195_Mouse_GLB.glb",
+        "assets/duck_walk_free.glb"
     ]
 }

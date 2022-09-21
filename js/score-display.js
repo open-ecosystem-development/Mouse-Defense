@@ -21,9 +21,5 @@ WL.registerComponent('score-display', {
         WL.onXRSessionStart.push(function() {
             // updateScore("Slowly scan\narea");
         });
-        this.bgMusic = this.object.addComponent('howler-audio-source', {src: 'music/happy-funny-kids-111912.mp3', loop: true, volume: 0.7 });
-        this.bgMusic.play();
-        this.bgDucks = this.object.addComponent('howler-audio-source', {src: 'sfx/recording-ducks-binaural-18742.mp3', loop: true, volume: 1.3 });
-        this.bgDucks.play();
     },
 });

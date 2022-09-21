@@ -79,7 +79,7 @@ WL.registerComponent('paperball-spawner', {
             // console.log("paperball-spawner >> onTouchUp GO");
             const end = e.inputSource.gamepad.axes;
             // const duration = 0.001*(e.timeStamp - this.startTime);
-            console.log("end >> ", end);
+            // console.log("end >> ", end);
 
             const dir = [0, 0, -1];
 
@@ -92,6 +92,7 @@ WL.registerComponent('paperball-spawner', {
             // const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
             /* Avoid tapping spawning a ball */
             // if(swipeLength < 0.1) return;
+            console.log("dir >>",dir);
 
             /* Rotate direction about rotation of the view object */
             glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);

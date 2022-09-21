@@ -94,6 +94,24 @@ WL.registerComponent('ball-physics', {
     // }
 });
 
+/* Global function used to update the score display */
+var updateScore = null;
+/**
+@brief Marks an object with text component as "score display"
+
+The center top text object that shows various helpful tutorial
+texts and the score.
+*/
+WL.registerComponent('bg-music', {
+}, {
+    init: function() {
+        this.bgMusic = this.object.addComponent('howler-audio-source', {src: 'music/happy-funny-kids-111912.mp3', loop: true, volume: 0.7 });
+        this.bgMusic.play();
+        this.bgDucks = this.object.addComponent('howler-audio-source', {src: 'sfx/recording-ducks-binaural-18742.mp3', loop: true, volume: 1.3 });
+        this.bgDucks.play();
+    },
+});
+
 WL.registerComponent('button', {
     buttonMeshObject: {type: WL.Type.Object},
     hoverMaterial: {type: WL.Type.Material},
@@ -597,7 +615,7 @@ WL.registerComponent('paperball-spawner', {
             // console.log("paperball-spawner >> onTouchUp GO");
             const end = e.inputSource.gamepad.axes;
             // const duration = 0.001*(e.timeStamp - this.startTime);
-            console.log("end >> ", end);
+            // console.log("end >> ", end);
 
             const dir = [0, 0, -1];
 
@@ -610,6 +628,7 @@ WL.registerComponent('paperball-spawner', {
             // const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
             /* Avoid tapping spawning a ball */
             // if(swipeLength < 0.1) return;
+            console.log("dir >>",dir);
 
             /* Rotate direction about rotation of the view object */
             glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);
@@ -814,10 +833,6 @@ WL.registerComponent('score-display', {
         WL.onXRSessionStart.push(function() {
             // updateScore("Slowly scan\narea");
         });
-        this.bgMusic = this.object.addComponent('howler-audio-source', {src: 'music/happy-funny-kids-111912.mp3', loop: true, volume: 0.7 });
-        this.bgMusic.play();
-        this.bgDucks = this.object.addComponent('howler-audio-source', {src: 'sfx/recording-ducks-binaural-18742.mp3', loop: true, volume: 1.3 });
-        this.bgDucks.play();
     },
 });
 
