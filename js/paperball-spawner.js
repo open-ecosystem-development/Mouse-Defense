@@ -21,7 +21,7 @@ WL.registerComponent('paperball-spawner', {
     paperballMesh: {type: WL.Type.Mesh},
     paperballMaterial: {type: WL.Type.Material},
     spawnAnimation: {type: WL.Type.Animation},
-    swipeSensitivity: {type: WL.Type.Float, default: 1.0},
+    ballSpeed: {type: WL.Type.Float, default: 1.0},
     maxPapers: {type: WL.Type.Int, default: 32},
     debug: {type: WL.Type.Bool, default: false},
 }, {
@@ -75,7 +75,7 @@ WL.registerComponent('paperball-spawner', {
         if(ballTime>50){
             // console.log("paperball-spawner >> onTouchUp GO");
             const end = e.inputSource.gamepad.axes;
-            const duration = 0.001*(e.timeStamp - this.startTime);
+            // const duration = 0.001*(e.timeStamp - this.startTime);
 
             const dir = [0, 0, -1];
 
@@ -85,7 +85,7 @@ WL.registerComponent('paperball-spawner', {
             /* In portrait mode, left-right is shorter */
             dir[0] *= 0.5;
 
-            const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
+            // const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
             /* Avoid tapping spawning a ball */
             // if(swipeLength < 0.1) return;
 
@@ -94,9 +94,9 @@ WL.registerComponent('paperball-spawner', {
             glMatrix.vec3.normalize(dir, dir);
 
             /* Assuming swipe length of 0.5, duration of 200ms, then the right term
-            * evaluates to 0.5/0.2 = 2.5. Times the swipeSensitivity is the
+            * evaluates to 0.5/0.2 = 2.5. Times the ballSpeed is the
             * meter per second initial speed of the ball */
-            glMatrix.vec3.scale(dir, dir, this.swipeSensitivity*swipeLength/duration);
+            glMatrix.vec3.scale(dir, dir, this.ballSpeed);
 
             // this.spawnPaper();
             this.throw(dir);
@@ -158,8 +158,6 @@ WL.registerComponent('paperball-spawner', {
 
         mesh.active = true;
 
-        
-        //doesn't do anything
         // if(this.spawnAnimation) {
         //     const anim = obj.addComponent('animation');
         //     anim.animation = this.spawnAnimation;

@@ -4414,7 +4414,8 @@
                     "paperball-spawner": {
                         "paperballMesh": "9",
                         "paperballMaterial": "20",
-                        "spawnAnimation": null
+                        "spawnAnimation": null,
+                        "ballSpeed": 20.0
                     }
                 }
             ]
