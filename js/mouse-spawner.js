@@ -46,14 +46,12 @@ WL.registerComponent('mouse-spawner', {
         // /* Make sure balls and confetti land on the floor */
         // floorHeight = pos[1];
 
-        obj.scale([0.2, 0.2, 0.2]);
-        obj.
+        obj.scale([0.1, 0.1, 0.1]);
         const mesh = obj.addComponent('mesh');
         mesh.mesh = this.targetMesh;
         mesh.material = this.targetMaterial;
         mesh.active = true;
-
-        obj.addComponent("target");
+        obj.addComponent("mouse-mover");
 
         if(this.spawnAnimation) {
             const anim = obj.addComponent('animation');

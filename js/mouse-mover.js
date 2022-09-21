@@ -67,7 +67,8 @@ WL.registerComponent('mouse-mover', {
         if(this.time <= moveDuration/2) {
             // console.log("target >> rotating");
             this.object.resetRotation();
-            this.object.rotateAxisAngleDeg([0, 1, 0], this.time*this.angle);
+            this.object.rotateAxisAngleDeg([0, 0, 1], this.time*this.angle);
+            this.object.rotateAxisAngleDeg([1, 0, 0], 90);
         }else{
             // console.log("target >> moving");
             // this.object.resetTranslation();

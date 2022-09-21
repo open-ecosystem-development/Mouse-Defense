@@ -401,7 +401,8 @@ WL.registerComponent('mouse-mover', {
         if(this.time <= moveDuration/2) {
             // console.log("target >> rotating");
             this.object.resetRotation();
-            this.object.rotateAxisAngleDeg([0, 1, 0], this.time*this.angle);
+            this.object.rotateAxisAngleDeg([0, 0, 1], this.time*this.angle);
+            this.object.rotateAxisAngleDeg([1, 0, 0], 90);
         }else{
             // console.log("target >> moving");
             // this.object.resetTranslation();
@@ -459,14 +460,12 @@ WL.registerComponent('mouse-spawner', {
         // /* Make sure balls and confetti land on the floor */
         // floorHeight = pos[1];
 
-        obj.scale([0.2, 0.2, 0.2]);
-        obj.
+        obj.scale([0.1, 0.1, 0.1]);
         const mesh = obj.addComponent('mesh');
         mesh.mesh = this.targetMesh;
         mesh.material = this.targetMaterial;
         mesh.active = true;
-
-        obj.addComponent("target");
+        obj.addComponent("mouse-mover");
 
         if(this.spawnAnimation) {
             const anim = obj.addComponent('animation');
@@ -561,6 +560,8 @@ WL.registerComponent('paperball-spawner', {
         }
 
         paperBallSpawner = this.object;
+
+        this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
     },
     onTouchDown: function(e) {
         // console.log("paperball-spawner >> onTouchDown >> "+e);
@@ -571,6 +572,7 @@ WL.registerComponent('paperball-spawner', {
         // this.start.set(e.inputSource.gamepad.axes);
         this.start.set([0,1]);
         this.startTime = e.timeStamp;
+
     },
 
     update: function(dt) {
@@ -624,6 +626,7 @@ WL.registerComponent('paperball-spawner', {
             // console.log("paperball-spawner >> onTouchUp SKIP");
         }
         this.lastTime=curTime;
+        this.soundClick.play();
     },
     throw: function(dir) {
         // console.log("paperball-spawner >> throw");
@@ -810,6 +813,10 @@ WL.registerComponent('score-display', {
         WL.onXRSessionStart.push(function() {
             // updateScore("Slowly scan\narea");
         });
+        this.bgMusic = this.object.addComponent('howler-audio-source', {src: 'music/happy-funny-kids-111912.mp3', loop: true, volume: 0.7 });
+        this.bgMusic.play();
+        this.bgDucks = this.object.addComponent('howler-audio-source', {src: 'sfx/recording-ducks-binaural-18742.mp3', loop: true, volume: 1.3 });
+        this.bgDucks.play();
     },
 });
 
@@ -828,6 +835,7 @@ WL.registerComponent('score-trigger', {
 }, {
     init: function() {
         this.collision = this.object.getComponent('collision');
+        this.soundHit = this.object.addComponent('howler-audio-source', {src: 'sfx/duck-quacking-37392.mp3', volume: 1.9 });
     },
     update: function(dt) {
         let overlaps = this.collision.queryOverlaps();
@@ -846,6 +854,7 @@ WL.registerComponent('score-trigger', {
                 // console.log("score-trigger >> scored");
                 updateScore(score.toString());
 
+                this.soundHit.play();
                 /* We don't have collisions with the wastebin, simply
                  * drop it straight down to avoid it flying through */
                 p.velocity.set([0, -1, 0]);
