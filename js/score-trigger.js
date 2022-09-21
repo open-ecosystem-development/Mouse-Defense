@@ -20,11 +20,13 @@ WL.registerComponent('score-trigger', {
         for(let i = 0; i < overlaps.length; ++i) {
             let p = overlaps[i].object.getComponent('ball-physics');
 
-            // console.log("score-trigger >> conditions >> "+p+", "+p.velocity[1]+", "+!p.scored);
+            // console.log("score-trigger >>  p >> "+p);
             if(p && p.velocity[1] < 0.0 && !p.scored) {
                 p.scored = true;
                 this.particles.transformWorld.set(this.object.transformWorld);
                 this.particles.getComponent('confetti-particles').burst();
+                this.object.parent.destroy();
+                // destroyTarget();
                 ++score;
                 // console.log("score-trigger >> scored");
                 updateScore(score.toString());

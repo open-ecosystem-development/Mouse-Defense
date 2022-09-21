@@ -49,7 +49,7 @@ WL.registerComponent('ball-physics', {
     },
 
     update: function(dt) {
-        console.log("ball-physics >> update");
+        // console.log("ball-physics >> update");
         /* Remember the last position */
         this.object.getTranslationWorld(this.pos);
 
@@ -603,7 +603,7 @@ Feel free to extend the game with a PR!
 */
 WL.registerComponent('roomba', {
     speed: {type: WL.Type.Float, default: 1.0},
-    roombaObject: {type: WL.Type.Object},
+    // roombaObject: {type: WL.Type.Object},
 }, {
     init: function() {
         this.time = 0;
@@ -611,52 +611,67 @@ WL.registerComponent('roomba', {
         this.position = [0, 0, 0];
         this.pointA = [0, 0, 0];
         this.pointB = [0, 0, 0];
-
         this.position = [0, 0, 0];
         glMatrix.quat2.getTranslation(this.position, this.object.transformLocal);
 
         glMatrix.vec3.add(this.pointA, this.pointA, this.position);
         glMatrix.vec3.add(this.pointB, this.position, [0, 0, 1.5]);
+
+        this.angle = 0;
     },
 
     start: function() {
         // this.roombaObject.scale([0.2, 0.2, 0.2]);
-        this.object.scale([0.2, 0.2, 0.2]);
+        // this.object.scale([0.2, 0.2, 0.2]);
     },
 
     update: function(dt) {
         if(isNaN(dt)) return;
 
         this.time += dt;
-        if(this.time >= 1.0) {
-            this.time -= 1.0;
-            this.state = (this.state + 1) % 4;
+        const moveDuration = 2;
+        if(this.time >= moveDuration) {
+            this.time -= moveDuration;
+            // this.state = (this.state + 1) % 4;
+            this.state = Math.floor(Math.random()*4);
+            this.pointA = this.position;
+
+            const randomPathZ = Math.random() < 0.5;
+            const randomNegative = Math.random() < 0.5;
+            var travelDistance = 1.5*moveDuration;
+
+            if(randomNegative){
+                travelDistance = -travelDistance;
+            }
+            //new position in Z axis
+            // console.log("pointB >> " + this.pointB);
+            
+            if(randomPathZ){
+                glMatrix.vec3.add(this.pointB, this.pointA, [0, 0, travelDistance]);
+            }
+            //new position in X axis.
+            else{
+                glMatrix.vec3.add(this.pointB, this.pointA, [travelDistance, 0, 0]);
+            }
+            //find angle between point A and B
+            let radAngle = glMatrix.vec3.angle(this.pointA, this.pointB);
+            this.angle = radAngle*(180/Math.PI);
+            // console.log("roomba >> point A, B >> " + this.pointA+", "+ this.pointB);
+            // console.log("roomba >> angle >> " + radAngle+", "+ this.angle);
+
         }
 
-        // console.log("roomba >> "+this.state);
-
-        switch(this.state) {
-            case 0:
-                this.object.resetTranslation();
-                glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time);
-                this.object.translate(this.position);
-                break;
-            case 1:
-                this.object.resetTransform();
-                this.object.rotateAxisAngleDeg([0, 1, 0], this.time*180);
-                this.object.translate(this.position);
-                break;
-            case 2:
-                this.object.resetTranslation();
-                glMatrix.vec3.lerp(this.position, this.pointB, this.pointA, this.time);
-                this.object.translate(this.position);
-                break;
-            case 3:
-                this.object.resetTransform();
-                this.object.rotateAxisAngleDeg([0, 1, 0], (1-this.time)*180);
-                this.object.translate(this.position);
-                break;
+        this.object.resetTranslation();
+        if(this.time <= moveDuration/2) {
+            // console.log("roomba >> rotating");
+            this.object.resetRotation();
+            this.object.rotateAxisAngleDeg([0, 1, 0], this.time*this.angle);
+        }else{
+            // console.log("roomba >> moving");
+            // this.object.resetTranslation();
+            glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time-moveDuration/2);
         }
+        this.object.translate(this.position);
     },
 });
 
@@ -708,11 +723,13 @@ WL.registerComponent('score-trigger', {
         for(let i = 0; i < overlaps.length; ++i) {
             let p = overlaps[i].object.getComponent('ball-physics');
 
-            // console.log("score-trigger >> conditions >> "+p+", "+p.velocity[1]+", "+!p.scored);
+            // console.log("score-trigger >>  p >> "+p);
             if(p && p.velocity[1] < 0.0 && !p.scored) {
                 p.scored = true;
                 this.particles.transformWorld.set(this.object.transformWorld);
                 this.particles.getComponent('confetti-particles').burst();
+                this.object.parent.destroy();
+                // destroyTarget();
                 ++score;
                 // console.log("score-trigger >> scored");
                 updateScore(score.toString());
@@ -750,38 +767,41 @@ WL.registerComponent('spawn-mover', {
 
     start: function() {
         // this.roombaObject.scale([0.2, 0.2, 0.2]);
-        this.object.scale([0.2, 0.2, 0.2]);
+        // this.object.scale([0.2, 0.2, 0.2]);
     },
 
     update: function(dt) {
         if(isNaN(dt)) return;
 
         this.time += dt;
-        if(this.time >= 1.0) {
-            this.time -= 1.0;
-            this.state = (this.state + 1) % 4;
-        }
+        const moveDuration = 2;
+        if(this.time >= moveDuration) {
+            this.time -= moveDuration;
 
-        this.object.resetTransform();
-        switch(this.state) {
-            case 0:
-                Math.floor(Math.random() * 3);
-                glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time);
-                this.object.translate(this.position);
-                break;
-            case 1:
-                this.object.rotateAxisAngleDeg([0, 1, 0], this.time*180);
-                this.object.translate(this.position);
-                break;
-            case 2:
-                glMatrix.vec3.lerp(this.position, this.pointB, this.pointA, this.time);
-                this.object.translate(this.position);
-                break;
-            case 3:
-                this.object.rotateAxisAngleDeg([0, 1, 0], (1-this.time)*180);
-                this.object.translate(this.position);
-                break;
+            this.state = Math.floor(Math.random()*4);
+            this.pointA = this.position;
+
+            const randomPathZ = Math.random() < 0.5;
+            const randomNegative = Math.random() < 0.5;
+            var travelDistance = 1.5*moveDuration;
+
+            if(randomNegative){
+                travelDistance = -travelDistance;
+            }
+            //new position in Z axis
+            // console.log("pointB >> " + this.pointB);
+            
+            if(randomPathZ){
+                glMatrix.vec3.add(this.pointB, this.pointA, [0, 0, travelDistance]);
+            }
+            //new position in X axis.
+            else{
+                glMatrix.vec3.add(this.pointB, this.pointA, [travelDistance, 0, 0]);
+            }
         }
+        this.object.resetTransform();
+        glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time);
+        this.object.translate(this.position);
     },
 });
 
@@ -803,21 +823,31 @@ WL.registerComponent('wastebin-spawner', {
     binMesh: {type: WL.Type.Mesh},
     binMaterial: {type: WL.Type.Material},
     spawnAnimation: {type: WL.Type.Animation},
-    maxWastebins: {type: WL.Type.Int, default: 3},
+    maxWastebins: {type: WL.Type.Int, default: 20},
     particles: {type: WL.Type.Object},
 }, {
+    init: function() {
+        this.time = 0;
+        this.spawnInterval = 3;
+    },
     start: function() {
         // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
-        // this.wastebins = [];
+        this.wastebins = [];
 
         // wastebinSpawner = this;
         this.spawnTarget();
     },
-    // update: function(dt) {
-    //     if(this.wastebins.length >= this.maxWastebins) return;
+    update: function(dt) {
+        this.time += dt;
+        if(this.wastebins.length >= this.maxWastebins) return;
 
-    //     updateScore("Place a\nWastebin");
-    // },
+        if(this.time >= this.spawnInterval){
+            this.time = 0;
+            this.spawnTarget();
+        }
+
+        // updateScore("Place a\nWastebin");
+    },
     spawnTarget: function() {
         console.log("wastebin-spawner >> spawnTarget");
         // if(this.wastebins.length >= this.maxWastebins) return;
@@ -860,7 +890,7 @@ WL.registerComponent('wastebin-spawner', {
 
         obj.setDirty();
 
-        // this.wastebins.push(obj);
+        this.wastebins.push(obj);
 
         // if(this.wastebins.length == this.maxWastebins) {
         //     updateScore("Swipe to\nthrow");
@@ -870,6 +900,10 @@ WL.registerComponent('wastebin-spawner', {
         //     this.object.getComponent('mesh').active = false;
         // }
     },
+    // destroyTarget: function(){
+    //     console.log("destroyTarget");
+    //     // this.wastebins.pop();
+    // }
     // onActivate: function() {
     //     if(WL.xrSession) {
     //         WL.xrSession.addEventListener('select', this.onClick.bind(this));

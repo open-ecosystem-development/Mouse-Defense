@@ -23,37 +23,40 @@ WL.registerComponent('spawn-mover', {
 
     start: function() {
         // this.roombaObject.scale([0.2, 0.2, 0.2]);
-        this.object.scale([0.2, 0.2, 0.2]);
+        // this.object.scale([0.2, 0.2, 0.2]);
     },
 
     update: function(dt) {
         if(isNaN(dt)) return;
 
         this.time += dt;
-        if(this.time >= 1.0) {
-            this.time -= 1.0;
-            this.state = (this.state + 1) % 4;
-        }
+        const moveDuration = 2;
+        if(this.time >= moveDuration) {
+            this.time -= moveDuration;
 
-        this.object.resetTransform();
-        switch(this.state) {
-            case 0:
-                Math.floor(Math.random() * 3);
-                glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time);
-                this.object.translate(this.position);
-                break;
-            case 1:
-                this.object.rotateAxisAngleDeg([0, 1, 0], this.time*180);
-                this.object.translate(this.position);
-                break;
-            case 2:
-                glMatrix.vec3.lerp(this.position, this.pointB, this.pointA, this.time);
-                this.object.translate(this.position);
-                break;
-            case 3:
-                this.object.rotateAxisAngleDeg([0, 1, 0], (1-this.time)*180);
-                this.object.translate(this.position);
-                break;
+            this.state = Math.floor(Math.random()*4);
+            this.pointA = this.position;
+
+            const randomPathZ = Math.random() < 0.5;
+            const randomNegative = Math.random() < 0.5;
+            var travelDistance = 1.5*moveDuration;
+
+            if(randomNegative){
+                travelDistance = -travelDistance;
+            }
+            //new position in Z axis
+            // console.log("pointB >> " + this.pointB);
+            
+            if(randomPathZ){
+                glMatrix.vec3.add(this.pointB, this.pointA, [0, 0, travelDistance]);
+            }
+            //new position in X axis.
+            else{
+                glMatrix.vec3.add(this.pointB, this.pointA, [travelDistance, 0, 0]);
+            }
         }
+        this.object.resetTransform();
+        glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time);
+        this.object.translate(this.position);
     },
 });

@@ -16,21 +16,31 @@ WL.registerComponent('wastebin-spawner', {
     binMesh: {type: WL.Type.Mesh},
     binMaterial: {type: WL.Type.Material},
     spawnAnimation: {type: WL.Type.Animation},
-    maxWastebins: {type: WL.Type.Int, default: 3},
+    maxWastebins: {type: WL.Type.Int, default: 20},
     particles: {type: WL.Type.Object},
 }, {
+    init: function() {
+        this.time = 0;
+        this.spawnInterval = 3;
+    },
     start: function() {
         // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
-        // this.wastebins = [];
+        this.wastebins = [];
 
         // wastebinSpawner = this;
         this.spawnTarget();
     },
-    // update: function(dt) {
-    //     if(this.wastebins.length >= this.maxWastebins) return;
+    update: function(dt) {
+        this.time += dt;
+        if(this.wastebins.length >= this.maxWastebins) return;
 
-    //     updateScore("Place a\nWastebin");
-    // },
+        if(this.time >= this.spawnInterval){
+            this.time = 0;
+            this.spawnTarget();
+        }
+
+        // updateScore("Place a\nWastebin");
+    },
     spawnTarget: function() {
         console.log("wastebin-spawner >> spawnTarget");
         // if(this.wastebins.length >= this.maxWastebins) return;
@@ -73,7 +83,7 @@ WL.registerComponent('wastebin-spawner', {
 
         obj.setDirty();
 
-        // this.wastebins.push(obj);
+        this.wastebins.push(obj);
 
         // if(this.wastebins.length == this.maxWastebins) {
         //     updateScore("Swipe to\nthrow");
@@ -83,6 +93,10 @@ WL.registerComponent('wastebin-spawner', {
         //     this.object.getComponent('mesh').active = false;
         // }
     },
+    // destroyTarget: function(){
+    //     console.log("destroyTarget");
+    //     // this.wastebins.pop();
+    // }
     // onActivate: function() {
     //     if(WL.xrSession) {
     //         WL.xrSession.addEventListener('select', this.onClick.bind(this));

@@ -26,7 +26,7 @@ WL.registerComponent('ball-physics', {
     },
 
     update: function(dt) {
-        console.log("ball-physics >> update");
+        // console.log("ball-physics >> update");
         /* Remember the last position */
         this.object.getTranslationWorld(this.pos);
 
