@@ -332,6 +332,190 @@ WL.registerComponent('confetti-particles', {
     }
 });
 
+/**
+@brief (Unused) Moves a mesh back and forth
+
+Feel free to extend the game with a PR!
+*/
+WL.registerComponent('mouse-mover', {
+    speed: {type: WL.Type.Float, default: 1.0},
+    // targetObject: {type: WL.Type.Object},
+}, {
+    init: function() {
+        this.time = 0;
+        this.state = 0;
+        this.position = [0, 0, 0];
+        this.pointA = [0, 0, 0];
+        this.pointB = [0, 0, 0];
+        this.position = [0, 0, 0];
+        glMatrix.quat2.getTranslation(this.position, this.object.transformLocal);
+
+        glMatrix.vec3.add(this.pointA, this.pointA, this.position);
+        glMatrix.vec3.add(this.pointB, this.position, [0, 0, 1.5]);
+
+        this.angle = 0;
+    },
+
+    start: function() {
+        // this.targetObject.scale([0.2, 0.2, 0.2]);
+        // this.object.scale([0.2, 0.2, 0.2]);
+    },
+
+    update: function(dt) {
+        if(isNaN(dt)) return;
+
+        this.time += dt;
+        const moveDuration = 2;
+        if(this.time >= moveDuration) {
+            this.time -= moveDuration;
+            // this.state = (this.state + 1) % 4;
+            this.state = Math.floor(Math.random()*4);
+            this.pointA = this.position;
+
+            const randomPathZ = Math.random() < 0.5;
+            const randomNegative = Math.random() < 0.5;
+            var travelDistance = 1.5*moveDuration;
+
+            if(randomNegative){
+                travelDistance = -travelDistance;
+            }
+            //new position in Z axis
+            // console.log("pointB >> " + this.pointB);
+            
+            if(randomPathZ){
+                glMatrix.vec3.add(this.pointB, this.pointA, [0, 0, travelDistance]);
+            }
+            //new position in X axis.
+            else{
+                glMatrix.vec3.add(this.pointB, this.pointA, [travelDistance, 0, 0]);
+            }
+            //find angle between point A and B
+            let radAngle = glMatrix.vec3.angle(this.pointA, this.pointB);
+            this.angle = radAngle*(180/Math.PI);
+            // console.log("target >> point A, B >> " + this.pointA+", "+ this.pointB);
+            // console.log("target >> angle >> " + radAngle+", "+ this.angle);
+
+        }
+
+        this.object.resetTranslation();
+        if(this.time <= moveDuration/2) {
+            // console.log("target >> rotating");
+            this.object.resetRotation();
+            this.object.rotateAxisAngleDeg([0, 1, 0], this.time*this.angle);
+        }else{
+            // console.log("target >> moving");
+            // this.object.resetTranslation();
+            glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time-moveDuration/2);
+        }
+        this.object.translate(this.position);
+    },
+});
+
+// var wastebinSpawner = null;
+var floorHeight = 0;
+
+/**
+@brief
+*/
+WL.registerComponent('mouse-spawner', {
+    targetMesh: {type: WL.Type.Mesh},
+    targetMaterial: {type: WL.Type.Material},
+    spawnAnimation: {type: WL.Type.Animation},
+    maxTargets: {type: WL.Type.Int, default: 20},
+    particles: {type: WL.Type.Object},
+}, {
+    init: function() {
+        this.time = 0;
+        this.spawnInterval = 3;
+    },
+    start: function() {
+        // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
+        this.targets = [];
+
+        // targetSpawner = this;
+        this.spawnTarget();
+    },
+    update: function(dt) {
+        this.time += dt;
+        if(this.targets.length >= this.maxTargets) return;
+
+        if(this.time >= this.spawnInterval){
+            this.time = 0;
+            this.spawnTarget();
+        }
+
+        // updateScore("Place a target");
+    },
+    spawnTarget: function() {
+        // console.log("target-spawner >> spawnTarget");
+        // if(this.targets.length >= this.maxTargets) return;
+        /* Only spawn object if cursor is visible */
+
+        const obj = WL.scene.addObject();
+        obj.transformLocal.set(this.object.transformWorld);
+
+        // const pos = [0, 0, 0];
+        // this.object.getTranslationWorld(pos);
+        // /* Make sure balls and confetti land on the floor */
+        // floorHeight = pos[1];
+
+        obj.scale([0.2, 0.2, 0.2]);
+        obj.
+        const mesh = obj.addComponent('mesh');
+        mesh.mesh = this.targetMesh;
+        mesh.material = this.targetMaterial;
+        mesh.active = true;
+
+        obj.addComponent("target");
+
+        if(this.spawnAnimation) {
+            const anim = obj.addComponent('animation');
+            anim.playCount = 1;
+            anim.animation = this.spawnAnimation;
+            anim.active = true;
+            anim.play();
+        }
+
+        /* Add scoring trigger */
+        const trigger = WL.scene.addObject(obj);
+        const col = trigger.addComponent('collision');
+        col.collider = WL.Collider.Sphere;
+        col.extents[0] = 0.6;
+        col.group = (1 << 0);
+        col.active = true;
+        trigger.translate([0, 0.4, 0]);
+        trigger.addComponent('score-trigger', {
+            particles: this.particles
+        });
+
+        obj.setDirty();
+
+        this.targets.push(obj);
+
+        // if(this.targets.length == this.maxTargets) {
+        //     updateScore("Swipe to\nthrow");
+        //     // paperBallSpawner.getComponent('mesh').active = true;
+        //     paperBallSpawner.getComponent('paperball-spawner').active = true;
+        //     /* Hide cursor */
+        //     this.object.getComponent('mesh').active = false;
+        // }
+    },
+    // destroyTarget: function(){
+    //     console.log("destroyTarget");
+    //     // this.targets.pop();
+    // }
+    // onActivate: function() {
+    //     if(WL.xrSession) {
+    //         WL.xrSession.addEventListener('select', this.onClick.bind(this));
+    //     }
+    // },
+    // xrSessionStart: function(session) {
+    //     if(this.active) {
+    //         session.addEventListener('select', this.onClick.bind(this));
+    //     }
+    // },
+});
+
 var paperBallSpawner = null;
 /**
 @brief Spawns paper balls at the component's object's location
@@ -410,6 +594,7 @@ WL.registerComponent('paperball-spawner', {
             // console.log("paperball-spawner >> onTouchUp GO");
             const end = e.inputSource.gamepad.axes;
             // const duration = 0.001*(e.timeStamp - this.startTime);
+            console.log("end >> ", end);
 
             const dir = [0, 0, -1];
 
@@ -417,7 +602,7 @@ WL.registerComponent('paperball-spawner', {
             /* Screenspace Y is inverted */
             dir[1] = -dir[1];
             /* In portrait mode, left-right is shorter */
-            dir[0] *= 0.5;
+            // dir[0] *= 0.5;
 
             // const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
             /* Avoid tapping spawning a ball */
@@ -433,6 +618,7 @@ WL.registerComponent('paperball-spawner', {
             glMatrix.vec3.scale(dir, dir, this.ballSpeed);
 
             // this.spawnPaper();
+            this.pulse(e.inputSource.gamepad);
             this.throw(dir);
         }else{
             // console.log("paperball-spawner >> onTouchUp SKIP");
@@ -515,6 +701,13 @@ WL.registerComponent('paperball-spawner', {
             object: obj,
             physics: physics
         };
+    },
+    pulse: function (gamepad) {
+        let actuator;
+        if (!gamepad || !gamepad.hapticActuators) { return; }        
+        actuator = gamepad.hapticActuators[0];
+        if(!actuator) return;
+        actuator.pulse(1, 100);        
     },
     onActivate: function() {
         if(WL.xrSession) {

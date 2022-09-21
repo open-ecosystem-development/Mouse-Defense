@@ -76,6 +76,7 @@ WL.registerComponent('paperball-spawner', {
             // console.log("paperball-spawner >> onTouchUp GO");
             const end = e.inputSource.gamepad.axes;
             // const duration = 0.001*(e.timeStamp - this.startTime);
+            console.log("end >> ", end);
 
             const dir = [0, 0, -1];
 
@@ -83,7 +84,7 @@ WL.registerComponent('paperball-spawner', {
             /* Screenspace Y is inverted */
             dir[1] = -dir[1];
             /* In portrait mode, left-right is shorter */
-            dir[0] *= 0.5;
+            // dir[0] *= 0.5;
 
             // const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
             /* Avoid tapping spawning a ball */
@@ -99,6 +100,7 @@ WL.registerComponent('paperball-spawner', {
             glMatrix.vec3.scale(dir, dir, this.ballSpeed);
 
             // this.spawnPaper();
+            this.pulse(e.inputSource.gamepad);
             this.throw(dir);
         }else{
             // console.log("paperball-spawner >> onTouchUp SKIP");
@@ -181,6 +183,13 @@ WL.registerComponent('paperball-spawner', {
             object: obj,
             physics: physics
         };
+    },
+    pulse: function (gamepad) {
+        let actuator;
+        if (!gamepad || !gamepad.hapticActuators) { return; }        
+        actuator = gamepad.hapticActuators[0];
+        if(!actuator) return;
+        actuator.pulse(1, 100);        
     },
     onActivate: function() {
         if(WL.xrSession) {

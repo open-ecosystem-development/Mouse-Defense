@@ -233,36 +233,6 @@
             ],
             "parent": "501"
         },
-        "27": {
-            "name": "Sphere",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "9",
-                        "material": "26"
-                    }
-                }
-            ],
-            "transformation": [
-                0.75,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.75,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.75,
-                0.0,
-                0.4999999,
-                0.75,
-                -1.25,
-                1.0
-            ]
-        },
         "53": {
             "link": {
                 "name": "root",
@@ -2798,31 +2768,6 @@
                 1.0
             ]
         },
-        "698": {
-            "link": {
-                "name": "Camera",
-                "file": "models\\farm\\uploads_files_2156679_farm.gltf"
-            },
-            "parent": "772",
-            "transformation": [
-                0.6602768,
-                -0.0000508,
-                0.7510223,
-                0.0,
-                -0.7497861,
-                -0.0573974,
-                0.6591862,
-                0.0,
-                0.0430731,
-                -0.9983515,
-                -0.0379363,
-                0.0,
-                -0.8776216,
-                0.4293961,
-                14.0279655,
-                1.0
-            ]
-        },
         "699": {
             "link": {
                 "name": "Cube.026",
@@ -4419,6 +4364,47 @@
                     }
                 }
             ]
+        },
+        "909": {
+            "link": {
+                "name": "Mouse",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            },
+            "transformation": [
+                0.2,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                -2.3841723262307823e-8,
+                0.1999988,
+                0.0,
+                0.0,
+                -0.1999999,
+                -2.3841858265427618e-8,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "components": [
+                {
+                    "active": false
+                },
+                {
+                    "type": "mouse-mover"
+                },
+                {
+                    "type": "mouse-spawner",
+                    "mouse-spawner": {
+                        "targetMesh": "838",
+                        "targetMaterial": "901",
+                        "spawnAnimation": "439",
+                        "particles": "482"
+                    }
+                }
+            ]
         }
     },
     "meshes": {
@@ -5720,6 +5706,72 @@
                 "name": "Cylinder.018.1",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
             }
+        },
+        "823": {
+            "link": {
+                "name": "mesh_0",
+                "file": "assets\\uploads_files_3300527_subaru.stl"
+            }
+        },
+        "832": {
+            "link": {
+                "name": "Beak.Bottom",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "833": {
+            "link": {
+                "name": "Eye.Left.001",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "834": {
+            "link": {
+                "name": "Eye.Lid.Left",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "835": {
+            "link": {
+                "name": "Eye.Lid.Right",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "836": {
+            "link": {
+                "name": "Eye.Right.001",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "837": {
+            "link": {
+                "name": "Cube.001",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "838": {
+            "link": {
+                "name": "Body",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "904": {
+            "link": {
+                "name": "Mesh",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "905": {
+            "link": {
+                "name": "Mesh.0",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "906": {
+            "link": {
+                "name": "Mesh.1",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
         }
     },
     "textures": {
@@ -5781,6 +5833,60 @@
             "link": {
                 "name": "sDNMMyv.png",
                 "file": "assets\\sDNMMyv.png"
+            }
+        },
+        "824": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "825": {
+            "link": {
+                "name": "texture_1",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "826": {
+            "link": {
+                "name": "texture_2",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "827": {
+            "link": {
+                "name": "texture_3",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "828": {
+            "link": {
+                "name": "texture_4",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "829": {
+            "link": {
+                "name": "texture_5",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "898": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "899": {
+            "link": {
+                "name": "texture_1",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "900": {
+            "link": {
+                "name": "texture_2",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
             }
         }
     },
@@ -5859,6 +5965,24 @@
             "link": {
                 "name": "sDNMMyv.png",
                 "file": "assets\\sDNMMyv.png"
+            }
+        },
+        "895": {
+            "link": {
+                "name": "chuot",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "896": {
+            "link": {
+                "name": "haili",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "897": {
+            "link": {
+                "name": "congau",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
             }
         }
     },
@@ -6490,6 +6614,36 @@
                 "name": "m_color10",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
             }
+        },
+        "830": {
+            "link": {
+                "name": "HEAD.STUFF",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "831": {
+            "link": {
+                "name": "DUCK",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            }
+        },
+        "901": {
+            "link": {
+                "name": "Bodd_tx",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "902": {
+            "link": {
+                "name": "Beard_tx",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
+        },
+        "903": {
+            "link": {
+                "name": "Eye_tx",
+                "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            }
         }
     },
     "shaders": {
@@ -6864,6 +7018,258 @@
                 "464",
                 "465"
             ]
+        },
+        "782": {
+            "link": {
+                "name": "skin_0",
+                "file": "assets\\duck\\scene.gltf"
+            },
+            "joints": [
+                "789",
+                "790",
+                "791",
+                "792",
+                "793",
+                "794",
+                "795",
+                "796",
+                "797",
+                "798",
+                "799",
+                "800",
+                "801",
+                "802",
+                "803",
+                "804",
+                "805",
+                "806",
+                "807"
+            ]
+        },
+        "839": {
+            "link": {
+                "name": "skin_0",
+                "file": "assets\\uploads_files_2109779_Duck.fbx"
+            },
+            "joints": [
+                "850",
+                "858",
+                "859",
+                "860",
+                "862",
+                "863",
+                "865",
+                "866",
+                "868",
+                "869",
+                "870",
+                "871",
+                "872",
+                "874",
+                "875",
+                "876",
+                "877",
+                "878",
+                "880",
+                "881",
+                "882",
+                "883",
+                "884",
+                "885",
+                "886",
+                "888",
+                "889",
+                "890",
+                "891",
+                "892",
+                "893",
+                "850",
+                "858",
+                "859",
+                "860",
+                "862",
+                "863",
+                "865",
+                "866",
+                "868",
+                "869",
+                "870",
+                "871",
+                "872",
+                "874",
+                "875",
+                "876",
+                "877",
+                "878",
+                "880",
+                "881",
+                "882",
+                "883",
+                "884",
+                "885",
+                "886",
+                "888",
+                "889",
+                "890",
+                "891",
+                "892",
+                "893",
+                "850",
+                "858",
+                "859",
+                "860",
+                "862",
+                "863",
+                "865",
+                "866",
+                "868",
+                "869",
+                "870",
+                "871",
+                "872",
+                "874",
+                "875",
+                "876",
+                "877",
+                "878",
+                "880",
+                "881",
+                "882",
+                "883",
+                "884",
+                "885",
+                "886",
+                "888",
+                "889",
+                "890",
+                "891",
+                "892",
+                "893",
+                "850",
+                "858",
+                "859",
+                "860",
+                "862",
+                "863",
+                "865",
+                "866",
+                "868",
+                "869",
+                "870",
+                "871",
+                "872",
+                "874",
+                "875",
+                "876",
+                "877",
+                "878",
+                "880",
+                "881",
+                "882",
+                "883",
+                "884",
+                "885",
+                "886",
+                "888",
+                "889",
+                "890",
+                "891",
+                "892",
+                "893",
+                "850",
+                "858",
+                "859",
+                "860",
+                "862",
+                "863",
+                "865",
+                "866",
+                "868",
+                "869",
+                "870",
+                "871",
+                "872",
+                "874",
+                "875",
+                "876",
+                "877",
+                "878",
+                "880",
+                "881",
+                "882",
+                "883",
+                "884",
+                "885",
+                "886",
+                "888",
+                "889",
+                "890",
+                "891",
+                "892",
+                "893",
+                "850",
+                "858",
+                "859",
+                "860",
+                "862",
+                "863",
+                "865",
+                "866",
+                "868",
+                "869",
+                "870",
+                "871",
+                "872",
+                "874",
+                "875",
+                "876",
+                "877",
+                "878",
+                "880",
+                "881",
+                "882",
+                "883",
+                "884",
+                "885",
+                "886",
+                "888",
+                "889",
+                "890",
+                "891",
+                "892",
+                "893",
+                "850",
+                "858",
+                "859",
+                "860",
+                "862",
+                "863",
+                "865",
+                "866",
+                "868",
+                "869",
+                "870",
+                "871",
+                "872",
+                "874",
+                "875",
+                "876",
+                "877",
+                "878",
+                "880",
+                "881",
+                "882",
+                "883",
+                "884",
+                "885",
+                "886",
+                "888",
+                "889",
+                "890",
+                "891",
+                "892",
+                "893"
+            ]
         }
     },
     "pipelines": {
@@ -6961,6 +7367,9 @@
         "assets/BillBoardX.fbx",
         "assets/uploads_files_3767630_skybox.obj",
         "models/farm/uploads_files_2156679_farm.gltf",
-        "assets/sDNMMyv.png"
+        "assets/sDNMMyv.png",
+        "assets/uploads_files_3300527_subaru.stl",
+        "assets/uploads_files_2109779_Duck.fbx",
+        "assets/uploads_files_3861195_Mouse_GLB.glb"
     ]
 }
