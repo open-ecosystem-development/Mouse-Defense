@@ -56,11 +56,12 @@ WL.registerComponent('mouse-mover', {
                 glMatrix.vec3.add(this.pointB, this.pointA, [travelDistance, 0, 0]);
             }
             //find angle between point A and B
-            let radAngle = glMatrix.vec3.angle(this.pointA, this.pointB);
-            this.angle = radAngle*(180/Math.PI);
+            // let radAngle = glMatrix.vec3.angle(this.pointA, this.pointB);
+            // this.angle = radAngle*(180/Math.PI);
             // console.log("target >> point A, B >> " + this.pointA+", "+ this.pointB);
             // console.log("target >> angle >> " + radAngle+", "+ this.angle);
 
+            this.angle = Math.floor(Math.random()*180);
         }
 
         this.object.resetTranslation();
