@@ -14,6 +14,7 @@ WL.registerComponent('mouse-spawner', {
     init: function() {
         this.time = 0;
         this.spawnInterval = 3;
+        this.critterSound = this.object.addComponent('howler-audio-source', {src: 'sfx/critter-40645.mp3', loop: true, volume: 1.0 });
     },
     start: function() {
         // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
@@ -76,6 +77,7 @@ WL.registerComponent('mouse-spawner', {
         obj.setDirty();
 
         this.targets.push(obj);
+        this.critterSound.play();
 
         // if(this.targets.length == this.maxTargets) {
         //     updateScore("Swipe to\nthrow");
