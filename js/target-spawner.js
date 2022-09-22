@@ -1,5 +1,5 @@
 // var wastebinSpawner = null;
-// var floorHeight = 0;
+var floorHeight = 0;
 
 /**
 @brief

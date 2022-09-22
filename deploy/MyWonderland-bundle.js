@@ -94,6 +94,24 @@ WL.registerComponent('ball-physics', {
     // }
 });
 
+/* Global function used to update the score display */
+var updateScore = null;
+/**
+@brief Marks an object with text component as "score display"
+
+The center top text object that shows various helpful tutorial
+texts and the score.
+*/
+WL.registerComponent('bg-music', {
+}, {
+    init: function() {
+        this.bgMusic = this.object.addComponent('howler-audio-source', {src: 'music/happy-funny-kids-111912.mp3', loop: true, volume: 0.7 });
+        this.bgMusic.play();
+        this.bgDucks = this.object.addComponent('howler-audio-source', {src: 'sfx/recording-ducks-binaural-18742.mp3', loop: true, volume: 1.3 });
+        this.bgDucks.play();
+    },
+});
+
 WL.registerComponent('button', {
     buttonMeshObject: {type: WL.Type.Object},
     hoverMaterial: {type: WL.Type.Material},
@@ -332,6 +350,190 @@ WL.registerComponent('confetti-particles', {
     }
 });
 
+/**
+@brief (Unused) Moves a mesh back and forth
+
+Feel free to extend the game with a PR!
+*/
+WL.registerComponent('mouse-mover', {
+    speed: {type: WL.Type.Float, default: 1.0},
+    // targetObject: {type: WL.Type.Object},
+}, {
+    init: function() {
+        this.time = 0;
+        this.state = 0;
+        this.position = [0, 0, 0];
+        this.pointA = [0, 0, 0];
+        this.pointB = [0, 0, 0];
+        this.position = [0, 0, 0];
+        glMatrix.quat2.getTranslation(this.position, this.object.transformLocal);
+
+        glMatrix.vec3.add(this.pointA, this.pointA, this.position);
+        glMatrix.vec3.add(this.pointB, this.position, [0, 0, 1.5]);
+
+        this.angle = 0;
+    },
+
+    start: function() {
+        // this.targetObject.scale([0.2, 0.2, 0.2]);
+        // this.object.scale([0.2, 0.2, 0.2]);
+    },
+
+    update: function(dt) {
+        if(isNaN(dt)) return;
+
+        this.time += dt;
+        const moveDuration = 2;
+        if(this.time >= moveDuration) {
+            this.time -= moveDuration;
+            // this.state = (this.state + 1) % 4;
+            this.state = Math.floor(Math.random()*4);
+            this.pointA = this.position;
+
+            const randomPathZ = Math.random() < 0.5;
+            const randomNegative = Math.random() < 0.5;
+            var travelDistance = 1.5*moveDuration;
+
+            if(randomNegative){
+                travelDistance = -travelDistance;
+            }
+            //new position in Z axis
+            // console.log("pointB >> " + this.pointB);
+            
+            if(randomPathZ){
+                glMatrix.vec3.add(this.pointB, this.pointA, [0, 0, travelDistance]);
+            }
+            //new position in X axis.
+            else{
+                glMatrix.vec3.add(this.pointB, this.pointA, [travelDistance, 0, 0]);
+            }
+            //find angle between point A and B
+            // let radAngle = glMatrix.vec3.angle(this.pointA, this.pointB);
+            // this.angle = radAngle*(180/Math.PI);
+            // console.log("target >> point A, B >> " + this.pointA+", "+ this.pointB);
+            // console.log("target >> angle >> " + radAngle+", "+ this.angle);
+
+            this.angle = Math.floor(Math.random()*180);
+        }
+
+        this.object.resetTranslation();
+        if(this.time <= moveDuration/2) {
+            // console.log("target >> rotating");
+            this.object.resetRotation();
+            this.object.rotateAxisAngleDeg([0, 0, 1], this.time*this.angle);
+            this.object.rotateAxisAngleDeg([1, 0, 0], 90);
+        }else{
+            // console.log("target >> moving");
+            // this.object.resetTranslation();
+            glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time-moveDuration/2);
+        }
+        this.object.translate(this.position);
+    },
+});
+
+// var wastebinSpawner = null;
+var floorHeight = 0;
+
+/**
+@brief
+*/
+WL.registerComponent('mouse-spawner', {
+    targetMesh: {type: WL.Type.Mesh},
+    targetMaterial: {type: WL.Type.Material},
+    spawnAnimation: {type: WL.Type.Animation},
+    maxTargets: {type: WL.Type.Int, default: 20},
+    particles: {type: WL.Type.Object},
+}, {
+    init: function() {
+        this.time = 0;
+        this.spawnInterval = 3;
+    },
+    start: function() {
+        // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
+        this.targets = [];
+
+        // targetSpawner = this;
+        this.spawnTarget();
+    },
+    update: function(dt) {
+        this.time += dt;
+        if(this.targets.length >= this.maxTargets) return;
+
+        if(this.time >= this.spawnInterval){
+            this.time = 0;
+            this.spawnTarget();
+        }
+
+        // updateScore("Place a target");
+    },
+    spawnTarget: function() {
+        // console.log("target-spawner >> spawnTarget");
+        // if(this.targets.length >= this.maxTargets) return;
+        /* Only spawn object if cursor is visible */
+
+        const obj = WL.scene.addObject();
+        obj.transformLocal.set(this.object.transformWorld);
+
+        // const pos = [0, 0, 0];
+        // this.object.getTranslationWorld(pos);
+        // /* Make sure balls and confetti land on the floor */
+        // floorHeight = pos[1];
+
+        obj.scale([0.1, 0.1, 0.1]);
+        const mesh = obj.addComponent('mesh');
+        mesh.mesh = this.targetMesh;
+        mesh.material = this.targetMaterial;
+        mesh.active = true;
+        obj.addComponent("mouse-mover");
+
+        if(this.spawnAnimation) {
+            const anim = obj.addComponent('animation');
+            anim.playCount = 1;
+            anim.animation = this.spawnAnimation;
+            anim.active = true;
+            anim.play();
+        }
+
+        /* Add scoring trigger */
+        const trigger = WL.scene.addObject(obj);
+        const col = trigger.addComponent('collision');
+        col.collider = WL.Collider.Sphere;
+        col.extents[0] = 0.6;
+        col.group = (1 << 0);
+        col.active = true;
+        trigger.translate([0, 0.4, 0]);
+        trigger.addComponent('score-trigger', {
+            particles: this.particles
+        });
+
+        obj.setDirty();
+
+        this.targets.push(obj);
+
+        // if(this.targets.length == this.maxTargets) {
+        //     updateScore("Swipe to\nthrow");
+        //     // paperBallSpawner.getComponent('mesh').active = true;
+        //     paperBallSpawner.getComponent('paperball-spawner').active = true;
+        //     /* Hide cursor */
+        //     this.object.getComponent('mesh').active = false;
+        // }
+    },
+    // destroyTarget: function(){
+    //     console.log("destroyTarget");
+    //     // this.targets.pop();
+    // }
+    // onActivate: function() {
+    //     if(WL.xrSession) {
+    //         WL.xrSession.addEventListener('select', this.onClick.bind(this));
+    //     }
+    // },
+    // xrSessionStart: function(session) {
+    //     if(this.active) {
+    //         session.addEventListener('select', this.onClick.bind(this));
+    //     }
+    // },
+});
+
 var paperBallSpawner = null;
 /**
 @brief Spawns paper balls at the component's object's location
@@ -355,7 +557,7 @@ WL.registerComponent('paperball-spawner', {
     paperballMesh: {type: WL.Type.Mesh},
     paperballMaterial: {type: WL.Type.Material},
     spawnAnimation: {type: WL.Type.Animation},
-    swipeSensitivity: {type: WL.Type.Float, default: 1.0},
+    ballSpeed: {type: WL.Type.Float, default: 1.0},
     maxPapers: {type: WL.Type.Int, default: 32},
     debug: {type: WL.Type.Bool, default: false},
 }, {
@@ -377,6 +579,8 @@ WL.registerComponent('paperball-spawner', {
         }
 
         paperBallSpawner = this.object;
+
+        this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
     },
     onTouchDown: function(e) {
         // console.log("paperball-spawner >> onTouchDown >> "+e);
@@ -387,6 +591,7 @@ WL.registerComponent('paperball-spawner', {
         // this.start.set(e.inputSource.gamepad.axes);
         this.start.set([0,1]);
         this.startTime = e.timeStamp;
+
     },
 
     update: function(dt) {
@@ -409,7 +614,9 @@ WL.registerComponent('paperball-spawner', {
         if(ballTime>50){
             // console.log("paperball-spawner >> onTouchUp GO");
             const end = e.inputSource.gamepad.axes;
-            const duration = 0.001*(e.timeStamp - this.startTime);
+            // const duration = 0.001*(e.timeStamp - this.startTime);
+            // console.log("end >> ", end);
+            // console.log("inputSource.targetRaySpace >> ",e.inputSource.targetRaySpace);
 
             const dir = [0, 0, -1];
 
@@ -417,30 +624,36 @@ WL.registerComponent('paperball-spawner', {
             /* Screenspace Y is inverted */
             dir[1] = -dir[1];
             /* In portrait mode, left-right is shorter */
-            dir[0] *= 0.5;
+            // dir[0] *= 0.5;
 
-            const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
+            // const swipeLength = glMatrix.vec2.len(dir); /* [0 - 2] */
             /* Avoid tapping spawning a ball */
             // if(swipeLength < 0.1) return;
+            // console.log("dir >>",dir);
 
             /* Rotate direction about rotation of the view object */
             glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);
             glMatrix.vec3.normalize(dir, dir);
 
             /* Assuming swipe length of 0.5, duration of 200ms, then the right term
-            * evaluates to 0.5/0.2 = 2.5. Times the swipeSensitivity is the
+            * evaluates to 0.5/0.2 = 2.5. Times the ballSpeed is the
             * meter per second initial speed of the ball */
-            glMatrix.vec3.scale(dir, dir, this.swipeSensitivity*swipeLength/duration);
+            glMatrix.vec3.scale(dir, dir, this.ballSpeed);
 
             // this.spawnPaper();
+            this.pulse(e.inputSource.gamepad);
             this.throw(dir);
+            // console.log("dir >> ", dir);
         }else{
             // console.log("paperball-spawner >> onTouchUp SKIP");
         }
         this.lastTime=curTime;
+        this.soundClick.play();
     },
     throw: function(dir) {
         // console.log("paperball-spawner >> throw");
+        this.object.resetRotation();
+        this.object.rotateAxisAngleDegObject([1, 0, 0], -90);
         let paper =
             this.paperBalls.length == this.maxPapers ?
             this.paperBalls[this.nextIndex] : this.spawnPaper();
@@ -452,6 +665,8 @@ WL.registerComponent('paperball-spawner', {
         paper.object.transformLocal.set(this.object.transformWorld);
         paper.object.setDirty();
         paper.physics.velocity.set(dir);
+
+        //double speed by 2
         paper.physics.velocity[0] *= 2;
         /* Reset scored value which is set in 'score-trigger' component */
         paper.physics.scored = false;
@@ -459,14 +674,13 @@ WL.registerComponent('paperball-spawner', {
 
 
         /* New orientation for the next paper */
-        this.object.resetRotation();
-        this.object.rotateAxisAngleDegObject([1, 0, 0], -90);
+        // this.object.resetRotation();
+        // this.object.rotateAxisAngleDegObject([1, 0, 0], -90);
         // this.object.rotateAxisAngleDegObject([0, 1, 0], Math.random()*180.0);
-        this.object.scale([0, 0, 0]);
 
         this.canThrow = false;
         setTimeout(function() {
-            this.object.resetScaling();
+            // this.object.resetScaling();
             this.canThrow = true;
         }.bind(this), 1000);
 
@@ -492,8 +706,6 @@ WL.registerComponent('paperball-spawner', {
 
         mesh.active = true;
 
-        
-        //doesn't do anything
         // if(this.spawnAnimation) {
         //     const anim = obj.addComponent('animation');
         //     anim.animation = this.spawnAnimation;
@@ -517,6 +729,13 @@ WL.registerComponent('paperball-spawner', {
             object: obj,
             physics: physics
         };
+    },
+    pulse: function (gamepad) {
+        let actuator;
+        if (!gamepad || !gamepad.hapticActuators) { return; }        
+        actuator = gamepad.hapticActuators[0];
+        if(!actuator) return;
+        actuator.pulse(1, 100);        
     },
     onActivate: function() {
         if(WL.xrSession) {
@@ -637,6 +856,7 @@ WL.registerComponent('score-trigger', {
 }, {
     init: function() {
         this.collision = this.object.getComponent('collision');
+        this.soundHit = this.object.addComponent('howler-audio-source', {src: 'sfx/duck-quacking-37392.mp3', volume: 1.9 });
     },
     update: function(dt) {
         let overlaps = this.collision.queryOverlaps();
@@ -655,6 +875,7 @@ WL.registerComponent('score-trigger', {
                 // console.log("score-trigger >> scored");
                 updateScore(score.toString());
 
+                this.soundHit.play();
                 /* We don't have collisions with the wastebin, simply
                  * drop it straight down to avoid it flying through */
                 p.velocity.set([0, -1, 0]);
@@ -727,7 +948,7 @@ WL.registerComponent('spawn-mover', {
 });
 
 // var wastebinSpawner = null;
-// var floorHeight = 0;
+var floorHeight = 0;
 
 /**
 @brief
