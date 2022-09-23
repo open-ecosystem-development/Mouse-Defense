@@ -1,6 +1,7 @@
 # Wonderland
 cache/
 deploy/
+ssl/
 
 # General
 .DS_Store
