@@ -179,61 +179,39 @@
             ]
         },
         "21": {
-            "name": "Light",
+            "name": "Sunlight",
             "components": [
                 {
                     "type": "light",
                     "light": {
-                        "attenuation": 0.1
+                        "attenuation": 0.1,
+                        "type": "sun",
+                        "color": [
+                            1.0,
+                            0.8839215,
+                            0.4196078
+                        ],
+                        "shadows": true,
+                        "range": 50.0
                     }
                 }
             ],
             "transformation": [
-                1.0,
+                0.7599774,
+                0.1785317,
+                0.6249484,
                 0.0,
+                -0.4572522,
+                0.8302014,
+                0.3188807,
                 0.0,
+                -0.4619027,
+                -0.5281012,
+                0.7125682,
                 0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                3.0,
-                8.8421192,
-                1.0
-            ],
-            "parent": "501"
-        },
-        "23": {
-            "name": "Light.000",
-            "components": [
-                {
-                    "type": "light",
-                    "light": {
-                        "attenuation": 0.1
-                    }
-                }
-            ],
-            "transformation": [
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                -1.0,
-                3.0,
-                -3.8117322,
+                -0.0000014,
+                3.0000147,
+                8.8421812,
                 1.0
             ],
             "parent": "501"
@@ -1972,58 +1950,38 @@
             "name": "Lights"
         },
         "502": {
-            "name": "Light.001",
+            "name": "Skylight",
             "parent": "501",
             "components": [
                 {
                     "type": "light",
-                    "active": true
+                    "active": true,
+                    "light": {
+                        "type": "sun",
+                        "color": [
+                            0.0,
+                            0.3451902,
+                            0.5058823
+                        ]
+                    }
                 }
             ],
             "transformation": [
-                1.0,
+                0.661019,
+                -0.4620445,
+                -0.59125,
                 0.0,
+                0.3207609,
+                0.8863101,
+                -0.3340139,
                 0.0,
+                0.6783612,
+                0.0311397,
+                0.7340745,
                 0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                7.5200338,
-                3.0,
-                2.5838074,
-                1.0
-            ]
-        },
-        "503": {
-            "name": "Light.002",
-            "parent": "501",
-            "components": [
-                {
-                    "type": "light",
-                    "active": true
-                }
-            ],
-            "transformation": [
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                -6.6474924,
-                3.0,
-                4.7757062,
+                7.5201473,
+                3.0000455,
+                2.5838541,
                 1.0
             ]
         },
@@ -2317,16 +2275,16 @@
                 -0.139586,
                 0.0,
                 0.0,
-                0.3512384,
+                0.3512383,
                 0.0,
                 0.0,
-                0.1569526,
+                0.1329348,
                 0.0,
-                0.4089975,
+                0.4174223,
                 0.0,
                 -1.3350408,
-                0.4258178,
-                -5.4807014,
+                0.4258177,
+                -5.4807019,
                 1.0
             ],
             "parent": "779"
@@ -2455,7 +2413,16 @@
                 9.1988658,
                 1.0
             ],
-            "parent": "772"
+            "parent": "772",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                {
+                    "active": true
+                }
+            ]
         },
         "716": {
             "link": {
@@ -2886,7 +2853,17 @@
                 1.0
             ],
             "parent": "772",
-            "name": "FarmFences"
+            "name": "FarmFences",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "521"
+                    }
+                },
+                {
+                    "active": true
+                }
+            ]
         },
         "742": {
             "link": {
@@ -3492,37 +3469,6 @@
                 1.0
             ],
             "parent": "780"
-        },
-        "769": {
-            "name": "Sunlight",
-            "components": [
-                {
-                    "type": "light",
-                    "light": {
-                        "attenuation": 0.1,
-                        "type": "sun"
-                    }
-                }
-            ],
-            "transformation": [
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                10.6775455,
-                5.2142944,
-                1.0
-            ],
-            "parent": "501"
         },
         "772": {
             "name": "Farm",
@@ -5259,7 +5205,8 @@
             "link": {
                 "name": "sDNMMyv.png",
                 "file": "assets\\sDNMMyv.png"
-            }
+            },
+            "compress": true
         },
         "895": {
             "link": {
@@ -5667,6 +5614,20 @@
             "link": {
                 "name": "m_color1",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.0941176,
+                    0.0420761,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.2196078,
+                    0.1010081,
+                    0.0775086,
+                    1.0
+                ]
             }
         },
         "506": {
@@ -5679,6 +5640,15 @@
             "link": {
                 "name": "Material.032",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.1843137,
+                    0.0867358,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.1
             }
         },
         "508": {
@@ -5733,6 +5703,15 @@
             "link": {
                 "name": "m_color13",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.2784313,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.1
             }
         },
         "517": {
@@ -5763,6 +5742,21 @@
             "link": {
                 "name": "m_color34",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.1254901,
+                    0.0649596,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.2,
+                "diffuseColor": [
+                    0.2823529,
+                    0.1660899,
+                    0.0,
+                    1.0
+                ]
             }
         },
         "522": {
@@ -5793,24 +5787,60 @@
             "link": {
                 "name": "m_color22",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.3882352,
+                    0.2923183,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.2
             }
         },
         "527": {
             "link": {
                 "name": "m_color19",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientFactor": 0.2,
+                "ambientColor": [
+                    0.0214071,
+                    0.1137254,
+                    0.0,
+                    1.0
+                ]
             }
         },
         "528": {
             "link": {
                 "name": "m_color20",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.0161476,
+                    0.1372548,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.2
             }
         },
         "529": {
             "link": {
                 "name": "m_color37",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.4392156,
+                    0.1756862,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.1
             }
         },
         "530": {
@@ -5877,6 +5907,21 @@
             "link": {
                 "name": "earttop",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.2784313,
+                    0.1375778,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.6627451,
+                    0.3259622,
+                    0.0,
+                    1.0
+                ],
+                "shininess": 0
             }
         },
         "541": {
@@ -5919,6 +5964,14 @@
             "link": {
                 "name": "m_color10",
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
+            },
+            "Phong": {
+                "ambientColor": [
+                    0.117647,
+                    0.0553633,
+                    0.0,
+                    1.0
+                ]
             }
         },
         "830": {
@@ -6086,7 +6139,7 @@
             "version": [
                 0,
                 9,
-                1
+                2
             ]
         },
         "vr": {
@@ -6111,7 +6164,11 @@
             "sky": {
                 "enabled": true,
                 "material": "485"
-            }
+            },
+            "compressedTextureAtlasSize": [
+                16384,
+                16384
+            ]
         }
     },
     "animations": {
