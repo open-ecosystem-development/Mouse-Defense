@@ -56,7 +56,7 @@ Unlike the Meta Quest, which is a standalone device, the HVR glass works in conj
 		2. Get [OpenSSL](https://www.openssl.org/) (also available with Git). Follow the process [here](https://www.baeldung.com/openssl-self-signed-cert).
 		3. Creating a Private Key (.key): `openssl genrsa -des3 -out localhost.key 2048`.
 		4. Creating a Certificate Signing Request (.csr): `openssl req -key localhost.key -new -out localhost.csr`.
-		5. Creating a Certificate Signing Request (.crt): `openssl x509 -signkey localhost.key -in localhost.csr -req -days 365 -out localhost.crt`.
+		5. Creating a Self-Signed Certificate (.crt): `openssl x509 -signkey localhost.key -in localhost.csr -req -days 365 -out localhost.crt`.
 		6. [Generate an SSL dh parameters file (.pem)](https://www.ibm.com/docs/en/zvse/6.2?topic=SSB27H_6.2.0/fa2ti_openssl_generate_dh_parms.html): `openssl dhparam -out dhparam.pem 1024`.
 		7. Add the SSL certificate, key, passphrase, and dh params file to the server page.
 		8. Repackage your Wonderland poject and launch the server.
