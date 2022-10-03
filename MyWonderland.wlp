@@ -465,21 +465,21 @@
             "parent": "129",
             "name": "ControllerModelRight",
             "transformation": [
-                -0.9993979,
+                -1.0000078,
+                -1.5099695360731857e-7,
                 0.0,
-                8.344650268554688e-7,
                 0.0,
-                -1.4901161193847656e-8,
-                0.9990808,
-                -0.0251145,
+                -1.0677013762006027e-7,
+                0.7071067,
+                0.7071068,
                 0.0,
-                -8.642673492431641e-7,
-                -0.0251297,
-                -0.9996858,
+                -1.0677171502493366e-7,
+                0.707117,
+                -0.7071171,
                 0.0,
-                0.0097995,
-                -0.0006203,
-                0.0177838,
+                -0.0,
+                -0.0,
+                0.0,
                 1.0
             ]
         },
@@ -831,7 +831,7 @@
                 {
                     "type": "input",
                     "input": {
-                        "type": "hand right"
+                        "type": "ray right"
                     }
                 },
                 {
@@ -873,7 +873,7 @@
                 {
                     "type": "input",
                     "input": {
-                        "type": "hand left"
+                        "type": "ray left"
                     }
                 },
                 {
@@ -3562,9 +3562,9 @@
         },
         "781": {
             "name": "BallSpawner",
-            "parent": "129",
+            "parent": "212",
             "transformation": [
-                0.0500005,
+                0.0500004,
                 0.0,
                 4.1749217416509055e-8,
                 0.0,
@@ -3572,7 +3572,7 @@
                 0.0500001,
                 0.0,
                 0.0,
-                -4.17487910908676e-8,
+                -4.1748801749008635e-8,
                 0.0,
                 0.05,
                 0.0,
@@ -6608,6 +6608,11 @@
             "link": {
                 "name": "Phong Opaque Textured",
                 "file": "default"
+            },
+            "castShadows": true,
+            "features": {
+                "ALPHA_MASKED": false,
+                "ALPHA": false
             }
         },
         "39": {
@@ -6638,7 +6643,12 @@
             "link": {
                 "name": "Physical Opaque Textured",
                 "file": "default"
-            }
+            },
+            "features": {
+                "ALPHA": false,
+                "ALPHA_MASKED": false
+            },
+            "castShadows": true
         },
         "226": {
             "link": {

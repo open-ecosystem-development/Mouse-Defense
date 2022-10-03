@@ -64,7 +64,8 @@ WL.registerComponent('paperball-spawner', {
 
         if(this.debug && this.time > 0.5) {
             let dir = [0, 0, 0];
-            this.object.getForward(dir);
+            this.object.getComponent('cursor').getForward(dir)
+            // this.object.getForward(dir);
             dir[1] += 1;
             this.throw(dir);
             this.time = 0;
@@ -117,7 +118,7 @@ WL.registerComponent('paperball-spawner', {
     throw: function(dir) {
         // console.log("paperball-spawner >> throw");
         this.object.resetRotation();
-        this.object.rotateAxisAngleDegObject([1, 0, 0], -90);
+        this.object.rotateAxisAngleDegObject([1, 0, 0], -45);
         let paper =
             this.paperBalls.length == this.maxPapers ?
             this.paperBalls[this.nextIndex] : this.spawnPaper();
