@@ -62,14 +62,15 @@ WL.registerComponent('paperball-spawner', {
         // console.log("paperball-spawner >> update >> "+dt);
         this.time = (this.time || 0) + dt;
 
-        if(this.debug && this.time > 0.5) {
-            let dir = [0, 0, 0];
-            this.object.getComponent('cursor').getForward(dir)
-            // this.object.getForward(dir);
-            dir[1] += 1;
-            this.throw(dir);
-            this.time = 0;
-        }
+        // if(this.debug && this.time > 0.5) {
+        //     let dir = [0, 0, 0];
+        //     this.object.getComponent('cursor').getForward(dir)
+        //     console.log("paperball >> cursor dir >> "+dir);
+        //     // this.object.getForward(dir);
+        //     dir[1] += 1;
+        //     this.throw(dir);
+        //     this.time = 0;
+        // }
     },
     onTouchUp: function(e) {
         // console.log("paperball-spawner >> onTouchUp >> "+e);
@@ -83,11 +84,12 @@ WL.registerComponent('paperball-spawner', {
             // console.log("end >> ", end);
             // console.log("inputSource.targetRaySpace >> ",e.inputSource.targetRaySpace);
 
-            const dir = [0, 0, -1];
+            const dir = [0, 0, 0];
+            // const dir = [0, 0, -1];
 
-            glMatrix.vec2.sub(dir, end, this.start);
-            /* Screenspace Y is inverted */
-            dir[1] = -dir[1];
+            // glMatrix.vec2.sub(dir, end, this.start);
+            // /* Screenspace Y is inverted */
+            // dir[1] = -dir[1];
             /* In portrait mode, left-right is shorter */
             // dir[0] *= 0.5;
 
@@ -97,13 +99,18 @@ WL.registerComponent('paperball-spawner', {
             // console.log("dir >>",dir);
 
             /* Rotate direction about rotation of the view object */
-            glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);
-            glMatrix.vec3.normalize(dir, dir);
+            this.object.getComponent('cursor').cursorRayObject.getForward(dir);
+            console.log("paperball >> cursor dir >> "+dir);
+            // glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);
+            // glMatrix.vec3.normalize(dir, dir);
 
             /* Assuming swipe length of 0.5, duration of 200ms, then the right term
             * evaluates to 0.5/0.2 = 2.5. Times the ballSpeed is the
             * meter per second initial speed of the ball */
+            // let manualDir = [dir[0]*40,dir[1]*40,dir[2]*40];
+            // console.log("paperball >> manual scale >> "+manualDir);
             glMatrix.vec3.scale(dir, dir, this.ballSpeed);
+            console.log("paperball-spawner >> throw >> dir >> "+ dir);
 
             // this.spawnPaper();
             this.pulse(e.inputSource.gamepad);
@@ -116,7 +123,7 @@ WL.registerComponent('paperball-spawner', {
         this.soundClick.play();
     },
     throw: function(dir) {
-        // console.log("paperball-spawner >> throw");
+        
         this.object.resetRotation();
         this.object.rotateAxisAngleDegObject([1, 0, 0], -45);
         let paper =

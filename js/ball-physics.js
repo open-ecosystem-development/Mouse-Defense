@@ -66,7 +66,4 @@ WL.registerComponent('ball-physics', {
         /* Apply gravity to velocity */
         this.velocity[1] -= this.weight*9.81*dt;
     },
-    // ballBurst: function(){
-
-    // }
 });
