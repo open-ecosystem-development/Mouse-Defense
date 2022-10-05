@@ -16,7 +16,7 @@ WL.registerComponent('score-display', {
             this.text.text = text;
         }.bind(this);
 
-        updateScore("");
+        // updateScore("");
         /* Initial text to set after session started */
         WL.onXRSessionStart.push(function() {
             // updateScore("Slowly scan\narea");

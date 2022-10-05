@@ -65,10 +65,10 @@ WL.registerComponent('target-spawner', {
         const trigger = WL.scene.addObject(obj);
         const col = trigger.addComponent('collision');
         col.collider = WL.Collider.Sphere;
-        col.extents[0] = 0.8;
+        col.extents[0] = 1;
         col.group = (1 << 0);
         col.active = true;
-        trigger.translate([0, 0.4, 0]);
+        trigger.translate([0, 0.7, 0]);
         trigger.addComponent('score-trigger', {
             particles: this.particles
         });

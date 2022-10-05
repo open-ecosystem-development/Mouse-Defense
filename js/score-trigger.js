@@ -20,10 +20,10 @@ WL.registerComponent('score-trigger', {
         let overlaps = this.collision.queryOverlaps();
 
         for(let i = 0; i < overlaps.length; ++i) {
-            let p = overlaps[i].object.getComponent('ball-physics');
+            let p = overlaps[i].object.getComponent('bullet-physics');
 
             // console.log("score-trigger >>  p >> "+p);
-            if(p && p.velocity[1] < 0.0 && !p.scored) {
+            if(p && !p.scored) {
                 p.scored = true;
                 this.particles.transformWorld.set(this.object.transformWorld);
                 this.particles.getComponent('confetti-particles').burst();
@@ -31,14 +31,50 @@ WL.registerComponent('score-trigger', {
                 // destroyTarget();
                 ++score;
                 // console.log("score-trigger >> scored");
-                updateScore(score.toString());
+                let scoreString = "";
+                if(maxTargets!=score){
+                    scoreString = score+" rats down, "+(maxTargets-score)+" left";
+                }else{
+                    scoreString = "Congrats, you got all the rats!";
+                }
+                
+                updateScore(scoreString);
 
                 this.soundHit.play();
                 this.soundPop.play();
                 /* We don't have collisions with the wastebin, simply
                  * drop it straight down to avoid it flying through */
-                p.velocity.set([0, -1, 0]);
+                // p.velocity.set([0, -1, 0]);
             }
         }
+
+        // for(let i = 0; i < overlaps.length; ++i) {
+        //     let p = overlaps[i].object.getComponent('ball-physics');
+
+        //     // console.log("score-trigger >>  p >> "+p);
+        //     if(p && p.velocity[1] < 0.0 && !p.scored) {
+        //         p.scored = true;
+        //         this.particles.transformWorld.set(this.object.transformWorld);
+        //         this.particles.getComponent('confetti-particles').burst();
+        //         this.object.parent.destroy();
+        //         // destroyTarget();
+        //         ++score;
+        //         // console.log("score-trigger >> scored");
+        //         let scoreString = "";
+        //         if(maxTargets!=score){
+        //             scoreString = score+" rats down, "+(maxTargets-score)+" left";
+        //         }else{
+        //             scoreString = "Congrats, you got all the rats!";
+        //         }
+                
+        //         updateScore(scoreString);
+
+        //         this.soundHit.play();
+        //         this.soundPop.play();
+        //         /* We don't have collisions with the wastebin, simply
+        //          * drop it straight down to avoid it flying through */
+        //         p.velocity.set([0, -1, 0]);
+        //     }
+        // }
     },
 });

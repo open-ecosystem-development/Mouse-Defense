@@ -1,5 +1,6 @@
 // var wastebinSpawner = null;
 var floorHeight = 0;
+var maxTargets = 0;
 
 /**
 @brief
@@ -12,6 +13,7 @@ WL.registerComponent('mouse-spawner', {
     particles: {type: WL.Type.Object},
 }, {
     init: function() {
+        maxTargets = this.maxTargets;
         this.time = 0;
         this.spawnInterval = 3;
         this.critterSound = this.object.addComponent('howler-audio-source', {src: 'sfx/critter-40645.mp3', loop: true, volume: 1.0 });

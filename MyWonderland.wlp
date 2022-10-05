@@ -1651,9 +1651,6 @@
                         "text": "Play again?",
                         "material": "201"
                     }
-                },
-                {
-                    "type": "score-display"
                 }
             ],
             "transformation": [
@@ -1815,8 +1812,11 @@
                     "paperball-spawner": {
                         "paperballMesh": "9",
                         "paperballMaterial": "20",
-                        "ballSpeed": 40.0
-                    }
+                        "ballSpeed": 30.5,
+                        "laserMesh": "11",
+                        "laserMaterial": "22"
+                    },
+                    "active": true
                 }
             ],
             "transformation": [
@@ -3608,6 +3608,43 @@
                     "type": "mouse-mover"
                 }
             ]
+        },
+        "970": {
+            "name": "Scoreboard"
+        },
+        "971": {
+            "name": "ScoreText",
+            "parent": "970",
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "text": "Eliminate all 20 rats.",
+                        "effect": "none"
+                    }
+                },
+                {
+                    "type": "score-display"
+                }
+            ],
+            "transformation": [
+                1.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.5,
+                0.0,
+                0.0,
+                2.3104021,
+                0.0,
+                1.0
+            ]
         }
     },
     "meshes": {
@@ -5222,9 +5259,9 @@
                     1.0
                 ],
                 "color": [
-                    0.0196078,
-                    0.0196078,
-                    0.0196078,
+                    1.0,
+                    1.0,
+                    1.0,
                     1.0
                 ]
             }
@@ -5246,9 +5283,9 @@
             "name": "Pink",
             "Phong": {
                 "diffuseColor": [
-                    0.9098039,
-                    0.0,
-                    0.5411764,
+                    1.0,
+                    0.2588235,
+                    0.4855363,
                     1.0
                 ],
                 "specularColor": [

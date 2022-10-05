@@ -23,6 +23,8 @@ WL.registerComponent('paperball-spawner', {
     spawnAnimation: {type: WL.Type.Animation},
     ballSpeed: {type: WL.Type.Float, default: 1.0},
     maxPapers: {type: WL.Type.Int, default: 32},
+    laserMesh: {type: WL.Type.Mesh},
+    laserMaterial: {type: WL.Type.Material},
     debug: {type: WL.Type.Bool, default: false},
 }, {
     start: function() {
@@ -36,6 +38,7 @@ WL.registerComponent('paperball-spawner', {
         this.nextIndex = 0;
         this.throwCount = 0;
         this.lastTime = 0;
+        this.laser = null;
 
         if(this.debug) {
             this.active = true;
@@ -55,7 +58,7 @@ WL.registerComponent('paperball-spawner', {
         // this.start.set(e.inputSource.gamepad.axes);
         this.start.set([0,1]);
         this.startTime = e.timeStamp;
-
+        // this.laserOn();
     },
 
     update: function(dt) {
@@ -74,6 +77,7 @@ WL.registerComponent('paperball-spawner', {
     },
     onTouchUp: function(e) {
         // console.log("paperball-spawner >> onTouchUp >> "+e);
+        // this.laserOff();
         let curTime = Date.now();
         ballTime = Math.abs(curTime-this.lastTime);
         // console.log("ballTime >> "+ ballTime);
@@ -100,7 +104,7 @@ WL.registerComponent('paperball-spawner', {
 
             /* Rotate direction about rotation of the view object */
             this.object.getComponent('cursor').cursorRayObject.getForward(dir);
-            console.log("paperball >> cursor dir >> "+dir);
+            // console.log("paperball >> cursor dir >> "+dir);
             // glMatrix.vec3.transformQuat(dir, dir, this.object.transformWorld);
             // glMatrix.vec3.normalize(dir, dir);
 
@@ -109,8 +113,8 @@ WL.registerComponent('paperball-spawner', {
             * meter per second initial speed of the ball */
             // let manualDir = [dir[0]*40,dir[1]*40,dir[2]*40];
             // console.log("paperball >> manual scale >> "+manualDir);
-            glMatrix.vec3.scale(dir, dir, this.ballSpeed);
-            console.log("paperball-spawner >> throw >> dir >> "+ dir);
+            // glMatrix.vec3.scale(dir, dir, this.ballSpeed);
+            // console.log("paperball-spawner >> throw >> dir >> "+ dir);
 
             // this.spawnPaper();
             this.pulse(e.inputSource.gamepad);
@@ -124,22 +128,25 @@ WL.registerComponent('paperball-spawner', {
     },
     throw: function(dir) {
         
-        this.object.resetRotation();
-        this.object.rotateAxisAngleDegObject([1, 0, 0], -45);
+        // this.object.resetRotation();
+        // this.object.rotateAxisAngleDegObject([1, 0, 0], -45);
         let paper =
             this.paperBalls.length == this.maxPapers ?
-            this.paperBalls[this.nextIndex] : this.spawnPaper();
+            this.paperBalls[this.nextIndex] : this.spawnBullet();
         this.paperBalls[this.nextIndex] = paper;
         // this.spawnPaper();
 
         this.nextIndex = (this.nextIndex + 1) % this.maxPapers;
 
         paper.object.transformLocal.set(this.object.transformWorld);
+        // let dir2 = [0,0,0];
+        // paper.object.getForward(dir2);
+        // console.log("paperball-spawner >> transformLocal >> dir >> "+ dir2);
         paper.object.setDirty();
-        paper.physics.velocity.set(dir);
+        paper.physics.dir.set(dir);
 
-        //double speed by 2
-        paper.physics.velocity[0] *= 2;
+        // //double speed by 2
+        // paper.physics.velocity[0] *= 2;
         /* Reset scored value which is set in 'score-trigger' component */
         paper.physics.scored = false;
         paper.physics.active = true;
@@ -158,14 +165,14 @@ WL.registerComponent('paperball-spawner', {
 
         /* Important only to update score display to show score
          * instead of the tutorial after first throw */
-        updateScore(score.toString());
+        // updateScore(score.toString());
 
         // this.throwCount++;
         // if(this.throwCount == 3) {
         //     resetButton.unhide();
         // }
     },
-    spawnPaper: function() {
+    spawnBullet:function(){
         // console.log("paperball-spawner >> spawnPaper");
         const obj = WL.scene.addObject();
 
@@ -191,6 +198,42 @@ WL.registerComponent('paperball-spawner', {
         col.group = (1 << 0);
         col.active = true;
 
+        const physics = obj.addComponent('bullet-physics', {
+            speed: this.ballSpeed,
+        });
+        physics.active = true;
+
+        return {
+            object: obj,
+            physics: physics
+        };
+    },
+    spawnPaper: function() {
+        // console.log("paperball-spawner >> spawnPaper");
+        const obj = WL.scene.addObject();
+
+        const mesh = obj.addComponent('mesh');
+        mesh.mesh = this.paperballMesh;
+        mesh.material = this.paperballMaterial;
+        //scaling
+        // obj.resetScaling();
+        obj.scale([0.05,0.05,0.05]);
+
+        mesh.active = true;
+
+        // if(this.spawnAnimation) {
+        //     const anim = obj.addComponent('animation');
+        //     anim.animation = this.spawnAnimation;
+        //     anim.active = true;
+        //     anim.play();
+        // }
+
+        const col = obj.addComponent('collision');
+        col.shape = WL.Collider.Sphere;
+        col.extents[0] = 0.02;
+        col.group = (1 << 0);
+        col.active = true;
+
         const physics = obj.addComponent('ball-physics', {
             bounciness: 0.5,
             weight: 0.2,
@@ -202,6 +245,28 @@ WL.registerComponent('paperball-spawner', {
             physics: physics
         };
     },
+    // laserOn: function(){
+    //     if(!this.laser){
+    //         const obj = WL.scene.addObject();
+    //         const mesh = obj.addComponent('mesh');
+    //         mesh.mesh = this.laserMesh;
+    //         mesh.material = this.laserMaterial;
+    //         obj.scale([0.01,0.01,1]);
+    //         this.laser = obj;
+    //     }else{
+    //         this.laser.active=true;
+    //     }
+    //     this.laser.transformLocal.set(this.object.transformWorld);
+    //     // let dir2 = [0,0,0];
+    //     // this.laser.getForward(dir2);
+    //     // console.log("paperball-spawner >> laser-dir >> "+ dir2);
+
+    // },
+    // laserOff: function(){
+    //     if(!this.laser){
+    //         this.laser.active=false;
+    //     }
+    // },
     pulse: function (gamepad) {
         let actuator;
         if (!gamepad || !gamepad.hapticActuators) { return; }        
