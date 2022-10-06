@@ -1812,11 +1812,8 @@
                     "paperball-spawner": {
                         "paperballMesh": "9",
                         "paperballMaterial": "20",
-                        "ballSpeed": 30.5,
-                        "laserMesh": "11",
-                        "laserMaterial": "22"
-                    },
-                    "active": true
+                        "ballSpeed": 5.0
+                    }
                 }
             ],
             "transformation": [
@@ -3601,7 +3598,8 @@
                         "targetMesh": "904",
                         "targetMaterial": "901",
                         "spawnAnimation": "439",
-                        "particles": "482"
+                        "particles": "482",
+                        "maxTargets": 20
                     }
                 },
                 {

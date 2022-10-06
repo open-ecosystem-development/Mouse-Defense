@@ -1,5 +1,6 @@
 /* Global function used to update the score display */
 var updateScore = null;
+var bgMusic = null;
 /**
 @brief Marks an object with text component as "score display"
 
@@ -9,8 +10,8 @@ texts and the score.
 WL.registerComponent('bg-music', {
 }, {
     init: function() {
-        this.bgMusic = this.object.addComponent('howler-audio-source', {src: 'music/happy-funny-kids-111912.mp3', loop: true, volume: 0.4 });
-        this.bgMusic.play();
+        bgMusic = this.object.addComponent('howler-audio-source', {src: 'music/happy-funny-kids-111912.mp3', loop: true, volume: 0.4 });
+        bgMusic.play();
         this.bgDucks = this.object.addComponent('howler-audio-source', {src: 'sfx/recording-ducks-binaural-18742.mp3', loop: true, volume: 1.3 });
         this.bgDucks.play();
         this.bgCow = this.object.addComponent('howler-audio-source', {src: 'sfx/cows-56001.mp3', loop: true, volume: 1.0 });
