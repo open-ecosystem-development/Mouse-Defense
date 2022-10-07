@@ -19,47 +19,45 @@ WL.registerComponent('bullet-physics', {
 }, {
     init: function() {
         this.dir = new Float32Array(3);
-        this.time = 0;
         this.position = [0, 0, 0];
-
         this.object.getTranslationWorld(this.position);
-        // console.log("init >> this.position >> ", this.position);
+        this.correctedSpeed = this.speed/6;
 
         this.collision = this.object.getComponent('collision', 0);
         if(!this.collision) {
             console.warn("'bullet-physics' component on object", this.object.name, "requires a collision component");
         }
+        
     },
-
-    start: function() {
-        // this.targetObject.scale([0.2, 0.2, 0.2]);
-        // this.object.scale([0.2, 0.2, 0.2]);
-    },
-
     update: function(dt) {
+        //error checking?
         if(isNaN(dt)){
             console.log("dt is NaN");
             return;
         } 
 
-        this.time += dt;
-
+        //update position
         this.object.getTranslationWorld(this.position);
-        console.log("update >> this.position >> ", this.position);
+        //deactivate bullet if through the floor
         if(this.position[1] <= floorHeight + this.collision.extents[0]) {
             console.log("bullet penetrated floor >> "+this.position[1]+" <= "+floorHeight + this.collision.extents[0]
             + " ( " + floorHeight, ", ", this.collision.extents[0]," )");
             this.active = false;
             return;
         }
+        //deactivate bullet if travel distance too far
+        if(glMatrix.vec3.length(this.position)>175){
+            this.active = false;
+            return;
+        }
 
-        glMatrix.vec3.scale(this.dir, this.dir, this.speed*this.time);
+        let newDir = [0,0,0];
+        glMatrix.vec3.add(newDir, newDir, this.dir);
+        glMatrix.vec3.scale(newDir, newDir, this.correctedSpeed);
 
-        glMatrix.vec3.add(this.position, this.position, this.dir);
+        glMatrix.vec3.add(this.position, this.position, newDir);
         
         this.object.resetTranslation();
-        // glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time-moveDuration/2);
-        console.log("this.position >> "+ this.position, ", ", this.speed*this.time);
         this.object.translate(this.position);
     },
 });
