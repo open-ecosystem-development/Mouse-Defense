@@ -62,7 +62,7 @@ Unlike the Meta Quest, which is a standalone device, the HVR glass works in conj
 	
 ## License
 
-This Android sample code is licensed under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+This Wonderland Engine sample code is licensed under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Acknowledgements
 The code in this project was based off the Wonderland Engine [Wastepaperbin AR game](https://github.com/WonderlandEngine/wastepaperbin-ar). 
