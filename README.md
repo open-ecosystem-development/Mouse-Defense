@@ -2,7 +2,6 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Setup](#setup)
-- [GMS vs HMS Behavior](#gms-vs-hms-behavior)
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
@@ -53,16 +52,17 @@ Unlike the Meta Quest, which is a standalone device, the HVR glass works in conj
 	6. You can now disconnect the USB cable and check `adb devices` that the device is still detected. The device should also show up under `Remote Targets` on Chrome Inspect.
 	7. Back on the Wonderland Editor, navigate to Views > Preferences > Server
 		1. Check `SSL enabled`
-		2. Get [OpenSSL](https://www.openssl.org/) (also available with Git). Follow the process [here](https://www.baeldung.com/openssl-self-signed-cert).
-		3. Creating a Private Key (.key): `openssl genrsa -des3 -out localhost.key 2048`.
-		4. Creating a Certificate Signing Request (.csr): `openssl req -key localhost.key -new -out localhost.csr`.
-		5. Creating a Self-Signed Certificate (.crt): `openssl x509 -signkey localhost.key -in localhost.csr -req -days 365 -out localhost.crt`.
-		6. [Generate an SSL dh parameters file (.pem)](https://www.ibm.com/docs/en/zvse/6.2?topic=SSB27H_6.2.0/fa2ti_openssl_generate_dh_parms.html): `openssl dhparam -out dhparam.pem 1024`.
-		7. Add the SSL certificate, key, passphrase, and dh params file to the server page.
-		8. Repackage your Wonderland poject and launch the server.
-	8. Go to your desktop Chrome browser, enter URL `chrome://inspect#devices`, click Port Forwarding button, add Port: `8081`, IP address and port: `localhost:8081`. Check `Enable port forwarding` and click Done. Keep this page open in the browser to keep port forwarding alive.
-	9. On the HVR Glass, launch either the Wolvic VR Browser and connect to https://localhost:8081/index.html
-	10. The VR experience should be available. If it is not connecting, make sure Wonderland Engine server is up and running.
+		2. Get [OpenSSL](https://www.openssl.org/) (also available with Git)
+		3. Generate an SSL certificate file: `openssl genrsa -des3 -out domain.key 2048`. Process [overview](https://www.baeldung.com/openssl-self-signed-cert).
+		4. Generate an SSL key file: `openssl req -key domain.key -new -out domain.csr`.
+		5. [Generate an SSL dh parameters file](https://www.ibm.com/docs/en/zvse/6.2?topic=SSB27H_6.2.0/fa2ti_openssl_generate_dh_parms.html): `openssl dhparam -out dhparam.pem 1024`.
+		6. Add the SSL certificate, key, passphrase, and dh params file to the server page.
+	8. On the HVR Glass, launch either the Wolvic VR Browser and connect to https://localhost:8080/index.html
+	9. The VR experience should be available.
+	
+## License
+
+This Android sample code is licensed under the [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Acknowledgements
 The code in this project was based off the Wonderland Engine [Wastepaperbin AR game](https://github.com/WonderlandEngine/wastepaperbin-ar). 
