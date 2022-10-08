@@ -12,19 +12,7 @@
 */
 var paperBallSpawner = null;
 /**
-@brief Spawns paper balls at the component's object's location
-During WebXR immersive-ar sessions, we do not have access to
-touch or click events. The only way to retrieve touch locations
-is through the `select`, `selectstart` and `selectend` events.
-These events report location of the event in `[-1.0, 1.0]` on
-both axis.
-A swipe is determined by the difference in the position and time
-from `selectstart` to `selectend` event.
-The faster and the longer the swipe, the more force will be applied
-for the throw.
-After every throw, the main paper ball mesh in front of the camera
-will be hidden for a short duration and reappears with a new
-random rotation to hide the fact that it's the same mesh over and over.
+@brief 
 */
 WL.registerComponent('paperball-spawner', {
     paperballMesh: {type: WL.Type.Mesh},
@@ -35,11 +23,8 @@ WL.registerComponent('paperball-spawner', {
     debug: {type: WL.Type.Bool, default: false},
 }, {
     start: function() {
-        /* We can only bind the selectstart/select end events
-         * when the session started */
         WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
         this.start = new Float32Array(2);
-        // console.log("paperball-spawner >> this.start >> "+this.start);
 
         this.paperBalls = [];
         this.nextIndex = 0;
@@ -51,23 +36,14 @@ WL.registerComponent('paperball-spawner', {
             this.active = true;
             this.object.getComponent('mesh').active = true;
         }
-
         paperBallSpawner = this.object;
-
         this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
     },
     onTouchDown: function(e) {
-        // console.log("paperball-spawner >> onTouchUp >> "+e);
-        // this.laserOff();
         let curTime = Date.now();
         ballTime = Math.abs(curTime-this.lastTime);
-        // console.log("ballTime >> "+ ballTime);
         if(ballTime>50){
-            // console.log("paperball-spawner >> onTouchUp GO");
             const end = e.inputSource.gamepad.axes;
-            // const duration = 0.001*(e.timeStamp - this.startTime);
-            // console.log("end >> ", end);
-            // console.log("inputSource.targetRaySpace >> ",e.inputSource.targetRaySpace);
 
             const dir = [0, 0, 0];
 
@@ -75,86 +51,46 @@ WL.registerComponent('paperball-spawner', {
 
             this.pulse(e.inputSource.gamepad);
             this.throw(dir);
-            // console.log("dir >> ", dir);
-        }else{
-            // console.log("paperball-spawner >> onTouchUp SKIP");
         }
         this.lastTime=curTime;
         this.soundClick.play();
     },
-
     update: function(dt) {
-        // console.log("paperball-spawner >> update >> "+dt);
         this.time = (this.time || 0) + dt;
     },
     onTouchUp: function(e) {
         
     },
     throw: function(dir) {
-        
-        // this.object.resetRotation();
-        // this.object.rotateAxisAngleDegObject([1, 0, 0], -45);
         let paper =
             this.paperBalls.length == this.maxPapers ?
             this.paperBalls[this.nextIndex] : this.spawnBullet();
         this.paperBalls[this.nextIndex] = paper;
-        // this.spawnPaper();
 
         this.nextIndex = (this.nextIndex + 1) % this.maxPapers;
 
         paper.object.transformLocal.set(this.object.transformWorld);
-        // let dir2 = [0,0,0];
-        // paper.object.getForward(dir2);
-        // console.log("paperball-spawner >> transformLocal >> dir >> "+ dir2);
         paper.object.setDirty();
         paper.physics.dir.set(dir);
 
-        // //double speed by 2
-        // paper.physics.velocity[0] *= 2;
-        /* Reset scored value which is set in 'score-trigger' component */
         paper.physics.scored = false;
         paper.physics.active = true;
 
-
-        /* New orientation for the next paper */
-        // this.object.resetRotation();
-        // this.object.rotateAxisAngleDegObject([1, 0, 0], -90);
-        // this.object.rotateAxisAngleDegObject([0, 1, 0], Math.random()*180.0);
-
         this.canThrow = false;
         setTimeout(function() {
-            // this.object.resetScaling();
             this.canThrow = true;
         }.bind(this), 1000);
-
-        /* Important only to update score display to show score
-         * instead of the tutorial after first throw */
-        // updateScore(score.toString());
-
-        // this.throwCount++;
-        // if(this.throwCount == 3) {
-        //     resetButton.unhide();
-        // }
     },
     spawnBullet:function(){
-        // console.log("paperball-spawner >> spawnPaper");
         const obj = WL.scene.addObject();
 
         const mesh = obj.addComponent('mesh');
         mesh.mesh = this.paperballMesh;
         mesh.material = this.paperballMaterial;
-        //scaling
-        // obj.resetScaling();
+
         obj.scale([0.05,0.05,0.05]);
 
         mesh.active = true;
-
-        // if(this.spawnAnimation) {
-        //     const anim = obj.addComponent('animation');
-        //     anim.animation = this.spawnAnimation;
-        //     anim.active = true;
-        //     anim.play();
-        // }
 
         const col = obj.addComponent('collision');
         col.shape = WL.Collider.Sphere;
@@ -186,7 +122,6 @@ WL.registerComponent('paperball-spawner', {
         }
     },
     xrSessionStart: function(session) {
-        /* Only spawn object if cursor is visible */
         if(this.active) {
             session.addEventListener('selectstart', this.onTouchDown.bind(this));
             session.addEventListener('selectend', this.onTouchUp.bind(this));

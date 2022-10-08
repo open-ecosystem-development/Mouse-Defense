@@ -67,14 +67,10 @@ WL.registerComponent('mouse-spawner', {
         /* Add scoring trigger */
         const trigger = WL.scene.addObject(obj);
         const col = trigger.addComponent('collision');
-        // const col = obj.addComponent('collision');
         col.collider = WL.Collider.Sphere;
         col.extents[0] = 0.6;
         col.group = (1 << 0);
         col.active = true;
-        // obj.addComponent('score-trigger', {
-        //     particles: this.particles
-        // });
         trigger.translate([0, 0.4, 0]);
         trigger.addComponent('score-trigger', {
             particles: this.particles
