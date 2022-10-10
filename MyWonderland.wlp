@@ -1504,7 +1504,8 @@
                     "mesh": {
                         "mesh": "195",
                         "material": "202"
-                    }
+                    },
+                    "active": false
                 }
             ],
             "transformation": [
@@ -1546,45 +1547,45 @@
                 0.0,
                 0.0,
                 0.0,
-                0.999999,
-                0.0000012,
+                0.9999818,
+                0.0000011,
                 0.0,
                 0.0,
-                -0.0000019,
-                0.999999,
+                -4.291402149192436e-7,
+                0.9999776,
                 0.0,
-                -0.0000095,
-                0.3244419,
-                -0.0000677,
+                -0.0000094,
+                0.0139377,
+                -0.0182402,
                 1.0
             ]
         },
         "197": {
-            "name": "Button",
-            "parent": "194",
+            "name": "PlayAgainButton",
+            "parent": null,
             "transformation": [
                 0.4,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.4999999,
+                -5.960385607295393e-8,
+                0.4999933,
                 0.0,
                 0.0,
+                -0.2999934,
+                -3.576201024202419e-8,
                 0.0,
-                2.9802322387695313e-8,
-                0.3,
                 0.0,
-                0.0,
-                -0.0476226,
-                0.2667406,
+                1.1724865,
+                0.0205847,
                 1.0
             ],
             "components": [
                 {
                     "type": "collision",
                     "collision": {
-                        "collider": "box",
+                        "collider": "aabb",
                         "box": {
                             "extents": [
                                 0.0974999,
@@ -1592,19 +1593,18 @@
                                 0.045
                             ]
                         },
-                        "groups": 251
+                        "groups": 1,
+                        "aabb": {
+                            "extents": [
+                                0.4,
+                                0.18,
+                                0.05
+                            ]
+                        }
                     }
                 },
                 {
                     "type": "cursor-target"
-                },
-                {
-                    "type": "button",
-                    "button": {
-                        "buttonMeshObject": "196",
-                        "hoverMaterial": "203"
-                    },
-                    "active": true
                 },
                 {
                     "type": "play-again-button"
@@ -1613,31 +1613,31 @@
         },
         "198": {
             "name": "ButtonLabel",
-            "parent": "196",
+            "parent": "197",
             "components": [
                 {
                     "type": "text",
                     "text": {
-                        "text": "YES\n"
+                        "text": "Play Again"
                     }
                 }
             ],
             "transformation": [
-                2.5,
+                3.0,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                0.0031942,
-                -3.7999985,
+                -3.5762786865234375e-7,
+                -3.0000004,
                 0.0,
                 0.0,
-                4.8000044,
-                0.0040349,
+                3.0000004,
+                -9.93427761386556e-7,
                 0.0,
-                -0.0001564,
-                0.108458,
-                0.0000047,
+                -0.0001658,
+                0.155125,
+                -0.044075,
                 1.0
             ]
         },
@@ -1650,7 +1650,8 @@
                     "text": {
                         "text": "Play again?",
                         "material": "201"
-                    }
+                    },
+                    "active": false
                 }
             ],
             "transformation": [
@@ -3599,7 +3600,7 @@
                         "targetMaterial": "901",
                         "spawnAnimation": "439",
                         "particles": "482",
-                        "maxTargets": 20
+                        "maxTargets": 1
                     }
                 },
                 {
@@ -3618,7 +3619,7 @@
                     "type": "text",
                     "text": {
                         "text": "Eliminate all 20 rats.",
-                        "effect": "none"
+                        "effect": "outline"
                     }
                 },
                 {
@@ -3640,6 +3641,40 @@
                 0.0,
                 0.0,
                 2.3104021,
+                0.0,
+                1.0
+            ]
+        },
+        "972": {
+            "name": "Shots",
+            "parent": "970",
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "text": "Shots Fired: 0",
+                        "effect": "outline"
+                    }
+                },
+                {
+                    "type": "shot-counter"
+                }
+            ],
+            "transformation": [
+                1.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.5,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.5,
+                0.0,
+                0.0,
+                1.9985342,
                 0.0,
                 1.0
             ]
@@ -6181,7 +6216,8 @@
             "compressedTextureAtlasSize": [
                 16384,
                 16384
-            ]
+            ],
+            "fontOutline": true
         }
     },
     "animations": {

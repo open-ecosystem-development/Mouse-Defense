@@ -28,7 +28,7 @@ WL.registerComponent('paperball-spawner', {
 
         this.paperBalls = [];
         this.nextIndex = 0;
-        this.throwCount = 0;
+        this.shotCount = 0;
         this.lastTime = 0;
         this.laser = null;
 
@@ -51,9 +51,10 @@ WL.registerComponent('paperball-spawner', {
 
             this.pulse(e.inputSource.gamepad);
             this.throw(dir);
+            this.lastTime=curTime;
+            this.soundClick.play();
         }
-        this.lastTime=curTime;
-        this.soundClick.play();
+        
     },
     update: function(dt) {
         this.time = (this.time || 0) + dt;
@@ -77,6 +78,8 @@ WL.registerComponent('paperball-spawner', {
         paper.physics.active = true;
 
         this.canThrow = false;
+        this.shotCount++;
+        updateCounter(this.shotCount);
         setTimeout(function() {
             this.canThrow = true;
         }.bind(this), 1000);

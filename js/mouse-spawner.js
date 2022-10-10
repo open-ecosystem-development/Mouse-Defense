@@ -10,10 +10,10 @@
       See the License for the specific language governing permissions and
       limitations under the License.
 */
-// var wastebinSpawner = null;
 var floorHeight = 0;
 var maxTargets = 0;
 var mouseSound = null;
+var mouseSpawner = null;
 
 /**
 @brief
@@ -32,8 +32,11 @@ WL.registerComponent('mouse-spawner', {
         mouseSound = this.object.addComponent('howler-audio-source', {src: 'sfx/critter-40645.mp3', loop: true, volume: 1.0 });
     },
     start: function() {
+        // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
         this.targets = [];
         this.spawnTarget();
+
+        mouseSpawner = this;
     },
     update: function(dt) {
         this.time += dt;
