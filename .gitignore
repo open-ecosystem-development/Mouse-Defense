@@ -1,7 +1,10 @@
 # Wonderland
+assets/
 cache/
 deploy/
+models/
 ssl/
+static/
 
 # General
 .DS_Store
