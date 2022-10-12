@@ -40,9 +40,10 @@ WL.registerComponent('bullet-physics', {
         this.object.getTranslationWorld(this.position);
         //deactivate bullet if through the floor
         if(this.position[1] <= floorHeight + this.collision.extents[0]) {
-            console.log("bullet penetrated floor >> "+this.position[1]+" <= "+floorHeight + this.collision.extents[0]
-            + " ( " + floorHeight, ", ", this.collision.extents[0]," )");
+            // console.log("bullet penetrated floor >> "+this.position[1]+" <= "+floorHeight + this.collision.extents[0]
+            // + " ( " + floorHeight, ", ", this.collision.extents[0]," )");
             this.active = false;
+            this.object.getComponent('collision').active=false;
             return;
         }
         //deactivate bullet if travel distance too far
@@ -50,6 +51,8 @@ WL.registerComponent('bullet-physics', {
             this.active = false;
             return;
         }
+
+        // console.log("bullet position >> ", this.position);
 
         let newDir = [0,0,0];
         glMatrix.vec3.add(newDir, newDir, this.dir);

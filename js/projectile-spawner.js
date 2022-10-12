@@ -11,6 +11,7 @@
       limitations under the License.
 */
 var paperBallSpawner = null;
+var shotCount = 0;
 /**
 @brief 
 */
@@ -28,7 +29,6 @@ WL.registerComponent('paperball-spawner', {
 
         this.paperBalls = [];
         this.nextIndex = 0;
-        this.shotCount = 0;
         this.lastTime = 0;
         this.laser = null;
 
@@ -78,8 +78,8 @@ WL.registerComponent('paperball-spawner', {
         paper.physics.active = true;
 
         this.canThrow = false;
-        this.shotCount++;
-        updateCounter(this.shotCount);
+        shotCount++;
+        updateCounter();
         setTimeout(function() {
             this.canThrow = true;
         }.bind(this), 1000);

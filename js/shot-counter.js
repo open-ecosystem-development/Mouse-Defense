@@ -23,8 +23,10 @@ WL.registerComponent('shot-counter', {
     init: function() {
         this.text = this.object.getComponent('text');
 
-        updateCounter = function(text) {
-            this.text.text = "Shots Fired: " + text;
+        updateCounter = function() {
+            if(!gameOver){
+                this.text.text = "Shots Fired: " + shotCount;
+            }
         }.bind(this);
 
         // updateScore("");

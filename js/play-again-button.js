@@ -23,30 +23,33 @@ WL.registerComponent('play-again-button', {
 }, {
     init: function() {
         this.collision = this.object.getComponent('collision');
-        // this.soundHit = this.object.addComponent('howler-audio-source', {src: 'sfx/high-pitched-aha-103125.mp3', volume: 1.9 });
         this.soundPop = this.object.addComponent('howler-audio-source', {src: 'sfx/pop-94319.mp3', volume: 1.9 });
-        // victoryMusic = this.object.addComponent('howler-audio-source', {src: 'music/level-win-6416.mp3', volume: 1.9 });
     },
     start: function() {
-        // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
         resetButton = this;
         this.hide();
 
     },
     restart: function() {
-        for(let i = 0; i < mouseSpawner.targets.length; ++i) {
-            mouseSpawner.targets[i].destroy();
-            mouseSpawner.resetTranslation();
+        try{
+            for(let i = 0; i < mouseSpawner.targets.length; ++i) {
+                mouseSpawner.targets[i].destroy();
+                mouseSpawner.object.resetTranslation();
+            }
+        }catch(e){
+            console.log("play-again-button >> restart >> ", e);
         }
         mouseSpawner.targets = [];
-        paperBallSpawner.getComponent('paperball-spawner').throwCount = 0;
 
         victoryMusic.stop();
         bgMusic.play();
-        updateCounter(0);
+
+        gameOver = false;
+        shotCount = 0;
+        score = 0;
+        updateCounter();
         updateScore("Eliminate all 20 Rats.");
 
-        // mouseSpawner.object.getComponent('mesh').active = true;
         this.hide();
     },
 
@@ -57,74 +60,20 @@ WL.registerComponent('play-again-button', {
     },
 
     unhide: function() {
-        // console.log(`children.length >> ${this.object.children.length}`);
-        // var childrens = this.object.children;
-        // for(let i =0; i<childrens.length; i++){
-        //     console.log("children >> ", i, " = ",childrens[i].name);
-        // }
         this.object.children[0].getComponent('mesh').active = true;
         this.object.children[1].getComponent('text').active = true;
         this.active = true;
     },
 
-    onClick: function(e) {
-        const pos = e.inputSource.gamepad.axes;
-        console.log(pos);
-        /* Test position agains bottom right corner */
-        if(pos[0] > 0.3 && pos[1] > 0.9) {
-            this.restart();
-        }
-    },
-
-    // onActivate: function() {
-    //     if(WL.xrSession) {
-    //         WL.xrSession.addEventListener('select', this.onClick.bind(this));
-    //     }
-    // },
-    // xrSessionStart: function(session) {
-    //     if(this.active) {
-    //         session.addEventListener('select', this.onClick.bind(this));
-    //     }
-    // },
-    
     update: function(dt) {
         let overlaps = this.collision.queryOverlaps();
-
         for(let i = 0; i < overlaps.length; ++i) {
             let p = overlaps[i].object.getComponent('bullet-physics');
             if(p){
-                console.log("ball detected");
                 this.restart();
                 this.soundPop.play();
-            }else{
-                console.log("no ball");
             }
-            
-
-        //     if(p && !p.scored) {
-        //         p.scored = true;
-        //         this.particles.transformWorld.set(this.object.transformWorld);
-        //         this.particles.getComponent('confetti-particles').burst();
-        //         this.object.parent.destroy();
-
-        //         ++score;
-
-        //         let scoreString = "";
-        //         if(maxTargets!=score){
-        //             scoreString = score+" rats down, "+(maxTargets-score)+" left";
-        //         }else{
-        //             scoreString = "Congrats, you got all the rats!";
-        //             victoryMusic.play();
-        //             bgMusic.stop();
-        //             mouseSound.stop();
-        //             resetButton.unhide();
-        //         }
-                
-        //         updateScore(scoreString);
-
-        //         this.soundHit.play();
-        //         this.soundPop.play();
-        //     }
+        
         }
     },
 });

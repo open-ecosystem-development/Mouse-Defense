@@ -13,6 +13,7 @@
 /* Global function used to update the score display */
 var updateScore = null;
 var bgMusic = null;
+var victoryMusic = null;
 /**
 @brief Marks an object with text component as "score display"
 
@@ -32,5 +33,6 @@ WL.registerComponent('bg-music', {
         this.bgSheep.play();        
         this.bgPig = this.object.addComponent('howler-audio-source', {src: 'sfx/pig_grunts_snorts_breathing_hackney_city_farm-73959.mp3', loop: true, volume: 1.0 });
         this.bgPig.play();
+        victoryMusic = this.object.addComponent('howler-audio-source', {src: 'music/level-win-6416.mp3', volume: 0.9 });
     },
 });

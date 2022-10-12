@@ -21,19 +21,21 @@ WL.registerComponent('mouse-mover', {
     init: function() {
         this.time = 0;
         this.state = 0;
-        this.position = [0, 0, 0];
+        this.currentPos = [0, 0, 0];
         this.pointA = [0, 0, 0];
         this.pointB = [0, 0, 0];
-        this.position = [0, 0, 0];
+
         this.moveDuration = 2;
         this.travelDistance = this.moveDuration*1.5;
 
-        glMatrix.quat2.getTranslation(this.position, this.object.transformLocal);
+        glMatrix.quat2.getTranslation(this.currentPos, this.object.transformLocal);
 
-        glMatrix.vec3.add(this.pointA, this.pointA, this.position);
-        glMatrix.vec3.add(this.pointB, this.position, [0, 0, 1.5]);
+        glMatrix.vec3.add(this.pointA, this.pointA, this.currentPos);
+        glMatrix.vec3.add(this.pointB, this.currentPos, [0, 0, 1.5]);
 
-        this.angle = 0;
+        this.savedAngle = 0;
+        this.previousAngle = 0;
+        this.newAngle = 0;
     },
     update: function(dt) {
         if(isNaN(dt)) return;
@@ -43,41 +45,30 @@ WL.registerComponent('mouse-mover', {
             this.time -= this.moveDuration;
 
             this.state = Math.floor(Math.random()*4);
-            this.pointA = this.position;
+            this.pointA = this.currentPos;
 
             let x = Math.random()*this.travelDistance;
-            let z = sqrt(Math.pow(this.travelDistance,2) - Math.pow(x,2));
+            let z = Math.sqrt(Math.pow(this.travelDistance,2) - Math.pow(x,2));
 
-            // const randomPathZ = Math.random() < 0.5;
             const randomNegative = Math.round(Math.random()) * 2 - 1;
             const randomNegative2 = Math.round(Math.random()) * 2 - 1;
 
-            // if(randomNegative){
-            //     travelDistance = -travelDistance;
-            // }
-            
-            // if(randomPathZ){
-            //     glMatrix.vec3.add(this.pointB, this.pointA, [0, 0, travelDistance]);
-            // }
-            // //new position in X axis.
-            // else{
-            //     glMatrix.vec3.add(this.pointB, this.pointA, [travelDistance, 0, 0]);
-            // }
-
             glMatrix.vec3.add(this.pointB, this.pointA, [x*randomNegative, 0, z*randomNegative2]);
-            console.log("mouse >> ",x*randomNegative, ", ", z*randomNegative2);
+            // console.log("mouse >> ",(x*randomNegative), ", ", (z*randomNegative2));
 
-            this.angle = Math.floor(Math.random()*180);
+            this.newAngle = Math.floor(Math.random()*180);
+            this.previousAngle = this.savedAngle;
         }
 
         this.object.resetTranslation();
         if(this.time <= this.moveDuration/2) {
             this.object.resetRotation();
-            this.object.rotateAxisAngleDeg([0, 0, 1], this.time*this.angle);
+            this.savedAngle = (this.time*this.newAngle)+this.previousAngle;
+            this.object.rotateAxisAngleDeg([0, 0, 1], this.savedAngle);
             this.object.rotateAxisAngleDeg([1, 0, 0], 90);
         }else{
-            glMatrix.vec3.lerp(this.position, this.pointA, this.pointB, this.time-moveDuration/2);
+            glMatrix.vec3.lerp(this.currentPos, this.pointA, this.pointB, this.time-this.moveDuration/2);
         }
-        this.object.translate(this.position);
+        this.object.translate(this.currentPos);
     },
 });

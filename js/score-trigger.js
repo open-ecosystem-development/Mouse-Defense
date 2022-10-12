@@ -11,7 +11,7 @@
       limitations under the License.
 */
 var score = 0;
-var victoryMusic = null;
+var gameOver = false;
 /**
 @brief Score trigger
 
@@ -28,7 +28,6 @@ WL.registerComponent('score-trigger', {
         this.collision = this.object.getComponent('collision');
         this.soundHit = this.object.addComponent('howler-audio-source', {src: 'sfx/high-pitched-aha-103125.mp3', volume: 1.9 });
         this.soundPop = this.object.addComponent('howler-audio-source', {src: 'sfx/pop-94319.mp3', volume: 1.9 });
-        victoryMusic = this.object.addComponent('howler-audio-source', {src: 'music/level-win-6416.mp3', volume: 1.9 });
     },
     update: function(dt) {
         let overlaps = this.collision.queryOverlaps();
@@ -53,6 +52,7 @@ WL.registerComponent('score-trigger', {
                     bgMusic.stop();
                     mouseSound.stop();
                     resetButton.unhide();
+                    gameOver = true;
                 }
                 
                 updateScore(scoreString);

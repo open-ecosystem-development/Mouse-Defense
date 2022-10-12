@@ -15,7 +15,7 @@
 
 Feel free to extend the game with a PR!
 */
-WL.registerComponent('mouse-mover', {
+WL.registerComponent('spawn-mover', {
     speed: {type: WL.Type.Float, default: 1.0},
     // targetObject: {type: WL.Type.Object},
 }, {
