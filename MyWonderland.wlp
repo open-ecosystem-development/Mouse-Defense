@@ -1746,11 +1746,14 @@
                     }
                 },
                 {
-                    "type": "paperball-spawner",
-                    "paperball-spawner": {
+                    "type": "bullet-spawner",
+                    "bullet-spawner": {
                         "paperballMesh": "9",
                         "paperballMaterial": "20",
-                        "ballSpeed": 5.0
+                        "ballSpeed": 5.0,
+                        "bulletMesh": "9",
+                        "bulletMaterial": "20",
+                        "bulletSpeed": 5.0
                     }
                 }
             ],
@@ -3514,15 +3517,15 @@
                 0.0,
                 0.0,
                 0.0,
-                -2.3841714380523623e-8,
-                0.1999987,
+                -2.3840049934165112e-8,
+                0.1999848,
                 0.0,
                 0.0,
-                -0.1999998,
-                -2.3841845830929745e-8,
+                -0.1999859,
+                -2.3840179608214385e-8,
                 0.0,
-                0.0,
-                0.0,
+                -3.0,
+                4.76837158203125e-7,
                 -3.0,
                 1.0
             ],
@@ -3537,11 +3540,11 @@
                         "targetMaterial": "901",
                         "spawnAnimation": "439",
                         "particles": "482",
-                        "maxTargets": 5
+                        "maxTargets": 20
                     }
                 },
                 {
-                    "type": "mouse-mover"
+                    "type": "spawn-mover"
                 }
             ],
             "name": "MouseSpawner"

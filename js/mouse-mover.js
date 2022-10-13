@@ -1,32 +1,30 @@
 /*
-      Copyright 2021. Futurewei Technologies Inc. All rights reserved.
-      Licensed under the Apache License, Version 2.0 (the "License");
-      you may not use this file except in compliance with the License.
-      You may obtain a copy of the License at
-        http:  www.apache.org/licenses/LICENSE-2.0
-      Unless required by applicable law or agreed to in writing, software
-      distributed under the License is distributed on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-      See the License for the specific language governing permissions and
-      limitations under the License.
+    Copyright 2021. Futurewei Technologies Inc. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http:  www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
+var updateMoveDuration = null;
 /**
-@brief (Unused) Moves a mesh back and forth
-
-Feel free to extend the game with a PR!
+@brief Moves and rotates the mice in random directions at set intervals.
 */
 WL.registerComponent('mouse-mover', {
-    speed: {type: WL.Type.Float, default: 1.0},
 }, {
     init: function() {
         this.time = 0;
-        this.state = 0;
         this.currentPos = [0, 0, 0];
         this.pointA = [0, 0, 0];
         this.pointB = [0, 0, 0];
 
         this.moveDuration = 2;
-        this.travelDistance = this.moveDuration*1.5;
+        this.speed = 1.5;
+        this.travelDistance = this.moveDuration*this.speed;
 
         glMatrix.quat2.getTranslation(this.currentPos, this.object.transformLocal);
 
@@ -36,25 +34,38 @@ WL.registerComponent('mouse-mover', {
         this.savedAngle = 0;
         this.previousAngle = 0;
         this.newAngle = 0;
+
+        this.speedLevel1 = true;
+        this.speedLevel2 = true;
+        this.speedLevel3 = true;
     },
     update: function(dt) {
         if(isNaN(dt)) return;
 
         this.time += dt;
         if(this.time >= this.moveDuration) {
-            this.time -= this.moveDuration;
+            this.time =0;
 
-            this.state = Math.floor(Math.random()*4);
             this.pointA = this.currentPos;
-
             let x = Math.random()*this.travelDistance;
             let z = Math.sqrt(Math.pow(this.travelDistance,2) - Math.pow(x,2));
 
-            const randomNegative = Math.round(Math.random()) * 2 - 1;
-            const randomNegative2 = Math.round(Math.random()) * 2 - 1;
+            let distanceFromOrigin = glMatrix.vec3.length(this.pointA);
+            if(distanceFromOrigin>20){
+                if(this.pointA[0]>=14){
+                    x *= -1;
+                }
+                if(this.pointA[2]>=14){
+                    z *= -1;
+                }
+            }else{
+                const randomNegative1 = Math.round(Math.random()) * 2 - 1;
+                const randomNegative2 = Math.round(Math.random()) * 2 - 1;
+                x *= randomNegative1
+                z *= randomNegative2;
+            }
 
-            glMatrix.vec3.add(this.pointB, this.pointA, [x*randomNegative, 0, z*randomNegative2]);
-            // console.log("mouse >> ",(x*randomNegative), ", ", (z*randomNegative2));
+            glMatrix.vec3.add(this.pointB, this.pointA, [x, 0, z]);
 
             this.newAngle = Math.floor(Math.random()*180);
             this.previousAngle = this.savedAngle;
@@ -71,4 +82,17 @@ WL.registerComponent('mouse-mover', {
         }
         this.object.translate(this.currentPos);
     },
+    updateMoveDuration: function(){
+        let targetsLeft = score/maxTargets;
+        if(targetsLeft>0.2 && speedLevel1){
+            this.moveDuration*=0.8;
+            speedLevel1 = false;
+        }else if(targetsLeft>0.5 && speedLevel2){
+            this.moveDuration*=0.8;
+            speedLevel2 = false;
+        }else if(targetsLeft>0.8 && speedLevel3){
+            this.moveDuration*=0.8;
+            speedLevel3 = false;
+        }
+    }
 });

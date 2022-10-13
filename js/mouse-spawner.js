@@ -1,14 +1,14 @@
 /*
-      Copyright 2021. Futurewei Technologies Inc. All rights reserved.
-      Licensed under the Apache License, Version 2.0 (the "License");
-      you may not use this file except in compliance with the License.
-      You may obtain a copy of the License at
-        http:  www.apache.org/licenses/LICENSE-2.0
-      Unless required by applicable law or agreed to in writing, software
-      distributed under the License is distributed on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-      See the License for the specific language governing permissions and
-      limitations under the License.
+    Copyright 2021. Futurewei Technologies Inc. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http:  www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 */
 var floorHeight = 0;
 var maxTargets = 0;
@@ -16,23 +16,23 @@ var mouseSound = null;
 var mouseSpawner = null;
 
 /**
-@brief
+@brief Spawns in mice at set intervals until maxTargets is reached.
 */
 WL.registerComponent('mouse-spawner', {
     targetMesh: {type: WL.Type.Mesh},
     targetMaterial: {type: WL.Type.Material},
-    spawnAnimation: {type: WL.Type.Animation},
     maxTargets: {type: WL.Type.Int, default: 20},
     particles: {type: WL.Type.Object},
+    spawnIntervalCeiling: {type: WL.Type.Float, default: 3.0},
+    spawnIntervalFloor: {type: WL.Type.Float, default: 1.0},
 }, {
     init: function() {
         maxTargets = this.maxTargets;
         this.time = 0;
-        this.spawnInterval = 3;
+        this.spawnInterval = this.spawnIntervalCeiling;
         mouseSound = this.object.addComponent('howler-audio-source', {src: 'sfx/critter-40645.mp3', loop: true, volume: 1.0 });
     },
     start: function() {
-        // WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
         this.targets = [];
         this.spawnTarget();
 
@@ -45,6 +45,10 @@ WL.registerComponent('mouse-spawner', {
         if(this.time >= this.spawnInterval){
             this.time = 0;
             this.spawnTarget();
+            //gradually increases spawn interval until it hits the floor
+            if(this.spawnInterval>this.spawnIntervalFloor){
+                this.spawnInterval*=.8;
+            }
         }
     },
     spawnTarget: function() {
@@ -58,14 +62,6 @@ WL.registerComponent('mouse-spawner', {
         mesh.material = this.targetMaterial;
         mesh.active = true;
         obj.addComponent("mouse-mover");
-
-        if(this.spawnAnimation) {
-            const anim = obj.addComponent('animation');
-            anim.playCount = 1;
-            anim.animation = this.spawnAnimation;
-            anim.active = true;
-            anim.play();
-        }
 
         /* Add scoring trigger */
         const trigger = WL.scene.addObject(obj);
