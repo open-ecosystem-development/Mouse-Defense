@@ -19,7 +19,7 @@ WL.registerComponent('bullet-spawner', {
     bulletMesh: {type: WL.Type.Mesh},
     bulletMaterial: {type: WL.Type.Material},
     bulletSpeed: {type: WL.Type.Float, default: 1.0},
-    maxBullets: {type: WL.Type.Int, default: 32},
+    // maxBullets: {type: WL.Type.Int, default: 32},
 }, {
     start: function() {
         WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
@@ -49,12 +49,13 @@ WL.registerComponent('bullet-spawner', {
         
     },
     launch: function(dir) {
-        let bullet =
-            this.bullets.length == this.maxBullets ?
-            this.bullets[this.nextIndex] : this.spawnBullet();
-        this.bullets[this.nextIndex] = bullet;
+        // let bullet =
+        //     this.bullets.length == this.maxBullets ?
+        //     this.bullets[this.nextIndex] : this.spawnBullet();
+        // this.bullets[this.nextIndex] = bullet;
 
-        this.nextIndex = (this.nextIndex + 1) % this.maxBullets;
+        // this.nextIndex = (this.nextIndex + 1) % this.maxBullets;
+        let bullet = this.spawnBullet();
 
         bullet.object.transformLocal.set(this.object.transformWorld);
         bullet.object.setDirty();

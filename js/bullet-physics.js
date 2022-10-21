@@ -46,11 +46,13 @@ WL.registerComponent('bullet-physics', {
         if(this.position[1] <= floorHeight + this.collision.extents[0]) {
             this.active = false;
             this.object.getComponent('collision').active=false;
+            this.destroyBullet(5000);
             return;
         }
         //deactivate bullet if travel distance too far
         if(glMatrix.vec3.length(this.position)>175){
             this.active = false;
+            this.destroyBullet(0);
             return;
         }
         let newDir = [0,0,0];
@@ -61,5 +63,14 @@ WL.registerComponent('bullet-physics', {
         
         this.object.resetTranslation();
         this.object.translate(this.position);
+    },
+    destroyBullet: function(time){
+        if(time==0){
+            this.object.destroy();
+        }else{
+            setTimeout(()=>{
+                this.object.destroy()
+            }, time);
+        }
     },
 });

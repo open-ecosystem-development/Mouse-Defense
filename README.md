@@ -16,7 +16,7 @@ Please note that all development and testing was conducted with Google Chrome, M
 
 ### Initial 
 This part is common to both the Quest and HVR Glass.
-1. Clone this project: https://github.com/bryantvu/Wonderland-Demo.git.
+1. Clone this project: https://github.com/hms-ecosystem/Wonderland-Demo.git.
 2. Download and install the [Wonderland Engine Editor](https://wonderlandengine.com/downloads/).
 3. Download the [asset files](https://github.com/bryantvu/Wonderland-Demo-Assets) and place them into the project directory.
 4. Open the project in the Wonderland Editor.
