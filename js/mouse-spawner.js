@@ -25,6 +25,8 @@ WL.registerComponent('mouse-spawner', {
     particles: {type: WL.Type.Object},
     spawnIntervalCeiling: {type: WL.Type.Float, default: 3.0},
     spawnIntervalFloor: {type: WL.Type.Float, default: 1.0},
+    bulletMesh: {type: WL.Type.Mesh},
+    bulletMaterial: {type: WL.Type.Material},
 }, {
     init: function() {
         maxTargets = this.maxTargets;
@@ -70,7 +72,7 @@ WL.registerComponent('mouse-spawner', {
         col.extents[0] = 0.6;
         col.group = (1 << 0);
         col.active = true;
-        trigger.translate([0, 0.4, 0]);
+        trigger.translate([0, 0.7, 0]);
         trigger.addComponent('score-trigger', {
             particles: this.particles
         });

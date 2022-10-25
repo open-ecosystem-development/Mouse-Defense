@@ -457,247 +457,6 @@
             },
             "parent": "82"
         },
-        "95": {
-            "link": {
-                "name": "root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "129",
-            "name": "ControllerModelRight",
-            "transformation": [
-                -1.0000078,
-                -1.5099695360731857e-7,
-                0.0,
-                0.0,
-                -1.067701376200603e-7,
-                0.7071067,
-                0.7071068,
-                0.0,
-                -1.067717150249337e-7,
-                0.707117,
-                -0.7071171,
-                0.0,
-                -0.0,
-                -0.0,
-                0.0,
-                1.0
-            ]
-        },
-        "96": {
-            "link": {
-                "name": "a_button_pressed_max<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "97": {
-            "link": {
-                "name": "a_button_pressed_min<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "98": {
-            "link": {
-                "name": "a_button_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "99": {
-            "link": {
-                "name": "a_button<a_button_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "98"
-        },
-        "100": {
-            "link": {
-                "name": "b_button_pressed_max<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "101": {
-            "link": {
-                "name": "b_button_pressed_min<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "102": {
-            "link": {
-                "name": "b_button_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "103": {
-            "link": {
-                "name": "b_button<b_button_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "102"
-        },
-        "104": {
-            "link": {
-                "name": "controller<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95",
-            "components": [
-                {
-                    "active": false
-                }
-            ]
-        },
-        "105": {
-            "link": {
-                "name": "thumbrest_pressed_max<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "106": {
-            "link": {
-                "name": "thumbrest_pressed_min<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "107": {
-            "link": {
-                "name": "thumbrest_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "108": {
-            "link": {
-                "name": "xr_standard_squeeze_pressed_max<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "109": {
-            "link": {
-                "name": "xr_standard_squeeze_pressed_min<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "110": {
-            "link": {
-                "name": "xr_standard_squeeze_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "111": {
-            "link": {
-                "name": "squeeze<xr_standard_squeeze_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "110"
-        },
-        "112": {
-            "link": {
-                "name": "xr_standard_thumbstick_pressed_max<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "113": {
-            "link": {
-                "name": "xr_standard_thumbstick_pressed_min<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "114": {
-            "link": {
-                "name": "xr_standard_thumbstick_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "115": {
-            "link": {
-                "name": "xr_standard_thumbstick_xaxis_pressed_max<xr_standard_thumbstick_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "114"
-        },
-        "116": {
-            "link": {
-                "name": "xr_standard_thumbstick_xaxis_pressed_min<xr_standard_thumbstick_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "114"
-        },
-        "117": {
-            "link": {
-                "name": "xr_standard_thumbstick_xaxis_pressed_value<xr_standard_thumbstick_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "114"
-        },
-        "118": {
-            "link": {
-                "name": "xr_standard_thumbstick_yaxis_pressed_max<xr_standard_thumbstick_xaxis_pressed_value<xr_standard_thumbstick_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "117"
-        },
-        "119": {
-            "link": {
-                "name": "xr_standard_thumbstick_yaxis_pressed_min<xr_standard_thumbstick_xaxis_pressed_value<xr_standard_thumbstick_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "117"
-        },
-        "120": {
-            "link": {
-                "name": "xr_standard_thumbstick_yaxis_pressed_value<xr_standard_thumbstick_xaxis_pressed_value<xr_standard_thumbstick_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "117"
-        },
-        "121": {
-            "link": {
-                "name": "thumbstick<xr_standard_thumbstick_yaxis_pressed_value<xr_standard_thumbstick_xaxis_pressed_value<xr_standard_thumbstick_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "120"
-        },
-        "122": {
-            "link": {
-                "name": "xr_standard_trigger_pressed_max<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "123": {
-            "link": {
-                "name": "xr_standard_trigger_pressed_min<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "124": {
-            "link": {
-                "name": "xr_standard_trigger_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "95"
-        },
-        "125": {
-            "link": {
-                "name": "trigger<xr_standard_trigger_pressed_value<root",
-                "file": "models\\oculus-touch-v2-right.glb"
-            },
-            "parent": "124"
-        },
         "126": {
             "name": "CursorLeft",
             "parent": "205",
@@ -3540,7 +3299,9 @@
                         "targetMaterial": "901",
                         "spawnAnimation": "439",
                         "particles": "482",
-                        "maxTargets": 20
+                        "maxTargets": 20,
+                        "bulletMesh": "9",
+                        "bulletMaterial": "22"
                     }
                 },
                 {
@@ -3619,6 +3380,53 @@
                 0.0,
                 1.0
             ]
+        },
+        "981": {
+            "link": {
+                "name": "Sketchfab_model",
+                "file": "models\\firefight_water_gun.glb"
+            },
+            "parent": "129",
+            "transformation": [
+                0.0,
+                0.0099999,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0099999,
+                0.0,
+                0.0099999,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.1,
+                1.0
+            ],
+            "name": "GunModel"
+        },
+        "982": {
+            "link": {
+                "name": "Collada visual scene group<Sketchfab_model",
+                "file": "models\\firefight_water_gun.glb"
+            },
+            "parent": "981"
+        },
+        "983": {
+            "link": {
+                "name": "pCylinder17<Collada visual scene group<Sketchfab_model",
+                "file": "models\\firefight_water_gun.glb"
+            },
+            "parent": "982"
+        },
+        "984": {
+            "link": {
+                "name": "defaultMaterial<pCylinder17<Collada visual scene group<Sketchfab_model",
+                "file": "models\\firefight_water_gun.glb"
+            },
+            "parent": "983"
         }
     },
     "meshes": {
@@ -4992,6 +4800,12 @@
                 "name": "duck.1_Material_0_0",
                 "file": "assets\\duck_walk_free.glb"
             }
+        },
+        "980": {
+            "link": {
+                "name": "defaultMaterial",
+                "file": "models\\firefight_water_gun.glb"
+            }
         }
     },
     "textures": {
@@ -5114,6 +4928,24 @@
                 "name": "texture_0",
                 "file": "assets\\duck_walk_free.glb"
             }
+        },
+        "976": {
+            "link": {
+                "name": "texture_0",
+                "file": "models\\firefight_water_gun.glb"
+            }
+        },
+        "977": {
+            "link": {
+                "name": "texture_1",
+                "file": "models\\firefight_water_gun.glb"
+            }
+        },
+        "978": {
+            "link": {
+                "name": "texture_2",
+                "file": "models\\firefight_water_gun.glb"
+            }
         }
     },
     "images": {
@@ -5216,6 +5048,24 @@
             "link": {
                 "name": "image_0",
                 "file": "assets\\duck_walk_free.glb"
+            }
+        },
+        "973": {
+            "link": {
+                "name": "image_0",
+                "file": "models\\firefight_water_gun.glb"
+            }
+        },
+        "974": {
+            "link": {
+                "name": "image_1",
+                "file": "models\\firefight_water_gun.glb"
+            }
+        },
+        "975": {
+            "link": {
+                "name": "image_2",
+                "file": "models\\firefight_water_gun.glb"
             }
         }
     },
@@ -5998,6 +5848,12 @@
         },
         "139": {
             "pipeline": "37"
+        },
+        "979": {
+            "link": {
+                "name": "lambert1",
+                "file": "models\\firefight_water_gun.glb"
+            }
         }
     },
     "shaders": {
@@ -6128,7 +5984,7 @@
             "version": [
                 0,
                 9,
-                2
+                3
             ]
         },
         "vr": {
@@ -6672,6 +6528,7 @@
         "assets/uploads_files_3300527_subaru.stl",
         "assets/uploads_files_2109779_Duck.fbx",
         "assets/uploads_files_3861195_Mouse_GLB.glb",
-        "assets/duck_walk_free.glb"
+        "assets/duck_walk_free.glb",
+        "models/firefight_water_gun.glb"
     ]
 }
