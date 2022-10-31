@@ -38,6 +38,24 @@ WL.registerComponent('mouse-mover', {
         this.speedLevel1 = true;
         this.speedLevel2 = true;
         this.speedLevel3 = true;
+
+        updateMoveDuration = function(){
+            let targetsLeft = score/maxTargets;
+            console.log("targetsLeft >> ", targetsLeft*100, "%");
+            if(targetsLeft>0.2 && this.speedLevel1){
+                this.moveDuration*=0.5;
+                this.speedLevel1 = false;
+                console.log("speed 1 >> ", this.moveDuration);
+            }else if(targetsLeft>0.5 && this.speedLevel2){
+                this.moveDuration*=0.5;
+                this.speedLevel2 = false;
+                console.log("speed 2 >> ", this.moveDuration);
+            }else if(targetsLeft>0.8 && this.speedLevel3){
+                this.moveDuration*=0.5;
+                this.speedLevel3 = false;
+                console.log("speed 3 >> ", this.moveDuration);
+            }
+        }.bind(this);
     },
     update: function(dt) {
         if(isNaN(dt)) return;
@@ -82,17 +100,4 @@ WL.registerComponent('mouse-mover', {
         }
         this.object.translate(this.currentPos);
     },
-    updateMoveDuration: function(){
-        let targetsLeft = score/maxTargets;
-        if(targetsLeft>0.2 && speedLevel1){
-            this.moveDuration*=0.8;
-            speedLevel1 = false;
-        }else if(targetsLeft>0.5 && speedLevel2){
-            this.moveDuration*=0.8;
-            speedLevel2 = false;
-        }else if(targetsLeft>0.8 && speedLevel3){
-            this.moveDuration*=0.8;
-            speedLevel3 = false;
-        }
-    }
 });

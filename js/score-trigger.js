@@ -30,38 +30,43 @@ WL.registerComponent('score-trigger', {
         this.soundPop = this.object.addComponent('howler-audio-source', {src: 'sfx/pop-94319.mp3', volume: 1.9 });
     },
     update: function(dt) {
-        let overlaps = this.collision.queryOverlaps();
+        try{
+            let overlaps = this.collision.queryOverlaps();
 
-        for(let i = 0; i < overlaps.length; ++i) {
-            let p = overlaps[i].object.getComponent('bullet-physics');
-
-            if(p && !p.scored) {
-                p.scored = true;
-                this.particles.transformWorld.set(this.object.transformWorld);
-                this.particles.getComponent('confetti-particles').burst();
-                this.object.parent.destroy();
-
-                ++score;
-
-                let scoreString = "";
-                if(maxTargets!=score){
-                    scoreString = score+" rats down, "+(maxTargets-score)+" left";
-                }else{
-                    scoreString = "Congrats, you got all the rats!";
-                    victoryMusic.play();
-                    bgMusic.stop();
-                    mouseSound.stop();
-                    resetButton.unhide();
-                    gameOver = true;
+            for(let i = 0; i < overlaps.length; ++i) {
+                let p = overlaps[i].object.getComponent('bullet-physics');
+    
+                if(p && !p.scored) {
+                    p.scored = true;
+                    this.particles.transformWorld.set(this.object.transformWorld);
+                    this.particles.getComponent('confetti-particles').burst();
+                    this.object.parent.destroy();
+    
+                    ++score;
+    
+                    let scoreString = "";
+                    if(maxTargets!=score){
+                        scoreString = score+" rats down, "+(maxTargets-score)+" left";
+                    }else{
+                        scoreString = "Congrats, you got all the rats!";
+                        victoryMusic.play();
+                        bgMusic.stop();
+                        mouseSound.stop();
+                        resetButton.unhide();
+                        gameOver = true;
+                    }
+                    
+                    updateScore(scoreString);
+    
+                    this.soundHit.play();
+                    this.soundPop.play();
+    
+                    updateMoveDuration();
                 }
-                
-                updateScore(scoreString);
-
-                this.soundHit.play();
-                this.soundPop.play();
-
-                updateMoveDuration();
             }
+        }catch(e){
+            console.log("score-trigger->update() >> ",e);
         }
+        
     },
 });
