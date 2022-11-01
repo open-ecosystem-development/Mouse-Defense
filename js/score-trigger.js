@@ -41,6 +41,7 @@ WL.registerComponent('score-trigger', {
                     this.particles.transformWorld.set(this.object.transformWorld);
                     this.particles.getComponent('confetti-particles').burst();
                     this.object.parent.destroy();
+                    p.object.destroy();
     
                     ++score;
     

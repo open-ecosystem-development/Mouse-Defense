@@ -17,12 +17,13 @@ var updateMoveDuration = null;
 WL.registerComponent('mouse-mover', {
 }, {
     init: function() {
-        this.time = 0;
+        
         this.currentPos = [0, 0, 0];
         this.pointA = [0, 0, 0];
         this.pointB = [0, 0, 0];
 
         this.moveDuration = 2;
+        this.time = this.moveDuration/2;
         this.speed = 1.5;
         this.travelDistance = this.moveDuration*this.speed;
 
@@ -39,21 +40,30 @@ WL.registerComponent('mouse-mover', {
         this.speedLevel2 = true;
         this.speedLevel3 = true;
 
-        updateMoveDuration = function(){
+        this.rotateMoveRatio = 2;
+
+        updateMoveDuration = function(firstShot = false){
             let targetsLeft = score/maxTargets;
             console.log("targetsLeft >> ", targetsLeft*100, "%");
-            if(targetsLeft>0.2 && this.speedLevel1){
+            if(firstShot){
+                this.moveDuration*=0.3;
+                this.rotateMoveRatio++;
+                console.log(`speed 0 >> ${this.moveDuration} sec, ${this.moveDuration/this.rotateMoveRatio} sec`);
+            }else if(targetsLeft>0.2 && this.speedLevel1){
                 this.moveDuration*=0.5;
+                this.rotateMoveRatio++;
                 this.speedLevel1 = false;
-                console.log("speed 1 >> ", this.moveDuration);
+                console.log(`speed 1 >> ${this.moveDuration} sec, ${this.moveDuration/this.rotateMoveRatio} sec`);
             }else if(targetsLeft>0.5 && this.speedLevel2){
-                this.moveDuration*=0.5;
+                this.moveDuration*=0.7;
+                this.rotateMoveRatio++;
                 this.speedLevel2 = false;
-                console.log("speed 2 >> ", this.moveDuration);
+                console.log(`speed 2 >> ${this.moveDuration} sec, ${this.moveDuration/this.rotateMoveRatio} sec`);
             }else if(targetsLeft>0.8 && this.speedLevel3){
-                this.moveDuration*=0.5;
+                this.moveDuration*=0.7;
+                this.rotateMoveRatio++;
                 this.speedLevel3 = false;
-                console.log("speed 3 >> ", this.moveDuration);
+                console.log(`speed 3 >> ${this.moveDuration} sec, ${this.moveDuration/this.rotateMoveRatio} sec`);
             }
         }.bind(this);
     },
@@ -66,9 +76,12 @@ WL.registerComponent('mouse-mover', {
 
             this.pointA = this.currentPos;
             let x = Math.random()*this.travelDistance;
-            let z = Math.sqrt(Math.pow(this.travelDistance,2) - Math.pow(x,2));
+            let z = Math.abs(Math.sqrt(Math.pow(this.travelDistance,2) - Math.pow(x,2)));
 
             let distanceFromOrigin = glMatrix.vec3.length(this.pointA);
+            let playerLocation = [0,0,0]
+            playerLocation = getPlayerLocation();
+            let distanceFromPlayer = glMatrix.vec3.dist(this.pointA, playerLocation);
             if(distanceFromOrigin>20){
                 if(this.pointA[0]>=14){
                     x *= -1;
@@ -76,6 +89,17 @@ WL.registerComponent('mouse-mover', {
                 if(this.pointA[2]>=14){
                     z *= -1;
                 }
+            }else if(distanceFromPlayer<7){
+                if(this.pointA[0]<playerLocation[0]){
+                    x*=-1;
+                }
+                if(this.pointA[2]<playerLocation[2]){
+                    x*=-1;
+                }
+                console.log("distanceFromPlayer >> ", distanceFromPlayer);
+                console.log("player location >> ", this.pointA);
+                console.log("mouse location >> ", playerLocation);
+                
             }else{
                 const randomNegative1 = Math.round(Math.random()) * 2 - 1;
                 const randomNegative2 = Math.round(Math.random()) * 2 - 1;
