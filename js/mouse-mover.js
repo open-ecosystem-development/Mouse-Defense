@@ -94,11 +94,11 @@ WL.registerComponent('mouse-mover', {
                     x*=-1;
                 }
                 if(this.pointA[2]<playerLocation[2]){
-                    x*=-1;
+                    z*=-1;
                 }
                 console.log("distanceFromPlayer >> ", distanceFromPlayer);
-                console.log("player location >> ", this.pointA);
-                console.log("mouse location >> ", playerLocation);
+                console.log(`player >> ${this.pointA}`);
+                console.log(`mouse >> ${playerLocation}->[${x}, 0, ${z}]`);
                 
             }else{
                 const randomNegative1 = Math.round(Math.random()) * 2 - 1;
