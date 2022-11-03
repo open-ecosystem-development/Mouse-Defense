@@ -11,19 +11,35 @@
     limitations under the License.
 */
 
-/* Global function used to play SFX and music */
+/* Global function used by mouse-mover to get player's current location */
 var getPlayerLocation = null;
 /**
-@brief Audio that is attached to the player object.
+@brief Returns the player's current location.
 */
 WL.registerComponent('player-location', {
 }, {
     init: function() {
-        this.playerLocation = [0,0,0];
+        this.playerLocation = [0, 0, 0];
+        this.object.getTranslationWorld(this.playerLocation);
+        /** Used by mouse-mover to run away from the player if they get too close to any mice. */
         getPlayerLocation = function(){
-            glMatrix.quat2.getTranslation(this.playerLocation, this.object.transformLocal);
-            // console.log(`playerLocation() >> ${this.playerLocation}`);
             return this.playerLocation;
         }.bind(this);
     },
+    update: function(){
+        let currentLocation = [0, 0, 0];
+        this.object.getTranslationWorld(currentLocation);
+
+        let locationDistance = glMatrix.vec3.dist(currentLocation, this.playerLocation);
+        if(locationDistance != 0){
+            this.playerLocation=currentLocation;
+            try{
+                for(let i = 0; i < mouseSpawner.targets.length; ++i) {
+                    mouseSpawner.targets[i].getComponent('mouse-mover').runFromPlayer(currentLocation);;
+                }
+            }catch(e){
+                console.log("player-location >> get mouse >> ", e);
+            }
+        }
+    }
 });

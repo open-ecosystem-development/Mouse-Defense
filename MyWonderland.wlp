@@ -3430,6 +3430,44 @@
                 "file": "models\\firefight_water_gun.glb"
             },
             "parent": "983"
+        },
+        "988": {
+            "name": "Game Logo",
+            "components": [
+                {
+                    "type": "image-texture",
+                    "image-texture": {
+                        "url": "https://exposexr.com/images/logo-dark.png",
+                        "material": "20"
+                    }
+                },
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "7",
+                        "material": "20"
+                    },
+                    "active": false
+                }
+            ],
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                -1.4923048,
+                2.4159641,
+                0.0,
+                1.0
+            ]
         }
     },
     "meshes": {
@@ -4949,6 +4987,12 @@
                 "name": "texture_2",
                 "file": "models\\firefight_water_gun.glb"
             }
+        },
+        "986": {
+            "link": {
+                "name": "mousedefense.png",
+                "file": "assets\\mousedefense.png"
+            }
         }
     },
     "images": {
@@ -5070,6 +5114,12 @@
                 "name": "image_2",
                 "file": "models\\firefight_water_gun.glb"
             }
+        },
+        "985": {
+            "link": {
+                "name": "mousedefense.png",
+                "file": "assets\\mousedefense.png"
+            }
         }
     },
     "materials": {
@@ -5091,6 +5141,10 @@
                     1.0,
                     1.0
                 ]
+            },
+            "pipeline": "35",
+            "Flat": {
+                "flatTexture": "986"
             }
         },
         "20": {
@@ -5104,6 +5158,10 @@
                     1.0
                 ],
                 "shininess": 1
+            },
+            "pipeline": "35",
+            "Flat": {
+                "flatTexture": "986"
             }
         },
         "22": {
@@ -6532,6 +6590,7 @@
         "assets/uploads_files_2109779_Duck.fbx",
         "assets/uploads_files_3861195_Mouse_GLB.glb",
         "assets/duck_walk_free.glb",
-        "models/firefight_water_gun.glb"
+        "models/firefight_water_gun.glb",
+        "assets/mousedefense.png"
     ]
 }
