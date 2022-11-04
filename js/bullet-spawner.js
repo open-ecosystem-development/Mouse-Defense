@@ -33,20 +33,22 @@ WL.registerComponent('bullet-spawner', {
         this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
     },
     onTouchDown: function(e) {
-        /** Limit how fast player can shoot */
-        let currentTime = Date.now();
-        let lastShotTimeGap = Math.abs(currentTime-this.lastShotTime);
+        /** Prevent left trigger from firing */
+        if(e.inputSource.handedness=="right"){
+            /** Limit how fast player can shoot */
+            let currentTime = Date.now();
+            let lastShotTimeGap = Math.abs(currentTime-this.lastShotTime);
 
-        if(lastShotTimeGap>500){
-            const dir = [0, 0, 0];
-            this.object.getComponent('cursor').cursorRayObject.getForward(dir);
+            if(lastShotTimeGap>500){
+                const dir = [0, 0, 0];
+                this.object.getComponent('cursor').cursorRayObject.getForward(dir);
 
-            this.pulse(e.inputSource.gamepad);
-            this.launch(dir);
-            this.lastShotTime=currentTime;
-            this.soundClick.play();
+                this.pulse(e.inputSource.gamepad);
+                this.launch(dir);
+                this.lastShotTime=currentTime;
+                this.soundClick.play();
+            }
         }
-        
     },
     launch: function(dir) {
         let bullet = this.spawnBullet();

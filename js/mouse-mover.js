@@ -23,8 +23,9 @@ WL.registerComponent('mouse-mover', {
         this.pointA = [0, 0, 0];
         this.pointB = [0, 0, 0];
 
-        this.moveDuration = 2;
-        this.time = this.moveDuration/2;
+        this.rotateMoveRatio = 2;
+        this.moveDuration = (Math.random()*0.7)+1.3;
+        this.time = this.moveDuration/this.rotateMoveRatio;
         this.speed = 1.5;
         this.travelDistance = this.moveDuration*this.speed;
 
@@ -39,7 +40,7 @@ WL.registerComponent('mouse-mover', {
         this.speedLevel2 = true;
         this.speedLevel3 = true;
 
-        this.rotateMoveRatio = 2;
+        
         this.minDistanceFromPlayer = 7;
 
         updateMoveDuration = function(firstShot = false){

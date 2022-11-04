@@ -26,6 +26,12 @@
                 },
                 {
                     "type": "player-location"
+                },
+                {
+                    "type": "wasd-controls",
+                    "wasd-controls": {
+                        "headObject": "14"
+                    }
                 }
             ]
         },
@@ -477,18 +483,6 @@
                     "type": "input",
                     "input": {
                         "type": "ray left"
-                    }
-                },
-                {
-                    "type": "teleport",
-                    "teleport": {
-                        "floorGroup": 2,
-                        "camRoot": "14",
-                        "cam": "17",
-                        "teleportIndicatorMeshObject": "208",
-                        "indicatorYOffset": 0.0099999,
-                        "eyeLeft": "18",
-                        "eyeRight": "19"
                     }
                 }
             ],
@@ -3435,19 +3429,12 @@
             "name": "Game Logo",
             "components": [
                 {
-                    "type": "image-texture",
-                    "image-texture": {
-                        "url": "https://exposexr.com/images/logo-dark.png",
-                        "material": "20"
-                    }
-                },
-                {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "7",
+                        "mesh": "12",
                         "material": "20"
                     },
-                    "active": false
+                    "active": true
                 }
             ],
             "transformation": [
@@ -3463,8 +3450,8 @@
                 0.0,
                 1.0,
                 0.0,
-                -1.4923048,
-                2.4159641,
+                0.0,
+                3.5986759,
                 0.0,
                 1.0
             ]
@@ -4993,6 +4980,12 @@
                 "name": "mousedefense.png",
                 "file": "assets\\mousedefense.png"
             }
+        },
+        "990": {
+            "link": {
+                "name": "Asset 1@2x.png",
+                "file": "assets\\Asset 1@2x.png"
+            }
         }
     },
     "images": {
@@ -5120,6 +5113,12 @@
                 "name": "mousedefense.png",
                 "file": "assets\\mousedefense.png"
             }
+        },
+        "989": {
+            "link": {
+                "name": "Asset 1@2x.png",
+                "file": "assets\\Asset 1@2x.png"
+            }
         }
     },
     "materials": {
@@ -5161,7 +5160,7 @@
             },
             "pipeline": "35",
             "Flat": {
-                "flatTexture": "986"
+                "flatTexture": "990"
             }
         },
         "22": {
@@ -6075,7 +6074,8 @@
                 16384,
                 16384
             ],
-            "fontOutline": true
+            "fontOutline": true,
+            "fontOutlineSize": 0.1
         }
     },
     "animations": {
@@ -6591,6 +6591,7 @@
         "assets/uploads_files_3861195_Mouse_GLB.glb",
         "assets/duck_walk_free.glb",
         "models/firefight_water_gun.glb",
-        "assets/mousedefense.png"
+        "assets/mousedefense.png",
+        "assets/Asset 1@2x.png"
     ]
 }
