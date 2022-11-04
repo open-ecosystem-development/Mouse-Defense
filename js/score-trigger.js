@@ -54,7 +54,9 @@ WL.registerComponent('score-trigger', {
                         bgMusic.stop();
                         mouseSound.stop();
                         resetButton.unhide();
+                        showLogo();
                         gameOver = true;
+
                     }
                     
                     updateScore(scoreString);

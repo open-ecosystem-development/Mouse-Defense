@@ -36,6 +36,7 @@ WL.registerComponent('player-location', {
             try{
                 for(let i = 0; i < mouseSpawner.targets.length; ++i) {
                     // console.log("mouse >> ", mouseSpawner.targets[i].getComponent('mouse-mover'));
+                    
                     mouseSpawner.targets[i].getComponent('mouse-mover').runFromPlayer(currentLocation);;
                 }
             }catch(e){

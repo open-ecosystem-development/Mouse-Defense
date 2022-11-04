@@ -3432,9 +3432,12 @@
                     "type": "mesh",
                     "mesh": {
                         "mesh": "12",
-                        "material": "20"
+                        "material": "903"
                     },
                     "active": true
+                },
+                {
+                    "type": "game-logo"
                 }
             ],
             "transformation": [
@@ -5158,9 +5161,9 @@
                 ],
                 "shininess": 1
             },
-            "pipeline": "35",
+            "pipeline": "34",
             "Flat": {
-                "flatTexture": "990"
+                "flatTexture": null
             }
         },
         "22": {
@@ -5178,11 +5181,21 @@
                     9.999999974752427e-7,
                     1.0
                 ],
-                "shininess": 10,
+                "shininess": 2,
                 "ambientColor": [
                     1.0,
                     0.0,
                     0.0,
+                    1.0
+                ]
+            },
+            "pipeline": "37",
+            "Flat": {
+                "flatTexture": "824",
+                "color": [
+                    1.0,
+                    0.0,
+                    0.9176473,
                     1.0
                 ]
             }
@@ -5205,6 +5218,16 @@
                 "ambientColor": [
                     0.3843137,
                     0.3089579,
+                    0.0,
+                    1.0
+                ]
+            },
+            "pipeline": "37",
+            "Flat": {
+                "flatTexture": "990",
+                "color": [
+                    1.0,
+                    0.8705882,
                     0.0,
                     1.0
                 ]
@@ -5898,6 +5921,35 @@
             "link": {
                 "name": "Eye_tx",
                 "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            },
+            "Phong": {
+                "diffuseTexture": "990",
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "emissiveColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "fogColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "ambientFactor": 1.0,
+                "shininess": 0
             }
         },
         "912": {

@@ -12,6 +12,7 @@
 */
 var bulletSpawner = null;
 var shotCount = 0;
+var firstShot = false;
 /**
 @brief Spawns a new bullet object when the player depresses the trigger.
 */
@@ -27,7 +28,6 @@ WL.registerComponent('bullet-spawner', {
         this.bullets = [];
         this.nextIndex = 0;
         this.lastShotTime = 0;
-        this.firstShot = false;
 
         bulletSpawner = this.object;
         this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
@@ -63,8 +63,10 @@ WL.registerComponent('bullet-spawner', {
         shotCount++;
         updateCounter();
 
-        if(!this.firstShot){
+        if(!firstShot){
+            hideLogo();
             updateMoveDuration(true);
+            firstShot = true;
         }
     },
     spawnBullet:function(){

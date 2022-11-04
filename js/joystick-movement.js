@@ -10,7 +10,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import {vec3} from 'gl-matrix';
+
 /**
  * Basic movement with W/A/S/D keys.
  */
@@ -42,10 +42,10 @@ WL.registerComponent('joystick-movement', {
         if (this.left) direction[0] -= 1.0;
         if (this.right) direction[0] += 1.0;
 
-        vec3.normalize(direction, direction);
+        glMatrix.vec3.normalize(direction, direction);
         direction[0] *= this.speed;
         direction[2] *= this.speed;
-        vec3.transformQuat(direction, direction, this.headObject.transformWorld);
+        glMatrix.vec3.transformQuat(direction, direction, this.headObject.transformWorld);
         this.object.translate(direction);
     },
 
