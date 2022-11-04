@@ -12,6 +12,7 @@
 */
 var bulletSpawner = null;
 var shotCount = 0;
+var firstShot = false;
 /**
 @brief Spawns a new bullet object when the player depresses the trigger.
 */
@@ -19,7 +20,6 @@ WL.registerComponent('bullet-spawner', {
     bulletMesh: {type: WL.Type.Mesh},
     bulletMaterial: {type: WL.Type.Material},
     bulletSpeed: {type: WL.Type.Float, default: 1.0},
-    // maxBullets: {type: WL.Type.Int, default: 32},
 }, {
     start: function() {
         WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
@@ -33,28 +33,24 @@ WL.registerComponent('bullet-spawner', {
         this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
     },
     onTouchDown: function(e) {
-        /** Limit how fast player can shoot */
-        let currentTime = Date.now();
-        let lastShotTimeGap = Math.abs(currentTime-this.lastShotTime);
+        /** Prevent left trigger from firing */
+        if(e.inputSource.handedness=="right"){
+            /** Limit how fast player can shoot */
+            let currentTime = Date.now();
+            let lastShotTimeGap = Math.abs(currentTime-this.lastShotTime);
 
-        if(lastShotTimeGap>50){
-            const dir = [0, 0, 0];
-            this.object.getComponent('cursor').cursorRayObject.getForward(dir);
+            if(lastShotTimeGap>500){
+                const dir = [0, 0, 0];
+                this.object.getComponent('cursor').cursorRayObject.getForward(dir);
 
-            this.pulse(e.inputSource.gamepad);
-            this.launch(dir);
-            this.lastShotTime=currentTime;
-            this.soundClick.play();
+                this.pulse(e.inputSource.gamepad);
+                this.launch(dir);
+                this.lastShotTime=currentTime;
+                this.soundClick.play();
+            }
         }
-        
     },
     launch: function(dir) {
-        // let bullet =
-        //     this.bullets.length == this.maxBullets ?
-        //     this.bullets[this.nextIndex] : this.spawnBullet();
-        // this.bullets[this.nextIndex] = bullet;
-
-        // this.nextIndex = (this.nextIndex + 1) % this.maxBullets;
         let bullet = this.spawnBullet();
 
         bullet.object.transformLocal.set(this.object.transformWorld);
@@ -66,6 +62,12 @@ WL.registerComponent('bullet-spawner', {
 
         shotCount++;
         updateCounter();
+
+        if(!firstShot){
+            hideLogo();
+            updateMoveDuration(true);
+            firstShot = true;
+        }
     },
     spawnBullet:function(){
         const obj = WL.scene.addObject();

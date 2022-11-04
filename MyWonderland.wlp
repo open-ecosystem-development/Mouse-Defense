@@ -23,6 +23,15 @@
             "components": [
                 {
                     "type": "bg-music"
+                },
+                {
+                    "type": "player-location"
+                },
+                {
+                    "type": "wasd-controls",
+                    "wasd-controls": {
+                        "headObject": "14"
+                    }
                 }
             ]
         },
@@ -474,18 +483,6 @@
                     "type": "input",
                     "input": {
                         "type": "ray left"
-                    }
-                },
-                {
-                    "type": "teleport",
-                    "teleport": {
-                        "floorGroup": 2,
-                        "camRoot": "14",
-                        "cam": "17",
-                        "teleportIndicatorMeshObject": "208",
-                        "indicatorYOffset": 0.0099999,
-                        "eyeLeft": "18",
-                        "eyeRight": "19"
                     }
                 }
             ],
@@ -1275,16 +1272,16 @@
                 0.0,
                 0.0,
                 0.0,
-                0.9999818,
+                0.9999814,
                 0.0000011,
                 0.0,
                 0.0,
                 -4.291402149192436e-7,
-                0.9999776,
+                0.9999777,
                 0.0,
-                -0.0000094,
-                0.0139377,
-                -0.0182402,
+                -0.0000093,
+                0.0139374,
+                -0.0182392,
                 1.0
             ]
         },
@@ -1346,7 +1343,7 @@
                 {
                     "type": "text",
                     "text": {
-                        "text": "Play Again"
+                        "text": "重新开始"
                     }
                 }
             ],
@@ -2853,12 +2850,12 @@
                 "file": "models\\farm\\uploads_files_2156679_farm.gltf"
             },
             "transformation": [
-                -9.871055084431648e-8,
-                0.828044,
+                -9.871053663346174e-8,
+                0.8280439,
                 0.0,
                 0.0,
-                -0.1469551,
-                -1.7518425821094752e-8,
+                -0.146955,
+                -1.7518413386596876e-8,
                 0.0,
                 0.0,
                 0.0,
@@ -2866,7 +2863,7 @@
                 0.0699099,
                 0.0,
                 8.2236309,
-                0.251125,
+                0.2511251,
                 -4.5196342,
                 1.0
             ],
@@ -3320,7 +3317,7 @@
                 {
                     "type": "text",
                     "text": {
-                        "text": "Eliminate all 20 rats.",
+                        "text": "歼灭20只老鼠",
                         "effect": "outline"
                     }
                 },
@@ -3329,19 +3326,19 @@
                 }
             ],
             "transformation": [
-                1.5,
+                3.5,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                1.5,
+                3.5,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                1.5,
+                3.5,
                 0.0,
-                0.0,
+                2.9802322387695313e-8,
                 2.3104021,
                 0.0,
                 1.0
@@ -3354,7 +3351,7 @@
                 {
                     "type": "text",
                     "text": {
-                        "text": "Shots Fired: 0",
+                        "text": "发射子弹：0",
                         "effect": "outline"
                     }
                 },
@@ -3363,20 +3360,20 @@
                 }
             ],
             "transformation": [
-                1.5,
+                2.5,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                1.5,
+                2.5,
                 0.0,
                 0.0,
                 0.0,
                 0.0,
-                1.5,
+                2.5,
                 0.0,
                 0.0,
-                1.9985342,
+                1.9513028,
                 0.0,
                 1.0
             ]
@@ -3427,6 +3424,40 @@
                 "file": "models\\firefight_water_gun.glb"
             },
             "parent": "983"
+        },
+        "988": {
+            "name": "Game Logo",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "12",
+                        "material": "903"
+                    },
+                    "active": true
+                },
+                {
+                    "type": "game-logo"
+                }
+            ],
+            "transformation": [
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                3.5986759,
+                0.0,
+                1.0
+            ]
         }
     },
     "meshes": {
@@ -4946,6 +4977,18 @@
                 "name": "texture_2",
                 "file": "models\\firefight_water_gun.glb"
             }
+        },
+        "986": {
+            "link": {
+                "name": "mousedefense.png",
+                "file": "assets\\mousedefense.png"
+            }
+        },
+        "990": {
+            "link": {
+                "name": "Asset 1@2x.png",
+                "file": "assets\\Asset 1@2x.png"
+            }
         }
     },
     "images": {
@@ -5067,6 +5110,18 @@
                 "name": "image_2",
                 "file": "models\\firefight_water_gun.glb"
             }
+        },
+        "985": {
+            "link": {
+                "name": "mousedefense.png",
+                "file": "assets\\mousedefense.png"
+            }
+        },
+        "989": {
+            "link": {
+                "name": "Asset 1@2x.png",
+                "file": "assets\\Asset 1@2x.png"
+            }
         }
     },
     "materials": {
@@ -5088,6 +5143,10 @@
                     1.0,
                     1.0
                 ]
+            },
+            "pipeline": "35",
+            "Flat": {
+                "flatTexture": "986"
             }
         },
         "20": {
@@ -5101,6 +5160,10 @@
                     1.0
                 ],
                 "shininess": 1
+            },
+            "pipeline": "34",
+            "Flat": {
+                "flatTexture": null
             }
         },
         "22": {
@@ -5118,11 +5181,21 @@
                     9.999999974752427e-7,
                     1.0
                 ],
-                "shininess": 10,
+                "shininess": 2,
                 "ambientColor": [
                     1.0,
                     0.0,
                     0.0,
+                    1.0
+                ]
+            },
+            "pipeline": "37",
+            "Flat": {
+                "flatTexture": "824",
+                "color": [
+                    1.0,
+                    0.0,
+                    0.9176473,
                     1.0
                 ]
             }
@@ -5145,6 +5218,16 @@
                 "ambientColor": [
                     0.3843137,
                     0.3089579,
+                    0.0,
+                    1.0
+                ]
+            },
+            "pipeline": "37",
+            "Flat": {
+                "flatTexture": "990",
+                "color": [
+                    1.0,
+                    0.8705882,
                     0.0,
                     1.0
                 ]
@@ -5838,6 +5921,35 @@
             "link": {
                 "name": "Eye_tx",
                 "file": "assets\\uploads_files_3861195_Mouse_GLB.glb"
+            },
+            "Phong": {
+                "diffuseTexture": "990",
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "emissiveColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "fogColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.0
+                ],
+                "ambientFactor": 1.0,
+                "shininess": 0
             }
         },
         "912": {
@@ -6014,7 +6126,10 @@
                 16384,
                 16384
             ],
-            "fontOutline": true
+            "fontOutline": true,
+            "fontOutlineSize": 0.1,
+            "font": "assets/fonts/Benmojinhei-fonts.ttf",
+            "fontCharacters": "abcdefghijklmnopqrstuvwxyz\nABCDEFGHIJKLMNOPQRSTUVWXYZ\n0123456789\n:-_+*,.!`\"'?°=\\/\n()[]<>{}$&%@|’‘ \n歼灭老鼠只！发射子弹重新开始被歼灭，剩下恭喜！任务完成了任务："
         }
     },
     "animations": {
@@ -6529,6 +6644,8 @@
         "assets/uploads_files_2109779_Duck.fbx",
         "assets/uploads_files_3861195_Mouse_GLB.glb",
         "assets/duck_walk_free.glb",
-        "models/firefight_water_gun.glb"
+        "models/firefight_water_gun.glb",
+        "assets/mousedefense.png",
+        "assets/Asset 1@2x.png"
     ]
 }

@@ -28,7 +28,7 @@ WL.registerComponent('score-display', {
         }.bind(this);
 
         WL.onXRSessionStart.push(function(){
-            updateScore(`Eliminate all ${maxTargets} rats.`);
+            updateScore(`歼灭了 ${maxTargets} 只老鼠！`);
         });
     },
 });

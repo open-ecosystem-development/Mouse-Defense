@@ -51,7 +51,8 @@ WL.registerComponent('play-again-button', {
         shotCount = 0;
         score = 0;
         updateCounter();
-        updateScore(`Eliminate all ${maxTargets} rats.`);
+        updateScore(`歼灭所有 ${maxTargets} 只老鼠！`);
+        firstShot = false;
 
         this.hide();
     },
