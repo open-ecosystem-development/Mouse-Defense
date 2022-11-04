@@ -26,12 +26,12 @@
 5. 打开 Chrome 检查设备 [页面](chrome://inspect/#devices)。
 6. 启用“发现 USB 设备” 和 “发现网络目标”
 7. 点击`Port forwarding(端口转发)...`按钮
-  1. 添加 `8080` 作为 `Port` 端口值。
-  2. 将 `localhost:8080` 添加为“IP地址和端口”值。
-  3. 勾选`IP address and port`（启用端口转发）选项。
+   1. 添加 `8080` 作为 `Port` 端口值。
+   2. 将 `localhost:8080` 添加为“IP地址和端口”值。
+   3. 勾选`IP address and port`（启用端口转发）选项。
 8. 单击“配置...”按钮
-  1. 将 `localhost:8080` 添加为“IP 地址和端口”的新值
-  2. 勾选“启用端口转发”选项。
+   1. 将 `localhost:8080` 添加为“IP 地址和端口”的新值
+   2. 勾选“启用端口转发”选项。
 9. 回到 Wonderland Editor，打包并启动服务器。
 
 ### Meta Quest
