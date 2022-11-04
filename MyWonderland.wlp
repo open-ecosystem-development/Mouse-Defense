@@ -635,6 +635,12 @@
                 {
                     "type": "vr-mode-active-switch",
                     "active": true
+                },
+                {
+                    "type": "joystick-movement",
+                    "joystick-movement": {
+                        "headObject": "14"
+                    }
                 }
             ],
             "transformation": [
