@@ -37,6 +37,10 @@ WL.registerComponent('score-trigger', {
                 let p = overlaps[i].object.getComponent('bullet-physics');
     
                 if(p && !p.scored) {
+                    let currentLocation = [];
+                    p.object.getTranslationWorld(currentLocation);
+                    console.log("rat killed at >> ", currentLocation);
+
                     p.scored = true;
                     this.particles.transformWorld.set(this.object.transformWorld);
                     this.particles.getComponent('confetti-particles').burst();

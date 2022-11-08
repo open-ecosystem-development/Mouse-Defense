@@ -32,6 +32,7 @@ WL.registerComponent('bullet-physics', {
             console.warn("'bullet-physics' component on object", this.object.name, "requires a collision component");
         }
         
+        // console.log("this.dir >> ", this.dir);
     },
     update: function(dt) {
         //error checking?
@@ -63,6 +64,7 @@ WL.registerComponent('bullet-physics', {
         
         this.object.resetTranslation();
         this.object.translate(this.position);
+        // console.log(`${this.dir} -> ${newDir} = ${this.position}`);
     },
     destroyBullet: function(time){
         if(time==0){

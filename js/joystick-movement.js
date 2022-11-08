@@ -73,8 +73,9 @@ WL.registerComponent('joystick-movement', {
             let yStrength = Math.abs(this.gamepad.axes[3]);
 
             if(yStrength>xStrength){
+                // console.log("y-axis movement");
                 glMatrix.vec3.normalize(direction, direction);
-                direction[2] *= this.speed;
+                direction[2] *= this.moveSpeed;
                 glMatrix.vec3.transformQuat(direction, direction, this.headObject.transformWorld);
                 this.headObject.translate(direction);
             }else if(lastTurnTimeGap>this.turnIntervalTime){
@@ -113,6 +114,7 @@ WL.registerComponent('joystick-movement', {
                     let inputSource = e.added[i];
                     if(inputSource.handedness == "left") {
                         this.gamepad = inputSource.gamepad;
+                        console.log("left gamepad added");
                     }
                 }
             }

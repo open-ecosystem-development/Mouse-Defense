@@ -32,6 +32,12 @@
                     "wasd-controls": {
                         "headObject": "14"
                     }
+                },
+                {
+                    "type": "fixed-foveation",
+                    "fixed-foveation": {
+                        "fixedFoveation": 1.0
+                    }
                 }
             ]
         },
@@ -201,7 +207,8 @@
                             0.4196078
                         ],
                         "shadows": true,
-                        "range": 50.0
+                        "range": 50.0,
+                        "cascadeCount": 3
                     }
                 }
             ],
@@ -5073,7 +5080,7 @@
                 "name": "sDNMMyv.png",
                 "file": "assets\\sDNMMyv.png"
             },
-            "compress": true
+            "compress": false
         },
         "895": {
             "link": {
@@ -5127,7 +5134,8 @@
             "link": {
                 "name": "Asset 1@2x.png",
                 "file": "assets\\Asset 1@2x.png"
-            }
+            },
+            "compress": false
         }
     },
     "materials": {
@@ -6567,7 +6575,8 @@
             "link": {
                 "name": "Phong Opaque",
                 "file": "default"
-            }
+            },
+            "doubleSided": true
         },
         "38": {
             "link": {
