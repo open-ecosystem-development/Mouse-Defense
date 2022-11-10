@@ -15,27 +15,101 @@ WL.registerComponent('wasd-controls-custom', {
 
         window.addEventListener('keydown', this.press.bind(this));
         window.addEventListener('keyup', this.release.bind(this));
+        console.log("this.speed >> ", this.speed);
     },
 
-    start: function() {
-        this.headObject = this.headObject || this.object;
-    },
+    // start: function() {
+    //     this.headObject = this.headObject;
+    // },
 
     update: function() {
-        let direction = [0, 0, 0];
 
-        if (this.up) direction[2] -= 1.0;
-        if (this.down) direction[2] += 1.0;
-        if (this.left) direction[0] -= 1.0;
-        if (this.right) direction[0] += 1.0;
+        if(this.up || this.right || this.down || this.left){
+            let direction = [0, 0, 0];
 
-        glMatrix.vec3.normalize(direction, direction);
-        direction[0] *= this.speed;
-        direction[2] *= this.speed;
-        glMatrix.vec3.transformQuat(direction, direction, this.headObject.transformWorld);
-        this.object.translate(direction);
+            let forwardVec = [];
+            this.object.getForward(forwardVec);
+            forwardVec[1]=0;
+            let backVec = [0, 0, 0];
+            if(forwardVec[2]==1){
+                forwardVec[2] = this.speed;
+                backVec = [0, 0, -this.speed];
+            }else if(forwardVec[2]==-1){
+                forwardVec[2] = -this.speed;
+                backVec = [0, 0, this.speed];
+            }else{
+                let angle = glMatrix.vec3.angle([0,0,-1],forwardVec);
+                let xPolarity = -1;
+                let zPolarity = -1;
+                // console.log(`${forwardVec} -> ${angle}`);
 
-        console.log("direction >> ", direction);
+                //set x-magnitude for forward and back
+                if(forwardVec[0]>0) xPolarity = 1;
+                forwardVec[0] = xPolarity*Math.cos(angle)*this.speed;
+                backVec[0] = -forwardVec[0];
+                //set z-magnitude for forward and back
+                if(forwardVec[2]>0) zPolarity = 1;
+                forwardVec[2] = zPolarity*Math.sin(angle)*this.speed;
+                backVec[2] = -forwardVec[2];
+
+                // forwardVec[2] = -Math.sin(angle)*this.speed;
+                // backVec[0] = -Math.cos(angle)*this.speed;
+                // backVec[2] = -Math.sin(angle)*this.speed;
+            }
+            let rightVec = [];
+            this.object.getRight(rightVec);
+            rightVec[1]=0;
+            let leftVec = [0, 0, 0];
+            if(rightVec[0]==1){
+                rightVec[0] = this.speed;
+                leftVec = [-this.speed, 0, 0];
+            }else if(rightVec[0]==-1){
+                rightVec[0] = -this.speed;
+                leftVec = [this.speed, 0, 0];
+            }else{
+                let angle = glMatrix.vec3.angle([-1,0,0],rightVec);
+                // rightVec[0] = -Math.cos(angle)*this.speed;
+                // rightVec[2] = -Math.sin(angle)*this.speed;
+                // leftVec[0] = -Math.cos(angle)*this.speed;
+                // leftVec[2] = -Math.sin(angle)*this.speed;
+                let xPolarity = -1;
+                let zPolarity = -1;
+                // console.log(`${forwardVec} -> ${angle}`);
+
+                //set x-magnitude for forward and back
+                if(rightVec[0]>0) xPolarity = 1;
+                rightVec[0] = xPolarity*Math.cos(angle)*this.speed;
+                leftVec[0] = -rightVec[0];
+                //set z-magnitude for forward and back
+                if(rightVec[2]>0) zPolarity = 1;
+                rightVec[2] = zPolarity*Math.sin(angle)*this.speed;
+                leftVec[2] = -rightVec[2];
+            }
+
+            // console.log("forwardVec >> ", forwardVec);
+            // console.log("backVec >> ", backVec);
+            // console.log("rightVec >> ", rightVec);
+            // console.log("leftVec >> ", leftVec);
+
+            if (this.up) glMatrix.vec3.add(direction, direction, forwardVec);
+            if (this.down) glMatrix.vec3.add(direction, direction, backVec);
+            if (this.left) glMatrix.vec3.add(direction, direction, leftVec);
+            if (this.right) glMatrix.vec3.add(direction, direction, rightVec);
+
+            // let playerLoc = getPlayerLocation();
+            // let worldDirection = [playerLoc[0]+direction[0],playerLoc[1]+direction[1],playerLoc[2]+direction[2]];
+            // glMatrix.vec3.add(direction, getPlayerLocation(), direction);
+
+            this.object.translate(direction);
+
+            // console.log(`${getPlayerLocation()} + ${direction} -> ${worldDirection}`);
+
+
+            // let currentPos = [];
+            // this.object.getForward(currentPos)
+            // console.log("player forward >> ", currentPos);
+            // console.log("direction >> ", direction);
+        }
     },
 
     press: function(e) {

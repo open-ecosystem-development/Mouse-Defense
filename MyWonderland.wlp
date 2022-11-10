@@ -102,13 +102,14 @@
                     "cursor": {
                         "collisionGroup": 0,
                         "handedness": "none"
-                    }
+                    },
+                    "active": false
                 },
                 {
                     "type": "wasd-controls-custom",
                     "wasd-controls-custom": {
                         "speed": 0.0099999,
-                        "headObject": "17"
+                        "headObject": "14"
                     }
                 },
                 {
