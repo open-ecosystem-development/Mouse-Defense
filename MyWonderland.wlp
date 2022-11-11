@@ -28,12 +28,6 @@
                     "type": "player-location"
                 },
                 {
-                    "type": "wasd-controls",
-                    "wasd-controls": {
-                        "headObject": "14"
-                    }
-                },
-                {
                     "type": "fixed-foveation",
                     "fixed-foveation": {
                         "fixedFoveation": 1.0
@@ -98,19 +92,12 @@
                     "type": "mouse-look"
                 },
                 {
-                    "type": "cursor",
-                    "cursor": {
-                        "collisionGroup": 0,
-                        "handedness": "none"
-                    },
-                    "active": false
-                },
-                {
                     "type": "wasd-controls-custom",
                     "wasd-controls-custom": {
-                        "speed": 0.0099999,
+                        "speed": 0.3,
                         "headObject": "14"
-                    }
+                    },
+                    "active": true
                 },
                 {
                     "type": "bullet-spawner-keyboard",
