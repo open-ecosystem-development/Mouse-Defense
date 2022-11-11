@@ -10,22 +10,24 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-/* Global function used to update the score display */
-var updateCounter = null;
-/**
-@brief Updates the floating Scoreboard text.
 
-The center top text object that shows various helpful texts and score.
+/* Global functions used to toggle logo visibility */
+var hideLogo = null;
+var showLogo = null;
+/**
+@brief All this file does is hide and show the game logo.
 */
-WL.registerComponent('shot-counter', {
+WL.registerComponent('game-logo', {
 }, {
     init: function() {
-        this.text = this.object.getComponent('text');
+        /** hide logo when the 1st shot is fired */
+        hideLogo = function(){
+            this.object.getComponent('mesh').active=false;
+        }.bind(this);
 
-        updateCounter = function() {
-            if(!gameOver){
-                this.text.text = "发射子弹：" + shotCount;
-            }
+        /** show logo when the game ends */
+        showLogo = function(){
+            this.object.getComponent('mesh').active=true;
         }.bind(this);
     },
 });
