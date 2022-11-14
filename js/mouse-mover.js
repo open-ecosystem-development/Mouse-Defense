@@ -45,26 +45,21 @@ WL.registerComponent('mouse-mover', {
 
         updateMoveDuration = function(firstShot = false){
             let targetsLeft = score/maxTargets;
-            // console.log("targetsLeft >> ", targetsLeft*100, "%");
             if(firstShot){
                 this.moveDuration*=0.3;
                 this.rotateMoveRatio++;
-                // console.log(`speed 0 >> ${this.moveDuration} sec, ${this.moveDuration/this.rotateMoveRatio} sec`);
             }else if(targetsLeft>0.2 && this.speedLevel1){
                 this.moveDuration*=0.5;
                 this.rotateMoveRatio++;
                 this.speedLevel1 = false;
-                // console.log(`speed 1 >> ${this.moveDuration} sec, ${this.moveDuration/this.rotateMoveRatio} sec`);
             }else if(targetsLeft>0.5 && this.speedLevel2){
                 this.moveDuration*=0.7;
                 this.rotateMoveRatio++;
                 this.speedLevel2 = false;
-                // console.log(`speed 2 >> ${this.moveDuration} sec, ${this.moveDuration/this.rotateMoveRatio} sec`);
             }else if(targetsLeft>0.8 && this.speedLevel3){
                 this.moveDuration*=0.7;
                 this.rotateMoveRatio++;
                 this.speedLevel3 = false;
-                // console.log(`speed 3 >> ${this.moveDuration} sec, ${this.moveDuration/this.rotateMoveRatio} sec`);
             }
         }.bind(this);
     },
@@ -77,7 +72,6 @@ WL.registerComponent('mouse-mover', {
 
         // get new angle and move location only when movement cycle is complete
         if(this.time >= this.moveDuration) {
-            //console.log("new move position");
             this.time =0;
 
             this.pointA = this.currentPos;
@@ -86,16 +80,20 @@ WL.registerComponent('mouse-mover', {
             let x = Math.random()*this.travelDistance;
             let z = Math.abs(Math.sqrt(Math.pow(this.travelDistance,2) - Math.pow(x,2)));
 
-            let distanceFromOrigin = glMatrix.vec3.length(this.pointA);
             let playerLocation = [0,0,0]
             playerLocation = getPlayerLocation();
+
+            let xNegBoundary = this.pointA[0]<-8;
+            let xPosBoundary = this.pointA[0]>13;
+            let yNegBoundary = this.pointA[2]<-8;
+            let yPosBoundary = this.pointA[2]>12;
             
-            // keep mice within 20 units of origin
-            if(distanceFromOrigin>20){
-                if(this.pointA[0]>=14){
+            // keep mice within farm fence
+            if(xNegBoundary || xPosBoundary || yNegBoundary || yPosBoundary){
+                if(xPosBoundary){
                     x *= -1;
                 }
-                if(this.pointA[2]>=14){
+                if(yPosBoundary){
                     z *= -1;
                 }
             // move away from player if too close
@@ -125,7 +123,6 @@ WL.registerComponent('mouse-mover', {
         let moveTime = this.time-this.moveDuration/this.rotateMoveRatio;
         // rotation phase
         if(this.time < rotateTime) {
-            //console.log("rotate phase");
             this.object.resetRotation();
             this.savedAngle = (this.time*this.newAngle)+this.previousAngle;
             this.object.rotateAxisAngleDeg([0, 0, 1], this.savedAngle);
@@ -133,11 +130,9 @@ WL.registerComponent('mouse-mover', {
         }
         // linear interpolation between old and new position
         else{
-            //console.log("linear interpolation");
             glMatrix.vec3.lerp(this.currentPos, this.pointA, this.pointB, moveTime);
         }
         // movement phase
-        //console.log("movement phase");
         this.object.translate(this.currentPos);
     },
     // check if player is too close
