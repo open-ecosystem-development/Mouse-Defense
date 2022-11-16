@@ -5005,6 +5005,18 @@
                 "name": "Asset 1@2x.png",
                 "file": "assets\\Asset 1@2x.png"
             }
+        },
+        "992": {
+            "link": {
+                "name": "skybox.png",
+                "file": "assets\\skybox.png"
+            }
+        },
+        "994": {
+            "link": {
+                "name": "skybox2.png",
+                "file": "assets\\skybox2.png"
+            }
         }
     },
     "images": {
@@ -5137,6 +5149,20 @@
             "link": {
                 "name": "Asset 1@2x.png",
                 "file": "assets\\Asset 1@2x.png"
+            },
+            "compress": false
+        },
+        "991": {
+            "link": {
+                "name": "skybox.png",
+                "file": "assets\\skybox.png"
+            },
+            "compress": false
+        },
+        "993": {
+            "link": {
+                "name": "skybox2.png",
+                "file": "assets\\skybox2.png"
             },
             "compress": false
         }
@@ -5519,7 +5545,7 @@
             },
             "pipeline": "229",
             "Sky": {
-                "texture": "771"
+                "texture": "994"
             }
         },
         "492": {
@@ -5983,6 +6009,13 @@
                 "name": "lambert1",
                 "file": "models\\firefight_water_gun.glb"
             }
+        },
+        "995": {
+            "name": "material.000",
+            "pipeline": "229",
+            "Sky": {
+                "texture": "994"
+            }
         }
     },
     "shaders": {
@@ -6137,14 +6170,22 @@
         "rendering": {
             "sky": {
                 "enabled": true,
-                "material": "485"
+                "material": "995"
             },
             "compressedTextureAtlasSize": [
                 16384,
                 16384
             ],
             "fontOutline": true,
-            "fontOutlineSize": 0.1
+            "fontOutlineSize": 0.1,
+            "bloom": {
+                "enabled": false,
+                "intensity": 1.0,
+                "threshold": 1.0
+            },
+            "hdr": {
+                "exposure": 1.5
+            }
         }
     },
     "animations": {
@@ -6637,6 +6678,9 @@
             "link": {
                 "name": "Sky",
                 "file": "default"
+            },
+            "features": {
+                "TEXTURED": true
             }
         }
     },
@@ -6662,6 +6706,8 @@
         "assets/duck_walk_free.glb",
         "models/firefight_water_gun.glb",
         "assets/mousedefense.png",
-        "assets/Asset 1@2x.png"
+        "assets/Asset 1@2x.png",
+        "assets/skybox.png",
+        "assets/skybox2.png"
     ]
 }
