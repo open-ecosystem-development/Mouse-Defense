@@ -467,18 +467,19 @@
             "parent": "205",
             "components": [
                 {
-                    "type": "cursor",
-                    "cursor": {
-                        "cursorObject": "127",
-                        "collisionGroup": 0,
-                        "cursorRayObject": "209",
-                        "cursorRayScalingAxis": "y"
-                    }
-                },
-                {
                     "type": "input",
                     "input": {
                         "type": "ray left"
+                    }
+                },
+                {
+                    "type": "cursor-custom",
+                    "cursor-custom": {
+                        "collisionGroup": 0,
+                        "cursorRayObject": "209",
+                        "cursorRayScalingAxis": "y",
+                        "cursorObject": "127",
+                        "cursorRayMesh": "210"
                     }
                 }
             ],
@@ -1447,15 +1448,6 @@
             "parent": "205",
             "components": [
                 {
-                    "type": "cursor",
-                    "cursor": {
-                        "cursorObject": "215",
-                        "collisionGroup": 0,
-                        "cursorRayObject": "213",
-                        "cursorRayScalingAxis": "y"
-                    }
-                },
-                {
                     "type": "input",
                     "input": {
                         "type": "ray right"
@@ -1480,6 +1472,16 @@
                         "eyeLeft": "18",
                         "eyeRight": "19",
                         "floorGroup": 2
+                    }
+                },
+                {
+                    "type": "cursor-custom",
+                    "cursor-custom": {
+                        "collisionGroup": 0,
+                        "cursorRayObject": "213",
+                        "cursorRayScalingAxis": "y",
+                        "cursorObject": "215",
+                        "cursorRayMesh": "214"
                     }
                 }
             ],
@@ -4995,9 +4997,10 @@
                     1.0,
                     1.0,
                     1.0
-                ]
+                ],
+                "font": "998"
             },
-            "pipeline": "35",
+            "pipeline": "226",
             "Flat": {
                 "flatTexture": "986"
             }
@@ -5135,7 +5138,15 @@
                 ],
                 "shininess": 1
             },
-            "pipeline": "34"
+            "pipeline": "34",
+            "Flat": {
+                "color": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
         },
         "131": {
             "link": {
