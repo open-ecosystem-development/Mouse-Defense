@@ -94,7 +94,7 @@
     _getCamRotation: function() {
         this.eyeLeft.getForward(this._tempVec);
         this._tempVec[1] = 0;
-        vec3.normalize(this._tempVec, this._tempVec);
+        glMatrix.vec3.normalize(this._tempVec, this._tempVec);
         return Math.atan2(this._tempVec[0], this._tempVec[2]);
     },
 
@@ -119,7 +119,7 @@
 
         if(this.isIndicating && this.teleportIndicatorMeshObject && this.input) {
             const origin = this._tempVec0;
-            quat2.getTranslation(origin, this.object.transformWorld);
+            glMatrix.quat2.getTranslation(origin, this.object.transformWorld);
 
             const direction = this.object.getForward(this._tempVec)
             let rayHit = this.rayHit = (this.rayCastMode == 0) ?
@@ -191,14 +191,14 @@
             this.eyeLeft.getTranslationWorld(p);
             this.eyeRight.getTranslationWorld(p1);
 
-            vec3.add(p, p, p1);
-            vec3.scale(p, p, 0.5);
+            glMatrix.vec3.add(p, p, p1);
+            glMatrix.vec3.scale(p, p, 0.5);
         } else {
             this.cam.getTranslationWorld(p);
         }
 
         this.camRoot.getTranslationWorld(p1);
-        vec3.sub(p, p1, p);
+        glMatrix.vec3.sub(p, p1, p);
         p[0] += newPosition[0];
         p[1] = newPosition[1];
         p[2] += newPosition[2];

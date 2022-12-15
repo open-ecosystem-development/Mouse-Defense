@@ -90,16 +90,9 @@ WL.registerComponent('wasd-controls-custom', {
             if (this.left) glMatrix.vec3.add(direction, direction, leftVec);
             if (this.right) glMatrix.vec3.add(direction, direction, rightVec);
 
-            this.object.translate(direction);
+            this.headObject.translate(direction);
         }
     },
-
-    // array2String: function(arr) {
-    //     let num1 = arr[0].toFixed(3);
-    //     let num2 = 0;
-    //     let num3 = arr[2].toFixed(3);
-    //     return `[${num1}, ${num2}, ${num3}]`;
-    // },
 
     press: function(e) {
         if (e.keyCode === 38 /* up */ || e.keyCode === 87 /* w */ || e.keyCode === 90 /* z */ ) {

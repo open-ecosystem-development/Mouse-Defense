@@ -45,7 +45,6 @@ WL.registerComponent('bullet-spawner-keyboard', {
                 try{
                     const dir = [0, 0, 0];
                     this.object.getForward(dir);
-                    console.log(dir);
 
                     this.launch(dir);
                     this.lastShotTime=currentTime;
