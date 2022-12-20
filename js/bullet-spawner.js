@@ -40,7 +40,7 @@ WL.registerComponent('bullet-spawner', {
 
             if(lastShotTimeGap>500){
                 const dir = [0, 0, 0];
-                this.object.getComponent('cursor').cursorRayObject.getForward(dir);
+                this.object.getComponent('cursor-custom').cursorRayObject.getForward(dir);
 
                 this.pulse(e.inputSource.gamepad);
                 this.launch(dir);
