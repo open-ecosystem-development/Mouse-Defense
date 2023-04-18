@@ -10,12 +10,22 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+import { Component, Type } from "@wonderlandengine/api";
+import { vec3, quat2 } from "gl-matrix";
+
 /**
 @brief Moves and the spawner in random directions.
 */
-WL.registerComponent('spawn-mover', {
-}, {
-    init: function() {
+
+export class SpawnMover extends Component {
+    static TypeName = "spawn-mover";
+    static Properties = {
+        speed: { type: Type.Float, default: 1.0 },
+        // targetObject: {type: Type.Object},
+    };
+
+    init() {
         this.time = 0;
         this.currentPos = [0, 0, 0];
         this.pointA = [0, 0, 0];
@@ -23,44 +33,46 @@ WL.registerComponent('spawn-mover', {
 
         this.moveDuration = 1;
         this.speed = 3;
-        this.travelDistance = this.moveDuration*this.speed;
+        this.travelDistance = this.moveDuration * this.speed;
 
-        glMatrix.quat2.getTranslation(this.currentPos, this.object.transformLocal);
+        quat2.getTranslation(this.currentPos, this.object.transformLocal);
 
-        glMatrix.vec3.add(this.pointA, this.pointA, this.currentPos);
-        glMatrix.vec3.add(this.pointB, this.currentPos, [0, 0, 1.5]);
-    },
-    update: function(dt) {
-        if(isNaN(dt)) return;
+        vec3.add(this.pointA, this.pointA, this.currentPos);
+        vec3.add(this.pointB, this.currentPos, [0, 0, 1.5]);
+    }
+
+    update(dt) {
+        if (isNaN(dt)) return;
 
         this.time += dt;
-        if(this.time >= this.moveDuration) {
+        if (this.time >= this.moveDuration) {
             this.time -= this.moveDuration;
 
             this.pointA = this.currentPos;
-            let x = Math.random()*this.travelDistance;
-            let z = Math.sqrt(Math.pow(this.travelDistance,2) - Math.pow(x,2));
-            
+            let x = Math.random() * this.travelDistance;
+            let z = Math.sqrt(Math.pow(this.travelDistance, 2) - Math.pow(x, 2));
 
-            let distanceFromOrigin = glMatrix.vec3.length(this.pointA);
-            if(distanceFromOrigin>20){
-                if(this.pointA[0]>=14){
+
+            let distanceFromOrigin = vec3.length(this.pointA);
+            if (distanceFromOrigin > 20) {
+                if (this.pointA[0] >= 14) {
                     x *= -1;
                 }
-                if(this.pointA[2]>=14){
+                if (this.pointA[2] >= 14) {
                     z *= -1;
                 }
-            }else{
+            } else {
                 const randomNegative1 = Math.round(Math.random()) * 2 - 1;
                 const randomNegative2 = Math.round(Math.random()) * 2 - 1;
                 x *= randomNegative1
                 z *= randomNegative2;
             }
-            glMatrix.vec3.add(this.pointB, this.pointA, [x, 0, z]);
+            vec3.add(this.pointB, this.pointA, [x, 0, z]);
         }
 
         this.object.resetTranslation();
-        glMatrix.vec3.lerp(this.currentPos, this.pointA, this.pointB, this.time);
+        vec3.lerp(this.currentPos, this.pointA, this.pointB, this.time);
         this.object.translate(this.currentPos);
-    },
-});
+    }
+
+};

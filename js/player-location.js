@@ -10,37 +10,39 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-
+import { Component, Type } from "@wonderlandengine/api";
 /* Global function used by mouse-mover to get player's current location */
 var getPlayerLocation = null;
 /**
 @brief Returns the player's current location.
 */
-WL.registerComponent('player-location', {
-}, {
-    init: function() {
+export class PlayerLocation extends Component {
+    static TypeName = "player-location";
+    static Properties = {};
+
+    init() {
         this.playerLocation = [0, 0, 0];
         this.object.getTranslationWorld(this.playerLocation);
         /** Used by mouse-mover to run away from the player if they get too close to any mice. */
-        getPlayerLocation = function(){
+        getPlayerLocation = function () {
             return this.playerLocation;
         }.bind(this);
-    },
-    update: function(){
+    }
+    update() {
         let currentLocation = [0, 0, 0];
         this.object.getTranslationWorld(currentLocation);
 
         let locationDistance = glMatrix.vec3.dist(currentLocation, this.playerLocation);
-        if(locationDistance != 0){
-            this.playerLocation=currentLocation;
-            try{
-                for(let i = 0; i < mouseSpawner.targets.length; ++i) {
+        if (locationDistance != 0) {
+            this.playerLocation = currentLocation;
+            try {
+                for (let i = 0; i < mouseSpawner.targets.length; ++i) {
                     let mouseMoverComponent = mouseSpawner.targets[i].getComponent('mouse-mover');
                     mouseMoverComponent.runFromPlayer(currentLocation);;
                 }
-            }catch(e){
+            } catch (e) {
                 console.log("player-location >> get mouse >> ", e);
             }
         }
     }
-});
+};

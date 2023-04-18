@@ -10,46 +10,54 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-var bulletSpawner = null;
-var shotCount = 0;
-var firstShot = false;
+import { Component, Type } from "@wonderlandengine/api";
 /**
 @brief Spawns a new bullet object when the player depresses the trigger.
 */
-WL.registerComponent('bullet-spawner', {
-    bulletMesh: {type: WL.Type.Mesh},
-    bulletMaterial: {type: WL.Type.Material},
-    bulletSpeed: {type: WL.Type.Float, default: 1.0},
-}, {
-    start: function() {
-        WL.onXRSessionStart.push(this.xrSessionStart.bind(this));
+
+var bulletSpawner = null;
+var shotCount = 0;
+var firstShot = false;
+
+export class BulletSpawner extends Component {
+    static TypeName = "bullet-spawner";
+    static Properties = {
+        bulletMesh: { type: Type.Mesh },
+        bulletMaterial: { type: Type.Material },
+        bulletSpeed: { type: Type.Float, default: 1.0 },
+    };
+
+    start() {
+        this.engine.onXRSessionStart.push(this.xrSessionStart.bind(this));
 
         this.bullets = [];
         this.nextIndex = 0;
         this.lastShotTime = 0;
 
         bulletSpawner = this.object;
-        this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
-    },
-    onTouchDown: function(e) {
+        this.soundClick = this.object.addComponent('howler-audio-source', { src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
+    }
+
+    onTouchDown(e) {
         /** Prevent left trigger from firing */
-        if(e.inputSource.handedness=="right"){
+        if (e.inputSource.handedness == "right") {
             /** Limit how fast player can shoot */
             let currentTime = Date.now();
-            let lastShotTimeGap = Math.abs(currentTime-this.lastShotTime);
+            let lastShotTimeGap = Math.abs(currentTime - this.lastShotTime);
 
-            if(lastShotTimeGap>500){
+            if (lastShotTimeGap > 500) {
                 const dir = [0, 0, 0];
                 this.object.getComponent('cursor-custom').cursorRayObject.getForward(dir);
 
                 this.pulse(e.inputSource.gamepad);
                 this.launch(dir);
-                this.lastShotTime=currentTime;
+                this.lastShotTime = currentTime;
                 this.soundClick.play();
             }
         }
-    },
-    launch: function(dir) {
+    }
+
+    launch(dir) {
         let bullet = this.spawnBullet();
 
         bullet.object.transformLocal.set(this.object.transformWorld);
@@ -62,25 +70,26 @@ WL.registerComponent('bullet-spawner', {
         shotCount++;
         updateCounter();
 
-        if(!firstShot){
+        if (!firstShot) {
             hideLogo();
             updateMoveDuration(true);
             firstShot = true;
         }
-    },
-    spawnBullet:function(){
-        const obj = WL.scene.addObject();
+    }
+
+    spawnBullet() {
+        const obj = this.engine.scene.addObject();
 
         const mesh = obj.addComponent('mesh');
         mesh.mesh = this.bulletMesh;
         mesh.material = this.bulletMaterial;
 
-        obj.scale([0.05,0.05,0.05]);
+        obj.scale([0.05, 0.05, 0.05]);
 
         mesh.active = true;
 
         const col = obj.addComponent('collision');
-        col.shape = WL.Collider.Sphere;
+        col.shape = this.engine.Collider.Sphere;
         col.extents[0] = 0.05;
         col.group = (1 << 0);
         col.active = true;
@@ -94,23 +103,27 @@ WL.registerComponent('bullet-spawner', {
             object: obj,
             physics: physics
         };
-    },
+    }
+
     //vibrates controller for haptic feedback
-    pulse: function (gamepad) {
+    pulse(gamepad) {
         let actuator;
-        if (!gamepad || !gamepad.hapticActuators) { return; }        
+        if (!gamepad || !gamepad.hapticActuators) { return; }
         actuator = gamepad.hapticActuators[0];
-        if(!actuator) return;
-        actuator.pulse(1, 100);        
-    },
-    onActivate: function() {
-        if(WL.xrSession) {
-            WL.xrSession.addEventListener('selectstart', this.onTouchDown.bind(this));
+        if (!actuator) return;
+        actuator.pulse(1, 100);
+    }
+
+    onActivate() {
+        if (this.engine.xrSession) {
+            this.engine.xrSession.addEventListener('selectstart', this.onTouchDown.bind(this));
         }
-    },
-    xrSessionStart: function(session) {
-        if(this.active) {
+    }
+
+    xrSessionStart(session) {
+        if (this.active) {
             session.addEventListener('selectstart', this.onTouchDown.bind(this));
         }
-    },
-});
+    }
+    
+};

@@ -10,7 +10,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-var resetButton = null;
+import { Component, Type } from "@wonderlandengine/api";
 /**
 @brief Shootable button to restart the game. 
 
@@ -21,25 +21,27 @@ button.js from WastePaperBin-AR wasn't working properly. Changed
 implementation to have the button respond to collision events from the 
 player's bullets.
 */
-WL.registerComponent('play-again-button', {
-}, {
-    init: function() {
+var resetButton = null;
+export class PlayAgainButton extends Component {
+    static TypeName = "play-again-button";
+    static Properties = {};
+    init() {
         this.collision = this.object.getComponent('collision');
-        this.soundPop = this.object.addComponent('howler-audio-source', {src: 'sfx/pop-94319.mp3', volume: 1.9 });
-    },
-    start: function() {
+        this.soundPop = this.object.addComponent('howler-audio-source', { src: 'sfx/pop-94319.mp3', volume: 1.9 });
+    }
+    start() {
         resetButton = this;
         this.hide();
 
-    },
-    restart: function() {
-        try{
-            for(let i = 0; i < mouseSpawner.targets.length; ++i) {
+    }
+    restart() {
+        try {
+            for (let i = 0; i < mouseSpawner.targets.length; ++i) {
                 mouseSpawner.targets[i].destroy();
                 mouseSpawner.object.resetTranslation();
-                mouseSpawner.object.translate([-3,0,-3]);
+                mouseSpawner.object.translate([-3, 0, -3]);
             }
-        }catch(e){
+        } catch (e) {
             console.log("play-again-button >> restart >> ", e);
         }
         mouseSpawner.targets = [];
@@ -55,25 +57,25 @@ WL.registerComponent('play-again-button', {
         firstShot = false;
 
         this.hide();
-    },
-    hide: function() {
+    }
+    hide() {
         this.object.children[0].getComponent('mesh').active = false;
         this.object.children[1].getComponent('text').active = false;
         this.active = false;
-    },
-    unhide: function() {
+    }
+    unhide() {
         this.object.children[0].getComponent('mesh').active = true;
         this.object.children[1].getComponent('text').active = true;
         this.active = true;
-    },
-    update: function(dt) {
+    }
+    update(dt) {
         let overlaps = this.collision.queryOverlaps();
-        for(let i = 0; i < overlaps.length; ++i) {
+        for (let i = 0; i < overlaps.length; ++i) {
             let p = overlaps[i].object.getComponent('bullet-physics');
-            if(p){
+            if (p) {
                 this.restart();
                 this.soundPop.play();
             }
         }
-    },
-});
+    }
+};

@@ -3,6 +3,7 @@ assets/
 cache/
 deploy/
 models/
+node_modules/
 ssl/
 static/
 

@@ -10,25 +10,30 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-/* Global function used to update the score display */
-var updateScore = null;
+import { Component, Type } from "@wonderlandengine/api";
+
 /**
 @brief Marks an object with text component as "score display"
-
 The center top text object that shows various helpful tutorial
 texts and the score.
 */
-WL.registerComponent('score-display', {
-}, {
-    init: function() {
+
+/* Global var used to update the score display */
+var updateScore = null;
+
+export class ScoreDisplay extends Component {
+    static TypeName = "score-display";
+    static Properties = {};
+
+    init() {
         this.text = this.object.getComponent('text');
 
-        updateScore = function(text) {
+        updateScore = function (text) {
             this.text.text = text;
         }.bind(this);
 
-        WL.onXRSessionStart.push(function(){
+        this.engine.onXRSessionStart.push(function () {
             updateScore(`Eliminate all ${maxTargets} rats.`);
         });
-    },
-});
+    }
+};

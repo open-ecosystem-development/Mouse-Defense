@@ -10,53 +10,61 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-var bulletSpawnerKeyboard = null;
-var shotCount = 0;
-var firstShot = false;
+import { Component, Type } from "@wonderlandengine/api";
+
 /**
 @brief Spawns a new bullet object when the player presses the spacebar.
 */
-WL.registerComponent('bullet-spawner-keyboard', {
-    bulletMesh: {type: WL.Type.Mesh},
-    bulletMaterial: {type: WL.Type.Material},
-    bulletSpeed: {type: WL.Type.Float, default: 1.0},
-}, {
-    init: function(){
+var bulletSpawnerKeyboard = null;
+var shotCount = 0;
+var firstShot = false;
+
+export class BulletSpawnerKeyboard extends Component {
+    static TypeName = "bullet-spawner-keyboard";
+    static Properties = {
+        bulletMesh: { type: Type.Mesh },
+        bulletMaterial: { type: Type.Material },
+        bulletSpeed: { type: Type.Float, default: 1.0 },
+    }
+
+    init() {
         this.spacebar = false;
 
         window.addEventListener('keydown', this.press.bind(this));
         window.addEventListener('keyup', this.release.bind(this));
-    },
-    start: function() {
+    }
+
+    start() {
         this.bullets = [];
         this.nextIndex = 0;
         this.lastShotTime = 0;
 
         bulletSpawner = this.object;
-        this.soundClick = this.object.addComponent('howler-audio-source', {src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
-    },
+        this.soundClick = this.object.addComponent('howler-audio-source', { src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
+    }
 
-    update: function(){
-        if(this.spacebar){
+    update() {
+        if (this.spacebar) {
             let currentTime = Date.now();
-            let lastShotTimeGap = Math.abs(currentTime-this.lastShotTime);
+            let lastShotTimeGap = Math.abs(currentTime - this.lastShotTime);
 
-            if(lastShotTimeGap>500){
-                try{
+            if (lastShotTimeGap > 500) {
+                try {
                     const dir = [0, 0, 0];
                     this.object.getForward(dir);
 
                     this.launch(dir);
-                    this.lastShotTime=currentTime;
+                    this.lastShotTime = currentTime;
                     this.soundClick.play();
-                }catch(e){
+                } catch (e) {
                     console.log("keyboard shoot >> ", e);
                 }
-                
+
             }
         }
-    },
-    launch: function(dir) {
+    }
+
+    launch(dir) {
         let bullet = this.spawnBullet();
 
         bullet.object.transformLocal.set(this.object.transformWorld);
@@ -69,25 +77,26 @@ WL.registerComponent('bullet-spawner-keyboard', {
         shotCount++;
         updateCounter();
 
-        if(!firstShot){
+        if (!firstShot) {
             hideLogo();
             updateMoveDuration(true);
             firstShot = true;
         }
-    },
-    spawnBullet:function(){
-        const obj = WL.scene.addObject();
+    }
+
+    spawnBullet() {
+        const obj = this.engine.scene.addObject();
 
         const mesh = obj.addComponent('mesh');
         mesh.mesh = this.bulletMesh;
         mesh.material = this.bulletMaterial;
 
-        obj.scale([0.05,0.05,0.05]);
+        obj.scale([0.05, 0.05, 0.05]);
 
         mesh.active = true;
 
         const col = obj.addComponent('collision');
-        col.shape = WL.Collider.Sphere;
+        col.shape = this.engine.Collider.Sphere;
         col.extents[0] = 0.05;
         col.group = (1 << 0);
         col.active = true;
@@ -101,16 +110,18 @@ WL.registerComponent('bullet-spawner-keyboard', {
             object: obj,
             physics: physics
         };
-    },
-    press: function(e) {
+    }
+
+    press(e) {
         if (e.keyCode === 32 /* spacebar */) {
             this.spacebar = true;
         }
-    },
+    }
 
-    release: function(e) {
-        if (e.keyCode === 32 /* spacebar */ ) {
+    release(e) {
+        if (e.keyCode === 32 /* spacebar */) {
             this.spacebar = false;
         }
-    },
-});
+    }
+
+};

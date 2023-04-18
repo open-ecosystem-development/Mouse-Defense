@@ -10,52 +10,64 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+import { Component, Type } from "@wonderlandengine/api";
+
+/**
+@brief Spawns in mice at set intervals until maxTargets is reached.
+*/
+
 var floorHeight = 0;
 var maxTargets = 0;
 var mouseSound = null;
 var mouseSpawner = null;
 
-/**
-@brief Spawns in mice at set intervals until maxTargets is reached.
-*/
-WL.registerComponent('mouse-spawner', {
-    targetMesh: {type: WL.Type.Mesh},
-    targetMaterial: {type: WL.Type.Material},
-    maxTargets: {type: WL.Type.Int, default: 20},
-    particles: {type: WL.Type.Object},
-    spawnIntervalCeiling: {type: WL.Type.Float, default: 3.0},
-    spawnIntervalFloor: {type: WL.Type.Float, default: 1.0},
-    bulletMesh: {type: WL.Type.Mesh},
-    bulletMaterial: {type: WL.Type.Material},
-}, {
-    init: function() {
+export class MouseSpawner extends Component {
+    static TypeName = "mouse-spawner";
+    static Properties = {
+        targetMesh: { type: Type.Mesh },
+        targetMaterial: { type: Type.Material },
+        spawnAnimation: { type: Type.Animation },
+        maxTargets: { type: Type.Int, default: 20 },
+        particles: { type: Type.Object },
+        spawnIntervalCeiling: { type: Type.Float, default: 3.0 },
+        spawnIntervalFloor: { type: Type.Float, default: 1.0 },
+        bulletMesh: { type: Type.Mesh },
+        bulletMaterial: { type: Type.Material },
+    };
+
+
+    init() {
         maxTargets = this.maxTargets;
         this.time = 0;
         this.spawnInterval = this.spawnIntervalCeiling;
-        mouseSound = this.object.addComponent('howler-audio-source', {src: 'sfx/critter-40645.mp3', loop: true, volume: 1.0 });
-    },
-    start: function() {
+        mouseSound = this.object.addComponent('howler-audio-source', {
+            src: 'sfx/critter-40645.mp3',
+            loop: true,
+            volume: 1.0
+        });
+    }
+    start() {
         this.targets = [];
         this.spawnTarget();
 
         mouseSpawner = this;
-    },
-    update: function(dt) {
+    }
+    update(dt) {
         this.time += dt;
-        if(this.targets.length >= this.maxTargets) return;
+        if (this.targets.length >= this.maxTargets) return;
 
-        if(this.time >= this.spawnInterval){
+        if (this.time >= this.spawnInterval) {
             this.time = 0;
             this.spawnTarget();
             //gradually increases spawn interval until it hits the floor
-            if(this.spawnInterval>this.spawnIntervalFloor){
-                this.spawnInterval*=.8;
+            if (this.spawnInterval > this.spawnIntervalFloor) {
+                this.spawnInterval *= .8;
             }
         }
-    },
-    spawnTarget: function() {
+    }
+    spawnTarget() {
 
-        const obj = WL.scene.addObject();
+        const obj = this.engine.scene.addObject();
         obj.transformLocal.set(this.object.transformWorld);
 
         obj.scale([0.1, 0.1, 0.1]);
@@ -66,9 +78,9 @@ WL.registerComponent('mouse-spawner', {
         obj.addComponent("mouse-mover");
 
         /* Add scoring trigger */
-        const trigger = WL.scene.addObject(obj);
+        const trigger = this.engine.scene.addObject(obj);
         const col = trigger.addComponent('collision');
-        col.collider = WL.Collider.Sphere;
+        col.collider = this.engine.Collider.Sphere;
         col.extents[0] = 0.6;
         col.group = (1 << 0);
         col.active = true;
@@ -81,5 +93,5 @@ WL.registerComponent('mouse-spawner', {
 
         this.targets.push(obj);
         mouseSound.play();
-    },
-});
+    }
+};
