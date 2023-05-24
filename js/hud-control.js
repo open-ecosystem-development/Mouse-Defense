@@ -43,7 +43,7 @@ export class HudControl extends Component {
         // this.currentPos = newPos;
         this.currentPos = trans;
 
-        console.log(this.currentPos);
+        // console.log(this.currentPos);
 
 
         // this.headObject.translate(direction);

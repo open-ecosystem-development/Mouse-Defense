@@ -13,7 +13,7 @@
 
 import { Component, Type } from "@wonderlandengine/api";
 import { vec3, quat, quat2 } from "gl-matrix";
-
+import {state} from "./game";
 /**
 @brief Confetti Particle System
 
@@ -118,7 +118,7 @@ export class ConfettiParticles extends Component {
             }
 
             /* Check if particle would collide */
-            if ((this.origin[1] + vel[1] * dt) <= floorHeight + this.particleScale && vel[1] <= 0) {
+            if ((this.origin[1] + vel[1] * dt) <= state.floorHeight + this.particleScale && vel[1] <= 0) {
                 /* Pseudo friction */
                 const frict = 1 / (1 - vel[1]);
                 vel[0] = frict * vel[0];

@@ -11,10 +11,7 @@
     limitations under the License.
 */
 import { Component, Type } from "@wonderlandengine/api";
-/* Global function used to play SFX and music */
-var updateScore = null;
-var bgMusic = null;
-var victoryMusic = null;
+import {state} from "./game";
 /**
 @brief Audio that is attached to the player object.
 */
@@ -23,12 +20,12 @@ export class BgMusic extends Component {
     static Properties = {};
 
     init() {
-        bgMusic = this.object.addComponent('howler-audio-source', {
+        state.bgMusic = this.object.addComponent('howler-audio-source', {
             src: 'music/happy-funny-kids-111912.mp3',
             loop: true,
             volume: 0.4
         });
-        bgMusic.play();
+        state.bgMusic.play();
         this.bgDucks = this.object.addComponent('howler-audio-source', {
             src: 'sfx/recording-ducks-binaural-18742.mp3',
             loop: true,
@@ -53,9 +50,5 @@ export class BgMusic extends Component {
             volume: 1.0
         });
         this.bgPig.play();
-        victoryMusic = this.object.addComponent('howler-audio-source', {
-            src: 'music/level-win-6416.mp3',
-            volume: 0.9
-        });
     }
 };

@@ -11,12 +11,12 @@
     limitations under the License.
 */
 import { Component, Type } from "@wonderlandengine/api";
+import { state } from "./game";
 
 /**
 @brief Spawns a new bullet object when the player presses the spacebar.
 */
 var bulletSpawnerKeyboard = null;
-var shotCount = 0;
 var firstShot = false;
 
 export class BulletSpawnerKeyboard extends Component {
@@ -74,12 +74,12 @@ export class BulletSpawnerKeyboard extends Component {
         bullet.physics.scored = false;
         bullet.physics.active = true;
 
-        shotCount++;
-        updateCounter();
+        state.shotCount++;
+        state.updateCounter();
 
         if (!firstShot) {
-            hideLogo();
-            updateMoveDuration(true);
+            state.hideLogo();
+            state.updateMoveDuration(true);
             firstShot = true;
         }
     }

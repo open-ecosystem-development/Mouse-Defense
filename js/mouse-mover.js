@@ -12,11 +12,12 @@
 */
 import { Component, Type } from "@wonderlandengine/api";
 import { vec3 } from "gl-matrix";
+import { state } from "./game";
 
 /**
 @brief Moves and rotates the mice in random directions at set intervals.
 */
-var updateMoveDuration = null;
+
 
 export class MouseMover extends Component {
 
@@ -25,12 +26,18 @@ export class MouseMover extends Component {
         speed: { type: Type.Float, default: 1.0 },
     };
 
-    init() {
+    time = 0;
+    currentPos = [0, 0, 0];
+    pointA = [0, 0, 0];
+    pointB = [0, 0, 0];
+    moveDuration = 2;
 
-        this.currentPos = [0, 0, 0];
-        this.object.getTranslationWorld(this.currentPos);
-        this.pointA = [0, 0, 0];
-        this.pointB = [0, 0, 0];
+    savedAngle = 0;
+    previousAngle = 0;
+    newAngle = 0
+
+    init() {
+        this.object.getPositionLocal(this.currentPos);
 
         this.rotateMoveRatio = 2;
         this.moveDuration = (Math.random() * 0.7) + 1.3;
@@ -41,10 +48,6 @@ export class MouseMover extends Component {
         vec3.add(this.pointA, this.pointA, this.currentPos);
         vec3.add(this.pointB, this.currentPos, [0, 0, 1.5]);
 
-        this.savedAngle = 0;
-        this.previousAngle = 0;
-        this.newAngle = 0;
-
         this.speedLevel1 = true;
         this.speedLevel2 = true;
         this.speedLevel3 = true;
@@ -52,8 +55,8 @@ export class MouseMover extends Component {
 
         this.minDistanceFromPlayer = 7;
 
-        updateMoveDuration = function (firstShot = false) {
-            let targetsLeft = score / maxTargets;
+        state.updateMoveDuration = function (firstShot = false) {
+            let targetsLeft = state.score / state.maxTargets;
             if (firstShot) {
                 this.moveDuration *= 0.3;
                 this.rotateMoveRatio++;
@@ -90,7 +93,7 @@ export class MouseMover extends Component {
             let z = Math.abs(Math.sqrt(Math.pow(this.travelDistance, 2) - Math.pow(x, 2)));
 
             let playerLocation = [0, 0, 0]
-            playerLocation = getPlayerLocation();
+            playerLocation = state.getPlayerLocation();
 
             let xNegBoundary = this.pointA[0] < -8;
             let xPosBoundary = this.pointA[0] > 13;
@@ -146,7 +149,7 @@ export class MouseMover extends Component {
     }
     // check if player is too close
     isPlayerClose() {
-        let distanceFromPlayer = vec3.dist(this.pointA, getPlayerLocation());
+        let distanceFromPlayer = vec3.dist(this.pointA, state.getPlayerLocation());
         if (distanceFromPlayer < this.minDistanceFromPlayer) {
             return true;
         } else {

@@ -11,8 +11,10 @@
     limitations under the License.
 */
 import { Component, Type } from "@wonderlandengine/api";
-/* Global function used by mouse-mover to get player's current location */
-var getPlayerLocation = null;
+import { state } from "./game";
+import { vec3 } from "gl-matrix";
+import { MouseMover } from "./mouse-mover";
+
 /**
 @brief Returns the player's current location.
 */
@@ -20,24 +22,28 @@ export class PlayerLocation extends Component {
     static TypeName = "player-location";
     static Properties = {};
 
+    static onRegister(engine) {
+        engine.registerComponent(MouseMover);
+      }
+
     init() {
         this.playerLocation = [0, 0, 0];
-        this.object.getTranslationWorld(this.playerLocation);
+        this.object.getPositionWorld(this.playerLocation);
         /** Used by mouse-mover to run away from the player if they get too close to any mice. */
-        getPlayerLocation = function () {
+        state.getPlayerLocation = function () {
             return this.playerLocation;
         }.bind(this);
     }
     update() {
         let currentLocation = [0, 0, 0];
-        this.object.getTranslationWorld(currentLocation);
+        this.object.getPositionWorld(currentLocation);
 
-        let locationDistance = glMatrix.vec3.dist(currentLocation, this.playerLocation);
+        let locationDistance = vec3.dist(currentLocation, this.playerLocation);
         if (locationDistance != 0) {
             this.playerLocation = currentLocation;
             try {
-                for (let i = 0; i < mouseSpawner.targets.length; ++i) {
-                    let mouseMoverComponent = mouseSpawner.targets[i].getComponent('mouse-mover');
+                for (let i = 0; i < state.mouseSpawner.targets.length; i++) {
+                    let mouseMoverComponent = state.mouseSpawner.targets[i].getComponent(MouseMover);
                     mouseMoverComponent.runFromPlayer(currentLocation);;
                 }
             } catch (e) {

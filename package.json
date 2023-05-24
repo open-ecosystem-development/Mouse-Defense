@@ -5,15 +5,12 @@
   "main": "js/index.js",
   "type": "module",
   "module": "js/index.js",
-  "scripts": {
-    "build": "esbuild ./js/index.js --bundle --outfile=\"deploy/MyWonderland-bundle.js\""
-  },
   "keywords": [
     "wonderland-engine"
   ],
   "dependencies": {
-    "@wonderlandengine/api": "^1.0.0-rc.3",
-    "@wonderlandengine/components": "^1.0.0-rc.3",
+    "@wonderlandengine/api": "^1.0.0",
+    "@wonderlandengine/components": "^1.0.3",
     "gl-matrix": "^3.4.3"
   }
 }

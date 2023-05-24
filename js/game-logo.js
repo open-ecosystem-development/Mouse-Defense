@@ -12,9 +12,9 @@
 */
 
 import { Component, Type } from "@wonderlandengine/api";
+import { state } from "./game";
 
 /* Global functions used to toggle logo visibility */
-var hideLogo = null;
 var showLogo = null;
 /**
 @brief All this file does is hide and show the game logo.
@@ -26,7 +26,7 @@ export class GameLogo extends Component {
 
     init() {
         /** hide logo when the 1st shot is fired */
-        hideLogo = function () {
+        state.hideLogo = function () {
             this.object.getComponent('mesh').active = false;
         }.bind(this);
 

@@ -11,13 +11,14 @@
     limitations under the License.
 */
 import { Component, Type } from "@wonderlandengine/api";
+import { vec3 } from "gl-matrix";
+import { state } from "./game";
 /**
  * Controls the camera through mouse movement.
  *
  * Efficiently implemented to affect object orientation only
  * when the mouse moves.
  */
-var shotCount = 0;
 var firstShot = false;
 
 export class MouseLookCustom extends Component {
@@ -43,7 +44,20 @@ export class MouseLookCustom extends Component {
         this.currentRotationX = 0;
         this.origin = new Float32Array(3);
         this.parentOrigin = new Float32Array(3);
-        document.addEventListener('mousemove', function (e) {
+        this.rotationX = 0;
+        this.rotationY = 0;
+    }
+
+    start() {
+        this.lastShotTime = 0;
+
+        state.bulletSpawner = this.object;
+        this.soundClick = this.object.addComponent('howler-audio-source', {
+            src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3',
+            volume: 0.5
+        });
+
+        document.addEventListener('mousemove', (e) => {
             if (this.active && (this.mouseDown || !this.requireMouseDown)) {
                 this.rotationY = -this.sensitity * e.movementX / 100;
                 this.rotationX = -this.sensitity * e.movementY / 100;
@@ -60,7 +74,7 @@ export class MouseLookCustom extends Component {
                 const parent = this.object.parent;
                 if (parent !== null) {
                     parent.getTranslationWorld(this.parentOrigin);
-                    glMatrix.vec3.sub(this.origin, this.origin, this.parentOrigin);
+                    vec3.sub(this.origin, this.origin, this.parentOrigin);
                 }
 
                 this.object.resetTranslationRotation();
@@ -68,25 +82,26 @@ export class MouseLookCustom extends Component {
                 this.object.rotateAxisAngleRad([0, 1, 0], this.currentRotationY);
                 this.object.translate(this.origin);
             }
-        }.bind(this));
+        });
 
+        const canvas = this.engine.canvas;
         if (this.pointerLockOnClick) {
-            this.enginecanvas.addEventListener("mousedown", () => {
-                this.enginecanvas.requestPointerLock =
-                    this.enginecanvas.requestPointerLock ||
-                    this.enginecanvas.mozRequestPointerLock ||
-                    this.enginecanvas.webkitRequestPointerLock;
-                this.enginecanvas.requestPointerLock();
+            canvas.addEventListener("mousedown", () => {
+                canvas.requestPointerLock =
+                    canvas.requestPointerLock ||
+                    canvas.mozRequestPointerLock ||
+                    canvas.webkitRequestPointerLock;
+                canvas.requestPointerLock();
             });
         }
 
         if (this.requireMouseDown) {
             if (this.mouseButtonIndex == 2) {
-                this.enginecanvas.addEventListener("contextmenu", function (e) {
+                canvas.addEventListener("contextmenu", function (e) {
                     e.preventDefault();
                 }, false);
             }
-            this.enginecanvas.addEventListener('mousedown', function (e) {
+            canvas.addEventListener('mousedown', function (e) {
                 if (e.button == this.mouseButtonIndex) {
                     this.mouseDown = true;
                     document.body.style.cursor = "grabbing";
@@ -97,14 +112,14 @@ export class MouseLookCustom extends Component {
                     }
                 }
             }.bind(this));
-            this.enginecanvas.addEventListener('mouseup', function (e) {
+            canvas.addEventListener('mouseup', function (e) {
                 if (e.button == this.mouseButtonIndex) {
                     this.mouseDown = false;
                     document.body.style.cursor = "initial";
                 }
             }.bind(this));
         } else {
-            this.enginecanvas.addEventListener('mousedown', function (e) {
+            canvas.addEventListener('mousedown', function (e) {
                 if (e.button == this.mouseButtonIndex) {
                     if (e.button == 0) {
                         let currentTime = Date.now();
@@ -128,17 +143,7 @@ export class MouseLookCustom extends Component {
             }.bind(this));
         }
     }
-    start() {
-        this.rotationX = 0;
-        this.rotationY = 0;
-        this.lastShotTime = 0;
 
-        bulletSpawner = this.object;
-        this.soundClick = this.object.addComponent('howler-audio-source', { 
-            src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', 
-            volume: 0.5 
-        });
-    }
     launch(dir) {
         let bullet = this.spawnBullet();
 
@@ -149,12 +154,12 @@ export class MouseLookCustom extends Component {
         bullet.physics.scored = false;
         bullet.physics.active = true;
 
-        shotCount++;
-        updateCounter();
+        state.shotCount++;
+        state.updateCounter();
 
         if (!firstShot) {
-            hideLogo();
-            updateMoveDuration(true);
+            state.hideLogo();
+            state.updateMoveDuration(true);
             firstShot = true;
         }
     }
@@ -170,7 +175,7 @@ export class MouseLookCustom extends Component {
         mesh.active = true;
 
         const col = obj.addComponent('collision');
-        col.shape = this.engineCollider.Sphere;
+        col.shape = this.engine.Collider.Sphere;
         col.extents[0] = 0.05;
         col.group = (1 << 0);
         col.active = true;

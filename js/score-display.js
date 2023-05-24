@@ -11,15 +11,12 @@
     limitations under the License.
 */
 import { Component, Type } from "@wonderlandengine/api";
-
+import {state} from "./game";
 /**
 @brief Marks an object with text component as "score display"
 The center top text object that shows various helpful tutorial
 texts and the score.
 */
-
-/* Global var used to update the score display */
-var updateScore = null;
 
 export class ScoreDisplay extends Component {
     static TypeName = "score-display";
@@ -28,12 +25,12 @@ export class ScoreDisplay extends Component {
     init() {
         this.text = this.object.getComponent('text');
 
-        updateScore = function (text) {
+        state.updateScore = function (text) {
             this.text.text = text;
         }.bind(this);
 
         this.engine.onXRSessionStart.push(function () {
-            updateScore(`Eliminate all ${maxTargets} rats.`);
+            state.updateScore(`Eliminate all ${state.maxTargets} rats.`);
         });
     }
 };

@@ -11,7 +11,7 @@
     limitations under the License.
 */
 import { Component, Type } from "@wonderlandengine/api";
-
+import { state } from "./game";
 /**
 @brief Score trigger
 
@@ -22,8 +22,7 @@ This component is automatically attached to newly spawned mouse
 objects, see `mouse-spawner`.
 */
 
-var score = 0;
-var gameOver = false;
+const tempQuat2 = new Float32Array(8);
 
 export class ScoreTrigger extends Component {
     static TypeName = "score-trigger";
@@ -33,67 +32,30 @@ export class ScoreTrigger extends Component {
 
     init() {
         this.collision = this.object.getComponent('collision');
-        this.soundHit = this.object.addComponent('howler-audio-source', { src: 'sfx/high-pitched-aha-103125.mp3', volume: 1.9 });
-        this.soundPop = this.object.addComponent('howler-audio-source', { src: 'sfx/pop-94319.mp3', volume: 1.9 });
-        this.maxOverlapDistance = 0.6;
+        this.soundHit = this.object.addComponent("howler-audio-source", {
+            src: "sfx/high-pitched-aha-103125.mp3",
+            volume: 1.9,
+        });
+        this.soundPop = this.object.addComponent("howler-audio-source", {
+            src: "sfx/pop-94319.mp3",
+            volume: 1.9,
+        });
+        state.victoryMusic = this.object.addComponent("howler-audio-source", {
+            src: "music/level-win-6416.mp3",
+            volume: 1.9,
+        });
     }
-    update(dt) {
-        try {
-            let overlaps = this.collision.queryOverlaps();
 
-            for (let i = 0; i < overlaps.length; ++i) {
-                let p = overlaps[i].object.getComponent('bullet-physics');
+    onHit() {
+        this.particles.setTransformWorld(this.object.getTransformWorld(tempQuat2));
+        this.particles.getComponent("confetti-particles").burst();
+        // console.log("onHit ID: "+this.object.parent.objectId);
+        // this.object.parent.destroy();
 
-                if (p && !p.scored) {
-                    let bulletLocation = [];
-                    p.object.getTranslationWorld(bulletLocation);
-                    // console.log("bulletLocation >> ", bulletLocation);
+        state.despawnTarget(this.object.parent);
+        state.incrementScore();
 
-                    let mouseLocation = [];
-                    this.object.getTranslationWorld(mouseLocation);
-                    // console.log("mouseLocation >> ", mouseLocation);
-
-                    let xOverlapDistance = Math.abs(bulletLocation[0] - mouseLocation[0]);
-                    let yOverlapDistance = Math.abs(bulletLocation[1] - mouseLocation[1]);
-                    let zOverlapDistance = Math.abs(bulletLocation[2] - mouseLocation[2]);
-
-                    if (xOverlapDistance < this.maxOverlapDistance &&
-                        yOverlapDistance < this.maxOverlapDistance &&
-                        zOverlapDistance < this.maxOverlapDistance) {
-                        p.scored = true;
-                        this.particles.transformWorld.set(this.object.transformWorld);
-                        this.particles.getComponent('confetti-particles').burst();
-                        this.object.parent.destroy();
-                        p.object.destroy();
-
-                        ++score;
-
-                        let scoreString = "";
-                        if (maxTargets != score) {
-                            scoreString = score + " rats down, " + (maxTargets - score) + " left";
-                        } else {
-                            scoreString = "Congrats, you got all the rats!";
-                            victoryMusic.play();
-                            bgMusic.stop();
-                            mouseSound.stop();
-                            resetButton.unhide();
-                            showLogo();
-                            gameOver = true;
-
-                        }
-
-                        updateScore(scoreString);
-
-                        this.soundHit.play();
-                        this.soundPop.play();
-
-                        updateMoveDuration();
-                    }
-                }
-            }
-        } catch (e) {
-            console.log("score-trigger->update() >> ", e);
-        }
-
+        this.soundHit.play();
+        this.soundPop.play();
     }
 };

@@ -13,7 +13,7 @@
 
 import { Component, Type } from "@wonderlandengine/api";
 import { vec3 } from "gl-matrix";
-
+import { state } from "./game";
 /**
 @brief Controls the bullet trajectory
 
@@ -22,8 +22,11 @@ deactivated when the bullet is on the ground. This is done to prevent the
 score-trigger going off when the mice run over the bullets.
 
 */
+
+let newDir = new Float32Array(3);
+
 export class BulletPhysics extends Component {
-    static TyupeName = "bullet-physics";
+    static TypeName = "bullet-physics";
     static Properties = {
         speed: { type: Type.Float, default: 1.0 },
     }
@@ -31,7 +34,7 @@ export class BulletPhysics extends Component {
     init() {
         this.dir = new Float32Array(3);
         this.position = [0, 0, 0];
-        this.object.getTranslationWorld(this.position);
+        this.object.getPositionWorld(this.position);
         this.correctedSpeed = this.speed / 6;
 
         this.collision = this.object.getComponent('collision', 0);
@@ -51,28 +54,41 @@ export class BulletPhysics extends Component {
         }
 
         //update position
-        this.object.getTranslationWorld(this.position);
+        this.object.getPositionWorld(this.position);
         //deactivate bullet if through the floor
-        if (this.position[1] <= floorHeight + this.collision.extents[0]) {
-            this.active = false;
-            this.object.getComponent('collision').active = false;
-            this.destroyBullet(5000);
+        if (this.position[1] <= state.floorHeight + this.collision.extents[0]) {
+            this.destroyBullet(0);
             return;
         }
         //deactivate bullet if travel distance too far
         if (vec3.length(this.position) > 175) {
-            this.active = false;
             this.destroyBullet(0);
             return;
         }
-        let newDir = [0, 0, 0];
-        vec3.add(newDir, newDir, this.dir);
+
+        // let newDir = [0, 0, 0];
+        // vec3.add(newDir, newDir, this.dir);
+        // vec3.scale(newDir, newDir, this.correctedSpeed);
+
+        // vec3.add(this.position, this.position, newDir);
+
+        // this.object.resetTranslation();
+        // this.object.translate(this.position);
+
+        newDir.set(this.dir);
         vec3.scale(newDir, newDir, this.correctedSpeed);
-
         vec3.add(this.position, this.position, newDir);
+        this.object.setPositionLocal(this.position);
 
-        this.object.resetTranslation();
-        this.object.translate(this.position);
+        let overlaps = this.collision.queryOverlaps();
+        for (let i = 0; i < overlaps.length; ++i) {
+            let t = overlaps[i].object.getComponent("score-trigger");
+            if (t && !this.scored) {
+                t.onHit();
+                this.destroy();
+                return;
+            }
+        }
     }
     destroyBullet(time) {
         if (time == 0) {

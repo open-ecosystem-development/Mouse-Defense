@@ -11,12 +11,12 @@
     limitations under the License.
 */
 import { Component, Type } from "@wonderlandengine/api";
+import { state } from "./game";
+import { BulletPhysics } from "./bullet-physics";
 /**
 @brief Spawns a new bullet object when the player depresses the trigger.
 */
 
-var bulletSpawner = null;
-var shotCount = 0;
 var firstShot = false;
 
 export class BulletSpawner extends Component {
@@ -27,6 +27,11 @@ export class BulletSpawner extends Component {
         bulletSpeed: { type: Type.Float, default: 1.0 },
     };
 
+    static onRegister(engine) {
+        engine.registerComponent(BulletPhysics);
+
+    }
+
     start() {
         this.engine.onXRSessionStart.push(this.xrSessionStart.bind(this));
 
@@ -34,7 +39,7 @@ export class BulletSpawner extends Component {
         this.nextIndex = 0;
         this.lastShotTime = 0;
 
-        bulletSpawner = this.object;
+        state.bulletSpawner = this.object;
         this.soundClick = this.object.addComponent('howler-audio-source', { src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
     }
 
@@ -67,12 +72,12 @@ export class BulletSpawner extends Component {
         bullet.physics.scored = false;
         bullet.physics.active = true;
 
-        shotCount++;
-        updateCounter();
+        state.shotCount++;
+        state.updateCounter();
 
         if (!firstShot) {
-            hideLogo();
-            updateMoveDuration(true);
+            state.hideLogo();
+            state.updateMoveDuration(true);
             firstShot = true;
         }
     }
@@ -94,7 +99,7 @@ export class BulletSpawner extends Component {
         col.group = (1 << 0);
         col.active = true;
 
-        const physics = obj.addComponent('bullet-physics', {
+        const physics = obj.addComponent(BulletPhysics, {
             speed: this.bulletSpeed,
         });
         physics.active = true;

@@ -6,6 +6,7 @@ models/
 node_modules/
 ssl/
 static/
+.editor/
 
 # General
 .DS_Store
