@@ -85,7 +85,8 @@ export class BulletPhysics extends Component {
             let t = overlaps[i].object.getComponent("score-trigger");
             if (t && !this.scored) {
                 t.onHit();
-                this.destroy();
+                this.destroyBullet(0);
+                // this.destroy();
                 return;
             }
         }

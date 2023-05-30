@@ -47,7 +47,7 @@ export class MouseSpawner extends Component {
 
     init() {
         state.despawnTarget = function (obj) {
-            console.log("despawnTarget ID: " + obj.objectId);
+            // console.log("despawnTarget ID: " + obj.objectId);
             for (let i = 0; i < this.targets.length; i++) {
                 if (obj.objectId == this.targets[i].objectId) {
                     this.targets.splice(i,1);

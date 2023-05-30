@@ -39,7 +39,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "7",
+                        "mesh": "12",
                         "material": "540"
                     },
                     "active": true
@@ -472,13 +472,9 @@
                     }
                 },
                 {
-                    "type": "cursor-custom",
-                    "cursor-custom": {
-                        "collisionGroup": 0,
-                        "cursorRayObject": "209",
-                        "cursorRayScalingAxis": "y",
-                        "cursorObject": "127",
-                        "cursorRayMesh": "210"
+                    "type": "cursor",
+                    "cursor": {
+                        "cursorObject": "127"
                     }
                 }
             ],
@@ -512,9 +508,9 @@
             ],
             "parent": null,
             "translation": [
-                0.0,
-                0.0388117,
-                1.5585094
+                0.0103949,
+                -0.2957165,
+                1.5582631
             ],
             "rotation": [
                 0.0,
@@ -1474,7 +1470,10 @@
                     }
                 },
                 {
-                    "type": "cursor"
+                    "type": "cursor",
+                    "cursor": {
+                        "cursorObject": "215"
+                    }
                 }
             ],
             "translation": [
@@ -1557,8 +1556,8 @@
             "parent": null,
             "translation": [
                 -1.030755,
-                -0.5227569,
-                -0.0603484
+                -1.4017565,
+                -0.0603483
             ],
             "rotation": [
                 0.0,
@@ -4908,6 +4907,30 @@
                 "name": "skybox2.png",
                 "file": "assets\\skybox2.png"
             }
+        },
+        "1003": {
+            "link": {
+                "name": "SkyOnlyHDRI021_2K-TONEMAPPED.jpg",
+                "file": "assets\\SkyOnlyHDRI021_2K-TONEMAPPED.jpg"
+            }
+        },
+        "1005": {
+            "link": {
+                "name": "OutdoorHDRI065_8K-TONEMAPPED.jpg",
+                "file": "assets\\OutdoorHDRI065_8K-TONEMAPPED.jpg"
+            }
+        },
+        "1007": {
+            "link": {
+                "name": "OutdoorHDRI065_4K-TONEMAPPED.jpg",
+                "file": "assets\\OutdoorHDRI065_4K-TONEMAPPED.jpg"
+            }
+        },
+        "1009": {
+            "link": {
+                "name": "OutdoorHDRI065_4K-TONEMAPPED_edit.jpg",
+                "file": "assets\\OutdoorHDRI065_4K-TONEMAPPED_edit.jpg"
+            }
         }
     },
     "images": {
@@ -5056,6 +5079,30 @@
                 "file": "assets\\skybox2.png"
             },
             "compression": "none"
+        },
+        "1002": {
+            "link": {
+                "name": "SkyOnlyHDRI021_2K-TONEMAPPED.jpg",
+                "file": "assets\\SkyOnlyHDRI021_2K-TONEMAPPED.jpg"
+            }
+        },
+        "1004": {
+            "link": {
+                "name": "OutdoorHDRI065_8K-TONEMAPPED.jpg",
+                "file": "assets\\OutdoorHDRI065_8K-TONEMAPPED.jpg"
+            }
+        },
+        "1006": {
+            "link": {
+                "name": "OutdoorHDRI065_4K-TONEMAPPED.jpg",
+                "file": "assets\\OutdoorHDRI065_4K-TONEMAPPED.jpg"
+            }
+        },
+        "1008": {
+            "link": {
+                "name": "OutdoorHDRI065_4K-TONEMAPPED_edit.jpg",
+                "file": "assets\\OutdoorHDRI065_4K-TONEMAPPED_edit.jpg"
+            }
         }
     },
     "materials": {
@@ -6693,7 +6740,7 @@
             "name": "material.000",
             "pipeline": "229",
             "Sky": {
-                "texture": "771"
+                "texture": "1009"
             }
         }
     },
@@ -7415,7 +7462,11 @@
         "assets/mousedefense.png",
         "assets/Asset 1@2x.png",
         "assets/skybox.png",
-        "assets/skybox2.png"
+        "assets/skybox2.png",
+        "assets/SkyOnlyHDRI021_2K-TONEMAPPED.jpg",
+        "assets/OutdoorHDRI065_8K-TONEMAPPED.jpg",
+        "assets/OutdoorHDRI065_4K-TONEMAPPED.jpg",
+        "assets/OutdoorHDRI065_4K-TONEMAPPED_edit.jpg"
     ],
     "fonts": {
         "998": {
