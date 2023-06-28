@@ -1,4 +1,4 @@
-﻿# Mouse Defense - WebXR, VR Game (Wonderland Demo)
+﻿# Mouse Defense - (Wonderland Demo)
 ## Table of Contents
 - [Introduction](#introduction)
 - [Setup](#setup)
