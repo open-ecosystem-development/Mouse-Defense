@@ -22,6 +22,7 @@ The center top text object that shows various helpful texts and score.
 export class ShotCounter extends Component {
     static TypeName = "shot-counter";
     static Properties = {};
+    
     init() {
         this.text = this.object.getComponent('text');
 

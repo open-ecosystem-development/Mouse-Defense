@@ -47,7 +47,6 @@ export class BulletPhysics extends Component {
         }
     }
     update(dt) {
-        //error checking?
         if (isNaN(dt)) {
             console.log("dt is NaN");
             return;
@@ -66,15 +65,6 @@ export class BulletPhysics extends Component {
             return;
         }
 
-        // let newDir = [0, 0, 0];
-        // vec3.add(newDir, newDir, this.dir);
-        // vec3.scale(newDir, newDir, this.correctedSpeed);
-
-        // vec3.add(this.position, this.position, newDir);
-
-        // this.object.resetTranslation();
-        // this.object.translate(this.position);
-
         newDir.set(this.dir);
         vec3.scale(newDir, newDir, this.correctedSpeed);
         vec3.add(this.position, this.position, newDir);
@@ -86,7 +76,6 @@ export class BulletPhysics extends Component {
             if (t && !this.scored) {
                 t.onHit();
                 this.destroyBullet(0);
-                // this.destroy();
                 return;
             }
         }

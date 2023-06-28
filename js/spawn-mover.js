@@ -70,9 +70,9 @@ export class SpawnMover extends Component {
             vec3.add(this.pointB, this.pointA, [x, 0, z]);
         }
 
-        this.object.resetTranslation();
+        this.object.resetPosition();
         vec3.lerp(this.currentPos, this.pointA, this.pointB, this.time);
-        this.object.translate(this.currentPos);
+        this.object.translateLocal(this.currentPos);
     }
 
 };

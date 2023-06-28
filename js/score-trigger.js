@@ -49,8 +49,6 @@ export class ScoreTrigger extends Component {
     onHit() {
         this.particles.setTransformWorld(this.object.getTransformWorld(tempQuat2));
         this.particles.getComponent("confetti-particles").burst();
-        // console.log("onHit ID: "+this.object.parent.objectId);
-        // this.object.parent.destroy();
 
         state.despawnTarget(this.object.parent);
         state.incrementScore();

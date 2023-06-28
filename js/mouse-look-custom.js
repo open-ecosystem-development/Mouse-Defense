@@ -19,7 +19,6 @@ import { state } from "./game";
  * Efficiently implemented to affect object orientation only
  * when the mouse moves.
  */
-var firstShot = false;
 
 export class MouseLookCustom extends Component {
     static TypeName = "mouse-look-custom";
@@ -130,7 +129,7 @@ export class MouseLookCustom extends Component {
                                 const dir = [0, 0, 0];
                                 this.object.getForward(dir);
 
-                                this.launch(dir);
+                                state.launch(dir);
                                 this.lastShotTime = currentTime;
                                 this.soundClick.play();
                             } catch (e) {
@@ -142,52 +141,5 @@ export class MouseLookCustom extends Component {
                 }
             }.bind(this));
         }
-    }
-
-    launch(dir) {
-        let bullet = this.spawnBullet();
-
-        bullet.object.transformLocal.set(this.object.transformWorld);
-        bullet.object.setDirty();
-        bullet.physics.dir.set(dir);
-
-        bullet.physics.scored = false;
-        bullet.physics.active = true;
-
-        state.shotCount++;
-        state.updateCounter();
-
-        if (!firstShot) {
-            state.hideLogo();
-            state.updateMoveDuration(true);
-            firstShot = true;
-        }
-    }
-    spawnBullet() {
-        const obj = this.engine.scene.addObject();
-
-        const mesh = obj.addComponent('mesh');
-        mesh.mesh = this.bulletMesh;
-        mesh.material = this.bulletMaterial;
-
-        obj.scale([0.05, 0.05, 0.05]);
-
-        mesh.active = true;
-
-        const col = obj.addComponent('collision');
-        col.shape = this.engine.Collider.Sphere;
-        col.extents[0] = 0.05;
-        col.group = (1 << 0);
-        col.active = true;
-
-        const physics = obj.addComponent('bullet-physics', {
-            speed: this.bulletSpeed,
-        });
-        physics.active = true;
-
-        return {
-            object: obj,
-            physics: physics
-        };
     }
 };

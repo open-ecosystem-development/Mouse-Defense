@@ -77,7 +77,6 @@ export class JoystickMovement extends Component {
             let yStrength = Math.abs(this.gamepad.axes[3]);
 
             if (yStrength > xStrength) {
-                // console.log("y-axis movement");
                 vec3.normalize(direction, direction);
                 direction[2] *= this.moveSpeed;
                 vec3.transformQuat(direction, direction, this.headObject.transformWorld);
@@ -110,9 +109,6 @@ export class JoystickMovement extends Component {
         }
 
         s.addEventListener('inputsourceschange', function (e) {
-            // console.log("inputsourceschange");
-            // console.log("e.added", e.added);
-
             if (e.added && e.added.length) {
                 for (let i = 0; i < e.added.length; i++) {
                     let inputSource = e.added[i];

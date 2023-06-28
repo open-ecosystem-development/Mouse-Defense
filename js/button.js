@@ -14,6 +14,7 @@
 import { Component, Type } from "@wonderlandengine/api";
 
 export class Button extends Component {
+    static TypeName = "button";
     static Properties = {
         buttonMeshObject: { type: Type.Object },
         hoverMaterial: { type: Type.Material },
@@ -29,8 +30,14 @@ export class Button extends Component {
         this.target.addDownFunction(this.onDown.bind(this));
         this.target.addUpFunction(this.onUp.bind(this));
 
-        this.soundClick = this.object.addComponent('howler-audio-source', { src: 'sfx/click.wav', spatial: true });
-        this.soundUnClick = this.object.addComponent('howler-audio-source', { src: 'sfx/unclick.wav', spatial: true });
+        this.soundClick = this.object.addComponent("howler-audio-source", {
+            src: "sfx/click.wav",
+            spatial: true,
+        });
+        this.soundUnClick = this.object.addComponent("howler-audio-source", {
+            src: "sfx/unclick.wav",
+            spatial: true,
+        });
     }
 
     onHover(_, cursor) {
@@ -64,10 +71,11 @@ export class Button extends Component {
     }
 
     hapticFeedback(object, strength, duration) {
-        const input = object.getComponent('input');
+        const input = object.getComponent("input");
         if (input && input.xrInputSource) {
             const gamepad = input.xrInputSource.gamepad;
-            if (gamepad && gamepad.hapticActuators) gamepad.hapticActuators[0].pulse(strength, duration);
+            if (gamepad && gamepad.hapticActuators)
+                gamepad.hapticActuators[0].pulse(strength, duration);
         }
     }
 };

@@ -19,6 +19,8 @@ export const state = {
     bulletSpawner: null,
     hideLogo: null,
     despawnTarget: null,
+    firstShot: false,
+    launch: null,
 
     incrementScore() {
         ++this.score;
@@ -50,6 +52,6 @@ export const state = {
         this.targetsSpawned = 0;
 
         this.updateCounter();
-        this.updateScore("Eliminate all 20 Rats.");
+        this.updateScore(`Eliminate all ${this.maxTargets} rats.`);
     }
 };

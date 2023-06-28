@@ -11,13 +11,14 @@
     limitations under the License.
 */
 import { Component, Type } from "@wonderlandengine/api";
+import { HowlerAudioSource } from "@wonderlandengine/components";
 import { state } from "./game";
 import { BulletPhysics } from "./bullet-physics";
 /**
 @brief Spawns a new bullet object when the player depresses the trigger.
 */
 
-var firstShot = false;
+const tempQuat2 = new Float32Array(8);
 
 export class BulletSpawner extends Component {
     static TypeName = "bullet-spawner";
@@ -28,19 +29,46 @@ export class BulletSpawner extends Component {
     };
 
     static onRegister(engine) {
+        engine.registerComponent(HowlerAudioSource);
         engine.registerComponent(BulletPhysics);
 
     }
 
+    init() {
+        state.launch = function (dir) {
+            let bullet = this.spawnBullet();
+
+            bullet.object.setTransformLocal(this.object.getTransformWorld(tempQuat2));
+            bullet.object.setDirty();
+            bullet.physics.dir.set(dir);
+
+            bullet.physics.scored = false;
+            bullet.physics.active = true;
+
+            state.shotCount++;
+            state.updateCounter();
+
+            if (!state.firstShot) {
+                state.hideLogo();
+                state.updateMoveDuration(true);
+                state.firstShot = true;
+            }
+        }.bind(this);
+    }
+
     start() {
-        this.engine.onXRSessionStart.push(this.xrSessionStart.bind(this));
+        this.engine.onXRSessionStart.add(this.xrSessionStart.bind(this));
+        this.start = new Float32Array(2);
 
         this.bullets = [];
         this.nextIndex = 0;
         this.lastShotTime = 0;
 
         state.bulletSpawner = this.object;
-        this.soundClick = this.object.addComponent('howler-audio-source', { src: 'sfx/9mm-pistol-shoot-short-reverb-7152.mp3', volume: 0.5 });
+        this.soundClick = this.object.addComponent(HowlerAudioSource, {
+            src: "sfx/9mm-pistol-shoot-short-reverb-7152.mp3",
+            volume: 0.5,
+        });
     }
 
     onTouchDown(e) {
@@ -52,52 +80,29 @@ export class BulletSpawner extends Component {
 
             if (lastShotTimeGap > 500) {
                 const dir = [0, 0, 0];
-                this.object.getComponent('cursor-custom').cursorRayObject.getForward(dir);
+                this.object.getComponent('cursor').cursorRayObject.getForward(dir);
 
                 this.pulse(e.inputSource.gamepad);
-                this.launch(dir);
+                state.launch(dir);
                 this.lastShotTime = currentTime;
                 this.soundClick.play();
             }
         }
     }
 
-    launch(dir) {
-        let bullet = this.spawnBullet();
-
-        bullet.object.transformLocal.set(this.object.transformWorld);
-        bullet.object.setDirty();
-        bullet.physics.dir.set(dir);
-
-        bullet.physics.scored = false;
-        bullet.physics.active = true;
-
-        state.shotCount++;
-        state.updateCounter();
-
-        if (!firstShot) {
-            state.hideLogo();
-            state.updateMoveDuration(true);
-            firstShot = true;
-        }
-    }
-
     spawnBullet() {
         const obj = this.engine.scene.addObject();
+        obj.scaleLocal([0.05, 0.05, 0.05]);
 
-        const mesh = obj.addComponent('mesh');
-        mesh.mesh = this.bulletMesh;
-        mesh.material = this.bulletMaterial;
-
-        obj.scale([0.05, 0.05, 0.05]);
-
-        mesh.active = true;
-
-        const col = obj.addComponent('collision');
-        col.shape = this.engine.Collider.Sphere;
-        col.extents[0] = 0.05;
-        col.group = (1 << 0);
-        col.active = true;
+        obj.addComponent("mesh", {
+            mesh: this.bulletMesh,
+            material: this.bulletMaterial,
+        });
+        obj.addComponent("collision", {
+            shape: WL.Collider.Sphere,
+            extents: [0.05, 0, 0],
+            group: 1 << 0,
+        });
 
         const physics = obj.addComponent(BulletPhysics, {
             speed: this.bulletSpeed,
@@ -120,15 +125,14 @@ export class BulletSpawner extends Component {
     }
 
     onActivate() {
-        if (this.engine.xrSession) {
-            this.engine.xrSession.addEventListener('selectstart', this.onTouchDown.bind(this));
-        }
+        if (!this.engine.xr) return;
+        this.engine.xr.session.addEventListener(
+            "selectstart", this.onTouchDown.bind(this));
     }
 
     xrSessionStart(session) {
-        if (this.active) {
-            session.addEventListener('selectstart', this.onTouchDown.bind(this));
-        }
+        if (!this.active) return;
+        session.addEventListener("selectstart", this.onTouchDown.bind(this));
     }
-    
+
 };

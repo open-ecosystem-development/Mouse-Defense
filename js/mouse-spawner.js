@@ -47,7 +47,6 @@ export class MouseSpawner extends Component {
 
     init() {
         state.despawnTarget = function (obj) {
-            // console.log("despawnTarget ID: " + obj.objectId);
             for (let i = 0; i < this.targets.length; i++) {
                 if (obj.objectId == this.targets[i].objectId) {
                     this.targets.splice(i,1);
@@ -66,8 +65,8 @@ export class MouseSpawner extends Component {
             volume: 1.0,
         });
 
-        this.maxTargets = 2;
         state.maxTargets = this.maxTargets;
+        state.updateScore(`Eliminate all ${state.maxTargets} rats.`);
         this.spawnInterval = this.spawnIntervalCeiling;
         this.spawnTarget();
     }
@@ -131,7 +130,6 @@ export class MouseSpawner extends Component {
 
         state.targetsSpawned++;
         this.targets.push(obj);
-        console.log("spawnTarget ID: " + obj.objectId);
         state.mouseSound.play();
     }
 };

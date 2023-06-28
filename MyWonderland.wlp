@@ -1472,7 +1472,10 @@
                 {
                     "type": "cursor",
                     "cursor": {
-                        "cursorObject": "215"
+                        "cursorObject": "215",
+                        "cursorRayObject": "213",
+                        "collisionGroup": 0,
+                        "cursorRayScalingAxis": "y"
                     }
                 }
             ],
@@ -6872,7 +6875,7 @@
             "version": [
                 1,
                 0,
-                1
+                2
             ]
         },
         "vr": {

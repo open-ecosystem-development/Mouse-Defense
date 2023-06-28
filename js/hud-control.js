@@ -38,15 +38,8 @@ export class HudControl extends Component {
 
         this.object.resetTranslation();
         vec3.add(newPos, trans, this.currentPos);
-        // this.object.translate(newPos);
         this.object.translate(trans);
-        // this.currentPos = newPos;
         this.currentPos = trans;
-
-        // console.log(this.currentPos);
-
-
-        // this.headObject.translate(direction);
     }
     trim(num) {
         let result = num.toFixed(2);

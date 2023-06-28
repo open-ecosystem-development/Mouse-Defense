@@ -76,7 +76,6 @@ export class MouseMover extends Component {
         }.bind(this);
     }
     update(dt) {
-        // error checking?
         if (isNaN(dt)) return;
 
         // increment time on movement cycle
@@ -130,22 +129,22 @@ export class MouseMover extends Component {
             this.previousAngle = this.savedAngle;
         }
 
-        this.object.resetTranslation();
+        this.object.resetPosition();
         let rotateTime = this.moveDuration / this.rotateMoveRatio;
         let moveTime = this.time - this.moveDuration / this.rotateMoveRatio;
         // rotation phase
         if (this.time < rotateTime) {
             this.object.resetRotation();
             this.savedAngle = (this.time * this.newAngle) + this.previousAngle;
-            this.object.rotateAxisAngleDeg([0, 0, 1], this.savedAngle);
-            this.object.rotateAxisAngleDeg([1, 0, 0], 90);
+            this.object.rotateAxisAngleDegLocal([0, 0, 1], this.savedAngle);
+            this.object.rotateAxisAngleDegLocal([1, 0, 0], 90);
         }
         // linear interpolation between old and new position
         else {
             vec3.lerp(this.currentPos, this.pointA, this.pointB, moveTime);
         }
         // movement phase
-        this.object.translate(this.currentPos);
+        this.object.translateLocal(this.currentPos);
     }
     // check if player is too close
     isPlayerClose() {
