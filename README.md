@@ -1,4 +1,4 @@
-﻿# Mouse Defense - (Wonderland Demo)
+﻿# Mouse Defense - (Wonderland Engine Demo)
 ## Table of Contents
 - [Introduction](#introduction)
 - [Setup](#setup)
@@ -16,7 +16,7 @@ Please note that all development and testing was conducted with Google Chrome, M
 
 ### Initial 
 This part is common to both the Quest and HVR Glass.
-1. Clone this project: https://github.com/bryantvu/Wonderland-Demo.git.
+1. Clone this project.
 2. Download and install the [Wonderland Engine Editor](https://wonderlandengine.com/downloads/).
 3. Open the project in the Wonderland Editor.
 4. Open the Chrome Inspect Devices [page](chrome://inspect/#devices).
