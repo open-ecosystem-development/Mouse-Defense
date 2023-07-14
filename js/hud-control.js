@@ -10,19 +10,23 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+import { Component, Type } from "@wonderlandengine/api";
+import { vec3 } from "gl-matrix";
 /**
  * Controls HUD placement and updates.
  */
-WL.registerComponent('hud-control', {
-    /** Camera Object of which the orientation is used to determine forward direction */
-    headObject: { type: WL.Type.Object }
-}, {
-    init: function() {
+export class HudControl extends Component {
+    static TypeName = "hud-control";
+    static Properties = {
+        headObject: { type: Type.Object },
+    }
+
+    init() {
         this.currentPos = [0, 0, 0];
         this.object.getTranslationWorld(this.currentPos);
-    },
+    }
 
-    update: function() {
+    update() {
         let newPos = [];
 
         const dir = [0, 0, 0];
@@ -33,20 +37,13 @@ WL.registerComponent('hud-control', {
         this.headObject.getTranslationWorld(trans);
 
         this.object.resetTranslation();
-        glMatrix.vec3.add(newPos, trans, this.currentPos);
-        // this.object.translate(newPos);
+        vec3.add(newPos, trans, this.currentPos);
         this.object.translate(trans);
-        // this.currentPos = newPos;
         this.currentPos = trans;
-
-        console.log(this.currentPos);
-
-
-        // this.headObject.translate(direction);
-    },
-    trim: function(num){
+    }
+    trim(num) {
         let result = num.toFixed(2);
 
         return result;
     }
-});
+};

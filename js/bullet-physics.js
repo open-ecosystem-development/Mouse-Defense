@@ -10,6 +10,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+
+import { Component, Type } from "@wonderlandengine/api";
+import { vec3 } from "gl-matrix";
+import { state } from "./game";
 /**
 @brief Controls the bullet trajectory
 
@@ -18,58 +22,71 @@ deactivated when the bullet is on the ground. This is done to prevent the
 score-trigger going off when the mice run over the bullets.
 
 */
-WL.registerComponent('bullet-physics', {
-    speed: {type: WL.Type.Float, default: 1.0},
-}, {
-    init: function() {
+
+let newDir = new Float32Array(3);
+
+export class BulletPhysics extends Component {
+    static TypeName = "bullet-physics";
+    static Properties = {
+        speed: { type: Type.Float, default: 1.0 },
+    }
+
+    init() {
         this.dir = new Float32Array(3);
         this.position = [0, 0, 0];
-        this.object.getTranslationWorld(this.position);
-        this.correctedSpeed = this.speed/6;
+        this.object.getPositionWorld(this.position);
+        this.correctedSpeed = this.speed / 6;
 
         this.collision = this.object.getComponent('collision', 0);
-        if(!this.collision) {
-            console.warn("'bullet-physics' component on object", this.object.name, "requires a collision component");
+        if (!this.collision) {
+            console.warn(
+                "'bullet-physics' component on object",
+                this.object.name,
+                "requires a collision component"
+            );
         }
-    },
-    update: function(dt) {
-        //error checking?
-        if(isNaN(dt)){
+    }
+    update(dt) {
+        if (isNaN(dt)) {
             console.log("dt is NaN");
             return;
-        } 
+        }
 
         //update position
-        this.object.getTranslationWorld(this.position);
+        this.object.getPositionWorld(this.position);
         //deactivate bullet if through the floor
-        if(this.position[1] <= floorHeight + this.collision.extents[0]) {
-            this.active = false;
-            this.object.getComponent('collision').active=false;
-            this.destroyBullet(5000);
-            return;
-        }
-        //deactivate bullet if travel distance too far
-        if(glMatrix.vec3.length(this.position)>175){
-            this.active = false;
+        if (this.position[1] <= state.floorHeight + this.collision.extents[0]) {
             this.destroyBullet(0);
             return;
         }
-        let newDir = [0,0,0];
-        glMatrix.vec3.add(newDir, newDir, this.dir);
-        glMatrix.vec3.scale(newDir, newDir, this.correctedSpeed);
+        //deactivate bullet if travel distance too far
+        if (vec3.length(this.position) > 175) {
+            this.destroyBullet(0);
+            return;
+        }
 
-        glMatrix.vec3.add(this.position, this.position, newDir);
-        
-        this.object.resetTranslation();
-        this.object.translate(this.position);
-    },
-    destroyBullet: function(time){
-        if(time==0){
+        newDir.set(this.dir);
+        vec3.scale(newDir, newDir, this.correctedSpeed);
+        vec3.add(this.position, this.position, newDir);
+        this.object.setPositionLocal(this.position);
+
+        let overlaps = this.collision.queryOverlaps();
+        for (let i = 0; i < overlaps.length; ++i) {
+            let t = overlaps[i].object.getComponent("score-trigger");
+            if (t && !this.scored) {
+                t.onHit();
+                this.destroyBullet(0);
+                return;
+            }
+        }
+    }
+    destroyBullet(time) {
+        if (time == 0) {
             this.object.destroy();
-        }else{
-            setTimeout(()=>{
+        } else {
+            setTimeout(() => {
                 this.object.destroy()
             }, time);
         }
-    },
-});
+    }
+};

@@ -1,4 +1,4 @@
-﻿# Wonderland Demo
+﻿# Mouse Defense - (Wonderland Engine Demo)
 ## Table of Contents
 - [Introduction](#introduction)
 - [Setup](#setup)
@@ -8,7 +8,7 @@
 ## Introduction
 This Wonderland Engine project is meant to demonstrate the capabilities of WebXR on a VR device such as the Meta Quest or Huawei VR Glass. 
 
-The game is set in a farm and the objective is to shoot all the rats that appear.
+The game is set in a farm and the objective is to shoot all the mice that appear.
 
 Please note that all development and testing was conducted with Google Chrome, Meta Quest, and Huawei VR Glass.
 
@@ -16,20 +16,19 @@ Please note that all development and testing was conducted with Google Chrome, M
 
 ### Initial 
 This part is common to both the Quest and HVR Glass.
-1. Clone this project: https://github.com/hms-ecosystem/Wonderland-Demo.git.
+1. Clone this project.
 2. Download and install the [Wonderland Engine Editor](https://wonderlandengine.com/downloads/).
-3. Download the [asset files](https://github.com/bryantvu/Wonderland-Demo-Assets) and place them into the project directory.
-4. Open the project in the Wonderland Editor.
-5. Open the Chrome Inspect Devices [page](chrome://inspect/#devices).
-6. Enable both `Discover USB devices` and `Discover network targets`
-7. Click on the `Port forwarding...` button 
+3. Open the project in the Wonderland Editor.
+4. Open the Chrome Inspect Devices [page](chrome://inspect/#devices).
+5. Enable both `Discover USB devices` and `Discover network targets`
+6. Click on the `Port forwarding...` button 
 	1. Add 8080 as the `Port` value .
 	2. Add localhost:8080 as the `IP address and port` value.
 	3. Check the `Enable port forwarding` option.
-8. Click on the `Configure...` button 
+7. Click on the `Configure...` button 
 	1. Add localhost:8080 as a new value for `IP address and port`
 	2. Check the `Enable port forwarding` option.
-9. Back in the Wonderland Editor, package and start the server.
+8. Back in the Wonderland Editor, package and start the server.
 
 ### Meta Quest
 

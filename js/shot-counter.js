@@ -10,22 +10,26 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-/* Global function used to update the score display */
-var updateCounter = null;
+import { Component, Type } from "@wonderlandengine/api";
+import {state} from "./game";
 /**
 @brief Updates the floating Scoreboard text.
-
 The center top text object that shows various helpful texts and score.
 */
-WL.registerComponent('shot-counter', {
-}, {
-    init: function() {
+
+/* Global var used to update the shot display */
+
+export class ShotCounter extends Component {
+    static TypeName = "shot-counter";
+    static Properties = {};
+    
+    init() {
         this.text = this.object.getComponent('text');
 
-        updateCounter = function() {
-            if(!gameOver){
-                this.text.text = "Shots Fired: " + shotCount;
+        state.updateCounter = function () {
+            if (!state.gameOver) {
+                this.text.text = "Shots Fired: " + state.shotCount;
             }
         }.bind(this);
-    },
-});
+    }
+};

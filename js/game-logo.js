@@ -11,23 +11,28 @@
     limitations under the License.
 */
 
+import { Component, Type } from "@wonderlandengine/api";
+import { state } from "./game";
+
 /* Global functions used to toggle logo visibility */
-var hideLogo = null;
 var showLogo = null;
 /**
 @brief All this file does is hide and show the game logo.
 */
-WL.registerComponent('game-logo', {
-}, {
-    init: function() {
+
+export class GameLogo extends Component {
+    static TypeName = "game-logo";
+    static Properties = {};
+
+    init() {
         /** hide logo when the 1st shot is fired */
-        hideLogo = function(){
-            this.object.getComponent('mesh').active=false;
+        state.hideLogo = function () {
+            this.object.getComponent('mesh').active = false;
         }.bind(this);
 
         /** show logo when the game ends */
-        showLogo = function(){
-            this.object.getComponent('mesh').active=true;
+        showLogo = function () {
+            this.object.getComponent('mesh').active = true;
         }.bind(this);
-    },
-});
+    }
+};
