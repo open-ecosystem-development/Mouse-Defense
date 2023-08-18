@@ -12,6 +12,8 @@ The game is set in a farm and the objective is to shoot all the mice that appear
 
 Please note that all development and testing was conducted with Google Chrome, Meta Quest, and Huawei VR Glass.
 
+You can play this game [on HeyVR.io](https://heyvr.io/game/mouse-defense).
+
 ## Setup
 
 ### Initial 
