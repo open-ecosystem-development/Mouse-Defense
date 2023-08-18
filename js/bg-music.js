@@ -10,7 +10,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-import { Component, Type } from "@wonderlandengine/api";
+import { Component } from "@wonderlandengine/api";
 import {state} from "./game";
 /**
 @brief Audio that is attached to the player object.
@@ -27,19 +27,19 @@ export class BgMusic extends Component {
         });
         state.bgMusic.play();
         this.bgDucks = this.object.addComponent('howler-audio-source', {
-            src: 'sfx/recording-ducks-binaural-18742.mp3',
+            src: 'sfx/ducks-short.mp3',
             loop: true,
             volume: 1.3
         });
         this.bgDucks.play();
         this.bgCow = this.object.addComponent('howler-audio-source', {
-            src: 'sfx/cows-56001.mp3',
+            src: 'sfx/cows-short.mp3',
             loop: true,
             volume: 1.0
         });
         this.bgCow.play();
         this.bgSheep = this.object.addComponent('howler-audio-source', {
-            src: 'sfx/sheep-23761.mp3',
+            src: 'sfx/sheep-short.mp3',
             loop: true,
             volume: 1.0
         });
