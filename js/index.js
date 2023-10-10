@@ -80,13 +80,17 @@ function setupButtonsXR() {
   /* Setup AR / VR buttons */
   const arButton = document.getElementById("ar-button");
   if (arButton) {
-    arButton.dataset.supported = engine.arSupported;
-    arButton.addEventListener("click", () => requestSession("immersive-ar"));
+    arButton.dataset.supported = engine.arSupported ? '1' : '0';
+    if (engine.arSupported) {
+      arButton.addEventListener("click", () => requestSession("immersive-ar"));
+    }
   }
   const vrButton = document.getElementById("vr-button");
   if (vrButton) {
-    vrButton.dataset.supported = engine.vrSupported;
-    vrButton.addEventListener("click", () => requestSession("immersive-vr"));
+    vrButton.dataset.supported = engine.vrSupported ? '1' : '0';
+    if (engine.vrSupported) {
+      vrButton.addEventListener("click", () => requestSession("immersive-vr"));
+    }
   }
 }
 
